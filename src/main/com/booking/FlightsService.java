@@ -1,12 +1,13 @@
 package com.booking;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FlightsService {
 
 //    private FlightsDAO flightsDAO;
 
-    List<Flight> showFlightsFor24hours();
+    Map <String, Flight> showFlightsFor24hours();
     Flight showFlightByID(String ID); // делегация в ДАО
-    List <Flight> showSelectedFlights(String destination, String date, int passangers);
+    Map <String, Flight> showSelectedFlights(String destination, String date, int passangers);
 }
