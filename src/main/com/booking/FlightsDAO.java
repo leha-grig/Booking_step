@@ -1,6 +1,7 @@
 package com.booking;
 
 import java.util.List;
+
 import java.util.Map;
 
 public interface   FlightsDAO {
@@ -19,6 +20,7 @@ public interface   FlightsDAO {
     Flight getFlightByIndex(int index);
     Flight getFlightByID(String ID);
     boolean isCollectionExist(); // private
+
 
 
     /*boolean deleteFlight(Booking booking);
