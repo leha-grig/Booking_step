@@ -15,10 +15,9 @@ public class BookingController {
     }
 
 
-
     Set<Booking> showSelectedBookings(String name, String surname) {
         return bookingsService.showSelectedBookings(name, surname);
     }
 
-    ;
+
 }
