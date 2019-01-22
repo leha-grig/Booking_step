@@ -1,22 +1,22 @@
 package com.booking;
 
+import java.time.LocalDateTime;
+
 public class Flight {
-//    private LocalDateTime dateTime = LocalDateTime.now();
-    private String time;
+    private LocalDateTime dateTime;
     private String departureCity;
     private String destination;
-    private String ID; // ??? HashCode?
+    private String id; // ??? HashCode?
     private int capasity;
-    private int bookedPlaces;
+    private int bookedSits;
 
-    public static void main(String[] args) {
 
-    }
     // геттеры, конструктор, Иквелс и хэш-код,
+    // конструктор должен генерить уникальное ID (вызов приватного метода) и записывать его в поле id;
     // метод вывода свободных мест,
     // метод получения даты,
     // метод получения времени
-    // метод получения ID?
+
     // метод генерации ID?
 
 }

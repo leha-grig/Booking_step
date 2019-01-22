@@ -10,6 +10,6 @@ public class Booking {
     private int ID; // ??hash-code?
 
     // геттеры, конструктор, Иквелс и хэш-код,
-    //
-    // метод получения ID?
+    // конструктор записывает hash-code в поле ID
+
 }

@@ -14,11 +14,9 @@ public class BookingController {
         return bookingsService.deleteBookingByID(ID);
     }
 
-
-
     Set<Booking> showSelectedBookings(String name, String surname) {
         return bookingsService.showSelectedBookings(name, surname);
     }
 
-    ;
+
 }
