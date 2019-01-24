@@ -5,42 +5,54 @@ import java.util.Objects;
 
 public class Booking {
 
-    private String flight;
+    private Flight flight;
     private LocalDate date;
     private String name;
     private String surname;
     private int ID;
 
-    public Booking(String flight, LocalDate date, String name, String surname, int ID) {
+    public Booking(Flight flight, LocalDate date, String name, String surname) {
         this.flight = flight;
         this.date = date;
         this.name = name;
         this.surname = surname;
-        this.ID = ID;
+        this.ID = hashCode();
     }
 
-    public String getFlight() {
+    public Flight getFlight() {
         return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public int getID() {
-        return ID;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public int getID() {
+        return ID;
     }
 
     public void setID(int ID) {
@@ -72,7 +84,7 @@ public class Booking {
 
     @Override
     public int hashCode() {
-        return Objects.hash(flight, date, name, surname, ID);
+        return Objects.hash(flight, date, name, surname);
     }
 
 }

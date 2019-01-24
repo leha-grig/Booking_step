@@ -8,16 +8,14 @@ public class BookingsService {
    
     private BookingsDAO bookingDAO;
 
-    public Booking createBooking(String flight, LocalDate date, String name, String surname) {
-        //ID должен автоматически генерироваться с помощью flight.hashCode()
-        Booking booking = new Booking(flight, date, name, surname, flight.hashCode());
-        bookingDAO.saveBooking(booking);
-        return bookingDAO.getBookingByID(booking.getID());
-    }
-
-    public Booking updateBooking(LocalDate date, int ID) {
-        Booking booking = bookingDAO.getBookingByID(ID);
-        booking.setDate(date);
+    public Booking createBooking(Flight flight, LocalDate date, String name, String surname) {
+        int flightSeats = flight.getBookedSits();
+        Booking booking = new Booking(flight, date, name, surname);
+        if (flight.getFreeSits() > 0) {
+            flight.setBookedSits(flightSeats++);
+        } else {
+            System.out.println("There are no free seats on this flight");
+        }
         bookingDAO.saveBooking(booking);
         return bookingDAO.getBookingByID(booking.getID());
     }
