@@ -25,7 +25,7 @@ public class FlightsDAO {
 
         } else {
             CollectionGenerator collectionGenerator = new CollectionGenerator();
-            this.flights = collectionGenerator.generateNewFlightsCollection(500, 48);
+            this.flights = collectionGenerator.generateNewFlightsCollection(500, 47);
         }
     }
 

@@ -40,6 +40,10 @@ public class Flight implements Serializable {
         return ""+departureCity.charAt(0)+destination.charAt(0)+dateTime.getMonthValue()+dateTime.getDayOfMonth()+dateTime.getHour()+dateTime.getMinute();
     }
 
+    public int getFreeSits(){
+        return capasity - bookedSits;
+    }
+
     @Override
     public String toString() {
         return id + " " + getDate() + " "+ getTime()+" "+ departureCity + " " + destination + " ";

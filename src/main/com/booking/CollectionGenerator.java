@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.Duration;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
+
 import java.util.*;
 
 public class CollectionGenerator {
@@ -37,8 +37,8 @@ public class CollectionGenerator {
             ldt = ldt.plusMinutes(15);
             flights.put(flight.getId(), flight);
         }
-//        Files.write("./flights.txt", flights)
-        FileOutputStream file = null;
+
+        FileOutputStream file;
         try {
             file = new FileOutputStream("./flights.txt");
             ObjectOutputStream data = new ObjectOutputStream(file);
