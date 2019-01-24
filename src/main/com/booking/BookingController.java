@@ -1,23 +1,25 @@
-package com.booking;
-
-import java.util.Set;
+package main.com.booking;
+import java.time.LocalDate;
+import java.util.List;
 
 public class BookingController {
+
     private BookingsService bookingsService;
 
-    Booking createBooking(Flight flight, String name, String surname) {
-        return bookingsService.createBooking(flight, name, surname);
+    public Booking createBooking(String flight, LocalDate date, String name, String surname) {
+        return bookingsService.createBooking(flight, date, name, surname);
     }
 
+    public Booking updateBooking(LocalDate date, int ID) {
+        return bookingsService.updateBooking(date, ID);
+    }
 
-    boolean deleteBookingByID(int ID) {
+    public boolean deleteBookingByID(int ID) {
         return bookingsService.deleteBookingByID(ID);
     }
 
-
-    Set<Booking> showSelectedBookings(String name, String surname) {
-        return bookingsService.showSelectedBookings(name, surname);
+    public List<Booking> showSelectedBookings(String name, String surname, int ID) {
+        return bookingsService.showSelectedBookings(name, surname, ID);
     }
-
 
 }
