@@ -12,6 +12,6 @@ public interface FlightsService {
 
     Map <String, Flight> showFlightsFor24hours();
     Flight showFlightByID(String ID); // делегация в ДАО
-    Map <String, Flight> showSelectedFlights(String destination, String date, int passangers);
+    List <Flight> showSelectedFlights(String destination, String date, int passangers); // не забыть порядковые номера
 
 }
