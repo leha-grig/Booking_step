@@ -80,7 +80,7 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(flight, date, name, surname);
+        return Math.abs(flight.getId().hashCode()*7+name.hashCode()*7+surname.hashCode()*7)*3;
     }
 
 }
