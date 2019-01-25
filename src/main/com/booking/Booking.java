@@ -61,13 +61,8 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "flight='" + flight + '\'' +
-                ", date=" + date +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", ID=" + ID +
-                '}';
+        String str = String.format("%-12s%-12s%-12s%-15s%-15s", ID, getDate(), flight, name, surname);
+        return str;
     }
 
     @Override
