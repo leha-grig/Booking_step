@@ -11,9 +11,9 @@ public class Booking {
     private String surname;
     private int ID;
 
-    public Booking(Flight flight, LocalDate date, String name, String surname) {
+    public Booking(Flight flight, String name, String surname) {
         this.flight = flight;
-        this.date = date;
+        this.date = flight.getDate();
         this.name = name;
         this.surname = surname;
         this.ID = hashCode();

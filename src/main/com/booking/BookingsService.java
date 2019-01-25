@@ -8,9 +8,9 @@ public class BookingsService {
    
     private BookingsDAO bookingDAO;
 
-    public Booking createBooking(Flight flight, LocalDate date, String name, String surname) {
+    public Booking createBooking(Flight flight, String name, String surname) {
         int flightSeats = flight.getBookedSits();
-        Booking booking = new Booking(flight, date, name, surname);
+        Booking booking = new Booking(flight, name, surname);
         if (flight.getFreeSits() > 0) {
             flight.setBookedSits(flightSeats++);
         } else {
