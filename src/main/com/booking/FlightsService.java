@@ -18,7 +18,7 @@ public class FlightsService {
 
     List<Flight> showFlightsFor24hours() {
 
-        List<Flight> flightsList = new ArrayList<Flight>(flightsDAO.getFlights().values());
+        List<Flight> flightsList = new ArrayList<>(flightsDAO.getFlights().values());
         List<Flight> selectedFlights = flightsList.stream()
                 .filter(flight -> flight.getDateTime().isBefore(LocalDateTime.now().plusHours(24)) && flight.getDateTime().isAfter(LocalDateTime.now()))
                 .sorted((f1, f2) -> (int) Duration.between(f2.getDateTime(), f1.getDateTime()).getSeconds())
@@ -31,7 +31,7 @@ public class FlightsService {
 
     Flight showFlightByID(String id) {
         Flight flight = flightsDAO.getFlightByID(id);
-        System.out.printf("%s%4d", flight.toString(), flight.getFreeSits());
+        System.out.printf("%s%4d%n", flight.toString(), flight.getFreeSits());
         return flight;
     }
 

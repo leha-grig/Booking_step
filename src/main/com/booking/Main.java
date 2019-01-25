@@ -16,9 +16,12 @@ public class Main {
         flightsService.showSelectedFlights("Lima", "2019/01.25", 3);
         flightsService.showFlightByID("KB1261330");
         CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
+        BookingsService bookingsService = new BookingsService(newBookings);
         Booking newBooking = new Booking(f1, "Alex", "Smith");
         newBookings.saveBooking(newBooking);
 
         System.out.println(newBooking);
+//        System.out.println(newBookings.getAllBookings());
+        bookingsService.showSelectedBookings("Alex", "Smith");
     }
 }
