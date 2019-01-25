@@ -9,6 +9,8 @@ public class BookingsService {
    
     private BookingsDAO bookingDAO;
 
+    //TODO: сделать проверку имени фамилии и не создавать, если уже есть на данный самолет.
+    // TODO: Переделать коллекцию букинг в Мапу, гле клюси это рейсы, значения - листы букингов на рейсы
     public Booking createBooking(Flight flight, String name, String surname, FlightController flightController) {
         int flightSeats = flight.getBookedSits();
         Booking booking = new Booking(flight, name, surname);
