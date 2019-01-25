@@ -14,7 +14,7 @@ public class FlightsDAO {
 
         if (isCollectionExist()) {
 
-            ObjectInputStream in = null;
+            ObjectInputStream in;
             try {
                 in = new ObjectInputStream(new BufferedInputStream(
                         new FileInputStream("flights.txt")));
@@ -30,9 +30,23 @@ public class FlightsDAO {
     }
 
 
-    public Flight getFlightByID(String ID){
+    public Flight getFlightByID(String ID) {
         return flights.get(ID);
-    };
+    }
+
+    public void saveFlight(Flight flight) {
+        flights.replace(flight.getId(), flight);
+        FileOutputStream file;
+        try {
+            file = new FileOutputStream("./flights.txt");
+            ObjectOutputStream data = new ObjectOutputStream(file);
+            data.writeObject(flights);
+            data.flush();
+            data.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private boolean isCollectionExist() {
         return new File("./flights.txt").isFile();
