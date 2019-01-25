@@ -1,5 +1,7 @@
 package com.booking;
 
+
+
 import java.time.LocalDate;
 
 public class Booking {
@@ -7,7 +9,7 @@ public class Booking {
     private LocalDate date;
     private String name;
     private String surname;
-    private int ID; // ??hash-code?
+     // ??hash-code?
 
     // геттеры, конструктор, Иквелс и хэш-код,
 
