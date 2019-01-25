@@ -1,4 +1,4 @@
-package main.com.booking;
+package com.booking;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
