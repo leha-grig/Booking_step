@@ -1,0 +1,36 @@
+DONE -> 1) Flight flight
+DONE -> 2) hash code мы получаем после создания экземпляра класса
+public Booking createBooking(String flight, LocalDate date, String name, String surname) {
+           //ID должен автоматически генерироваться с помощью booking.hashCode() -> конструкторе
+           Booking booking = new Booking(flight, date, name, surname);
+           bookingDAO.saveBooking(booking);
+           return bookingDAO.getBookingByID(booking.getID());
+       }
+
+DONE+- -> 3) Еще, насколько я понимаю, метод Booking createBooking(Flight flight, String name, String surname)
+должен при создании бронирования вызывать на объекте Flight, на который идет бронироване,
+метод setBookedSits и инкрементить поле bookedSits.
+
+DONE -> 4) убрать updateBooking(LocalDate date, int ID)
+
+DONE -> 5) метод  List<Booking> showSelectedBookings(String name, String surname, int ID):
+         должен принимать только String name, String surname, ID пользователь не вводит
+
+
+------------------------------------
+
+DONE => 1) LocalDate -> убрать из конструктора
+DONE => 2) toString -> change view
+DONE => 3) showSelectedFlights -> for Bookings -> вывести то же самое
+DONE => 4) createBooking -> logic if
+DONE -> 5) createBooking -> saveFlight(Flight flight)
+
+5) insert/upsert info in file!!!:::::
+WILL DONE => BookingDAO <=> FlightDAO (конструктор)
+=> FlightDAO/BookingDAO -> public void saveFlight <=> saveBooking
+
+??? => 6) isCollectionExist() -> flightsDAO / запись в файл /
+=> deleteBooking
+------------------------------------
+
+=> создать ТЕСТЫ ДЛЯ всех методов Booking
