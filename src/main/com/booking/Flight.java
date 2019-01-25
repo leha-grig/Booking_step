@@ -44,15 +44,6 @@ public class Flight implements Serializable {
         return capasity - bookedSits;
     }
 
-    @Override
-    public String toString() {
-        return id + " " + getDate() + " "+ getTime()+" "+ departureCity + " " + destination + " ";
-    }
-
-    public void setBookedSits(int bookedSits) {
-        this.bookedSits = bookedSits;
-    }
-
     public LocalDateTime getDateTime() {
         return dateTime;
     }
@@ -73,8 +64,18 @@ public class Flight implements Serializable {
         return capasity;
     }
 
+    public void setBookedSits(int bookedSits) {
+        this.bookedSits = bookedSits;
+    }
+
     public int getBookedSits() {
         return bookedSits;
+    }
+
+    @Override
+    public String toString() {
+        String str = String.format("%-12s%-12s%-7s%-15s%-15s", id, getDate(), getTime(), departureCity, destination);
+        return str;
     }
 
     @Override

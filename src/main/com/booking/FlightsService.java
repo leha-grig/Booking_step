@@ -30,7 +30,9 @@ public class FlightsService {
     }
 
     Flight showFlightByID(String id) {
-        return flightsDAO.getFlightByID(id);
+        Flight flight = flightsDAO.getFlightByID(id);
+        System.out.printf("%s%4d", flight.toString(), flight.getFreeSits());
+        return flight;
     }
 
     List<Flight> showSelectedFlights(String destination, String date, int passangers) {
@@ -42,7 +44,7 @@ public class FlightsService {
                 .filter(f -> f.getDate().isEqual(parsedDate))
                 .filter(f-> f.getFreeSits() >= passangers)
                 .collect(Collectors.toList());
-        selectedFlights.forEach(f->System.out.println((selectedFlights.indexOf(f)+1) + ". " + f.toString()));
+        selectedFlights.forEach(f->System.out.printf("%3d%-3s%s%n",(selectedFlights.indexOf(f)+1), ". ", f.toString()));
         return selectedFlights;
     }
 
@@ -52,6 +54,10 @@ public class FlightsService {
             date = date.replaceAll("[/.]", "-");
         }
         return date;
+    }
+
+    public void saveFlight(Flight flight){
+        flightsDAO.saveFlight(flight);
     }
 
 }

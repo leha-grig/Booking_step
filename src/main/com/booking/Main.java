@@ -12,7 +12,8 @@ public class Main {
         FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
 
-//        flightsService.showFlightsFor24hours();
+        flightsService.showFlightsFor24hours();
         flightsService.showSelectedFlights("Lima", "2019/01.25", 3);
+        flightsService.showFlightByID("KB1261330");
     }
 }
