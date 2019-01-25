@@ -18,5 +18,7 @@ public class Main {
         CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
         Booking newBooking = new Booking(f1, "Alex", "Smith");
         newBookings.saveBooking(newBooking);
+
+        System.out.println(newBooking);
     }
 }

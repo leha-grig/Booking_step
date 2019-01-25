@@ -62,7 +62,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        String str = String.format("%-12s%-15s%-15s%-12s%", ID, name, surname, flight);
+        String str = String.format("%-12s%-15s%-15s%s%n", ID, name, surname, flight);
         return str;
     }
 
