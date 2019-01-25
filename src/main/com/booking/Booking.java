@@ -1,9 +1,10 @@
 package com.booking;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Booking {
+public class Booking implements Serializable {
 
     private Flight flight;
     private LocalDate date;

@@ -6,8 +6,8 @@ public class BookingController {
 
     private BookingsService bookingsService;
 
-    public Booking createBooking(Flight flight, LocalDate date, String name, String surname) {
-        return bookingsService.createBooking(flight, date, name, surname);
+    public Booking createBooking(Flight flight, String name, String surname) {
+        return bookingsService.createBooking(flight, name, surname);
     }
 
     public boolean deleteBookingByID(int ID) {
