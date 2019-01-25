@@ -8,20 +8,24 @@ public class FlightsDAO {
 
     public FlightsDAO() {
 
-        if (isCollectionExist()) {
+        if (isCollectionExist("./flights.txt")) {
 
-            ObjectInputStream in;
-            try {
-                in = new ObjectInputStream(new BufferedInputStream(
-                        new FileInputStream("flights.txt")));
-                this.flights = (Map<String, Flight>) in.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            readFlightsCollectionFromFile("flights.txt");
 
         } else {
             CollectionGenerator collectionGenerator = new CollectionGenerator();
             this.flights = collectionGenerator.generateNewFlightsCollection(500, 47);
+        }
+    }
+
+    private void readFlightsCollectionFromFile(String path) {
+        ObjectInputStream in;
+        try {
+            in = new ObjectInputStream(new BufferedInputStream(
+                    new FileInputStream(path)));
+            this.flights = (Map<String, Flight>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -32,9 +36,13 @@ public class FlightsDAO {
 
     public void saveFlight(Flight flight) {
         flights.replace(flight.getId(), flight);
+        writeObjectToFile("./flights.txt", flights);
+    }
+
+    private void writeObjectToFile(String path, Map<String, Flight> flights) {
         FileOutputStream file;
         try {
-            file = new FileOutputStream("./flights.txt");
+            file = new FileOutputStream(path);
             ObjectOutputStream data = new ObjectOutputStream(file);
             data.writeObject(flights);
             data.flush();
@@ -44,8 +52,8 @@ public class FlightsDAO {
         }
     }
 
-    private boolean isCollectionExist() {
-        return new File("./flights.txt").isFile();
+    private boolean isCollectionExist(String path) {
+        return new File(path).isFile();
     }
 
     public Map<String, Flight> getFlights() {
