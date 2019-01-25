@@ -9,6 +9,10 @@ public class CollectionBookingsDAO implements BookingsDAO {
 
     private List<Booking> bookings;
 
+    public CollectionBookingsDAO(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     public CollectionBookingsDAO() {
 
         if (isCollectionExist("./bookings.txt")) {

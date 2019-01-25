@@ -34,7 +34,7 @@ public class BookingsService {
                 .collect(Collectors.toList());
         selectedBookings.forEach(booking ->
                 System.out.printf("%3d%-3s%s%n",(selectedBookings.indexOf(booking)+1), ". ", booking.toString()));
-        return bookings;
+        return selectedBookings;
     }
 
 }

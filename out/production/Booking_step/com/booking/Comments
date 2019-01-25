@@ -26,8 +26,8 @@ DONE => 4) createBooking -> logic if
 DONE -> 5) createBooking -> saveFlight(Flight flight)
 
 5) insert/upsert info in file!!!:::::
-WILL DONE => BookingDAO <=> FlightDAO (конструктор)
-=> FlightDAO/BookingDAO -> public void saveFlight <=> saveBooking
+DONE => BookingDAO <=> FlightDAO (конструктор)
+DONE => FlightDAO/BookingDAO -> public void saveFlight <=> saveBooking
 
 ??? => 6) isCollectionExist() -> flightsDAO / запись в файл /
 => deleteBooking
