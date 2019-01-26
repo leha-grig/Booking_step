@@ -9,11 +9,11 @@ public class PrintAllLine {
     private String header;
     private String delimiter;
 
-    /*public PrintAllLine(final Cities cities, final Map<String, Flight> listOfsits) {
-        this.cities = cities.data();
+    /*public PrintAllLine(final Cities cities.txt, final Map<String, Flight> listOfsits) {
+        this.cities.txt = cities.txt.data();
         this.listOfsits = listOfsits;
-        this.widths[1] = cities.maxLength();
-        this.widths[2] = cities.maxLength();
+        this.widths[1] = cities.txt.maxLength();
+        this.widths[2] = cities.txt.maxLength();
         this.header = generateHeader();
         final int totalWidth = this.header.length();
         System.out.println(totalWidth);
@@ -42,8 +42,8 @@ public class PrintAllLine {
     private void printBody(){
         listOfsits.forEach((s,tte)-> System.out.println(format()+"\n",
                 tte.getId(),
-                cities.get(tte.getBookedSits()).getName(),
-                cities.get(tte.getCapasity()).getName()
+                cities.txt.get(tte.getBookedSits()).getName(),
+                cities.txt.get(tte.getCapasity()).getName()
         );
     }
     public void print(){

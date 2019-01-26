@@ -12,6 +12,8 @@ public class Booking implements Serializable {
     private String surname;
     private int ID;
 
+    public Booking() {}
+
     public Booking(Flight flight, String name, String surname) {
         this.flight = flight;
         this.date = flight.getDate();
@@ -62,7 +64,9 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
+
         String str = String.format("%-12s%-15s%-15s%s%n", ID, name, surname, flight);
+        
         return str;
     }
 
