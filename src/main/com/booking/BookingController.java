@@ -6,7 +6,7 @@ public class BookingController {
 
     private BookingsService bookingsService;
 
-    public Booking createBooking(Flight flight, String name, String surname, FlightController flightController) {
+    public Booking createBooking(Flight flight, String name, String surname, FlightController flightController)throws BookingAlreadyExist {
         return bookingsService.createBooking(flight, name, surname, flightController);
     }
 

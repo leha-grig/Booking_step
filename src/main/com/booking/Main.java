@@ -11,16 +11,25 @@ public class Main {
 
         FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
+        FlightController flightController = new FlightController(flightsService);
 
         flightsService.showFlightsFor24hours();
         flightsService.showSelectedFlights("Lima", "2019/01.25", 3);
         flightsService.showFlightByID("KB1261330");
         CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(newBookings);
-        Booking newBooking = new Booking(f1, "Alex", "Smith");
-        newBookings.saveBooking(newBooking);
+        try {
+            bookingsService.createBooking(f1, "Alex", "Smith", flightController);
+        } catch (BookingAlreadyExist e) {
+            System.err.println(e);
+        }
+        /*try {
+            bookingsService.createBooking(f2, "Alex", "Smith", flightController);
+        } catch (BookingAlreadyExist e) {
+            System.err.println(e);
+        }*/
 
-        System.out.println(newBooking);
+
 //        System.out.println(newBookings.getAllBookings());
         bookingsService.showSelectedBookings("Alex", "Smith");
     }
