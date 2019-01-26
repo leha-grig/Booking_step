@@ -1,7 +1,9 @@
 package com.booking;
 
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,5 +36,8 @@ public class Main {
 
         System.out.println(newBookings.getAllBookings());
         bookingsService.showSelectedBookings("Alex", "Smith");
+        Scanner scanner = new Scanner(System.in);
+        Console console = new Console();
+        console.chooseCommand(scanner);
     }
 }
