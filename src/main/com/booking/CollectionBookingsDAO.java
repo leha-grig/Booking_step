@@ -1,13 +1,12 @@
 package com.booking;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CollectionBookingsDAO implements BookingsDAO {
 
-    private List<Booking> bookings;
+    private Map<Flight, List<Booking>> bookings;
 
     public CollectionBookingsDAO(List<Booking> bookings) {
         this.bookings = bookings;
@@ -20,7 +19,7 @@ public class CollectionBookingsDAO implements BookingsDAO {
             readBookingsCollectionFromFile("./bookings.txt");
 
         } else {
-            this.bookings = new ArrayList<>();
+            this.bookings = new HashMap<>();
             writeObjectToFile("./bookings.txt", this.bookings);
         }
     }
@@ -34,12 +33,13 @@ public class CollectionBookingsDAO implements BookingsDAO {
         try {
             in = new ObjectInputStream(new BufferedInputStream(
                     new FileInputStream(path)));
-            this.bookings = (List<Booking>) in.readObject();
+            this.bookings = (Map<Flight, List<Booking>>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    private void writeObjectToFile(String path, List<Booking> bookings) {
+
+    private void writeObjectToFile(String path, Map<Flight, List<Booking>> bookings) {
         FileOutputStream file;
         try {
             file = new FileOutputStream(path);
@@ -53,20 +53,18 @@ public class CollectionBookingsDAO implements BookingsDAO {
     }
 
     @Override
-    public List<Booking> getAllBookings() {
+    public Map<Flight, List<Booking>> getAllBookings() {
         return bookings;
     }
 
-    @Override
-    public Booking getBookingByIndex(int index) {
-        if (index < 0 || index >= bookings.size()) return null;
-        else return bookings.get(index);
-    }
 
     @Override
     public Booking getBookingByID(int ID) {
-
-        for (Booking booking : bookings) {
+        List<List<Booking>> bookingsList = new ArrayList<>(bookings.values());
+        List<Booking> flattenBookings = bookingsList.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        for (Booking booking : flattenBookings) {
             if (booking.getID() == ID) {
                 return booking;
             }
@@ -76,30 +74,53 @@ public class CollectionBookingsDAO implements BookingsDAO {
 
     @Override
     public boolean deleteBooking(Booking booking) {
-        if (bookings.indexOf(booking) < 0){
+        if (!bookings.containsKey(booking.getFlight())) {
             return false;
         }
-        bookings.remove(booking);
+        if (bookings.get(booking.getFlight()) == null) {
+            return false;
+        }
+        if (bookings.get(booking.getFlight()).indexOf(booking) < 0) {
+            return false;
+        }
+        bookings.get(booking.getFlight()).remove(booking);
         writeObjectToFile("./bookings.txt", bookings);
         return true;
     }
 
     @Override
     public boolean deleteBooking(int ID) {
-        boolean check = bookings.removeIf(bookingItem -> bookingItem.getID() == ID);
-        if (check){
+        final boolean[] check = {false};
+        bookings.forEach((flight, list) -> {
+            final int[] index = {0};
+            list.forEach(booking -> {
+                if (booking.getID() == ID) {
+                    check[0] = true;
+                    index[0] = list.indexOf(booking);
+                }
+            });
+            if (check[0]) {
+                list.remove(index[0]);
+            }
+        });
+        if (check[0]) {
             writeObjectToFile("./bookings.txt", bookings);
-            return true;
         }
-        return false;
+        return check[0];
     }
 
     @Override
     public void saveBooking(Booking booking) {
-        if (bookings.indexOf(booking) < 0) {
-            bookings.add(booking);
+        if (bookings.get(booking.getFlight()) == null) {
+            bookings.put(booking.getFlight(), new ArrayList<>(Arrays.asList(booking)));
+        } else if (bookings.get(booking.getFlight()).indexOf(booking) < 0) {
+            List<Booking> newList = bookings.get(booking.getFlight());
+            newList.add(booking);
+            bookings.replace(booking.getFlight(), newList);
         } else {
-            bookings.set(bookings.indexOf(booking), booking);
+            List<Booking> newList = bookings.get(booking.getFlight());
+            newList.set(newList.indexOf(booking), booking);
+            bookings.replace(booking.getFlight(), newList);
         }
         writeObjectToFile("./bookings.txt", bookings);
     }

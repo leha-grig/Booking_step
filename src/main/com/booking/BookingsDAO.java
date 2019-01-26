@@ -1,12 +1,11 @@
 package com.booking;
 import java.util.List;
+import java.util.Map;
 
 
 public interface BookingsDAO {
 
-    List<Booking> getAllBookings();
-
-    Booking getBookingByIndex(int index);
+    Map<Flight, List<Booking>> getAllBookings();
 
     Booking getBookingByID(int ID);
 
