@@ -8,10 +8,6 @@ public class CollectionBookingsDAO implements BookingsDAO {
 
     private Map<Flight, List<Booking>> bookings;
 
-    public CollectionBookingsDAO(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
     public CollectionBookingsDAO() {
 
         if (isCollectionExist("./bookings.txt")) {

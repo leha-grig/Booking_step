@@ -34,3 +34,6 @@ DONE => FlightDAO/BookingDAO -> public void saveFlight <=> saveBooking
 ------------------------------------
 
 => создать ТЕСТЫ ДЛЯ всех методов Booking
+
+------------------------------------
+=> new branch => Valentina-test (with all previous changes) => continue TODO Tests
