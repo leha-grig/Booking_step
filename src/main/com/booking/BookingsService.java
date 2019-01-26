@@ -24,7 +24,7 @@ public class BookingsService {
         final boolean[] check = {false};
         if (flightBookings != null) {
             flightBookings.forEach(bkng -> {
-                if (bkng.getName() == name && bkng.getSurname() == surname) {
+                if (bkng.getName().equals(name) && bkng.getSurname().equals(surname)) {
                     check[0] = true;
                 }
             });
@@ -37,7 +37,7 @@ public class BookingsService {
             Booking booking = new Booking(flight, name, surname);
 
 
-            flight.setBookedSits(flightSeats++);
+            flight.setBookedSits(++flightSeats);
             flightController.saveFlight(flight);
 
             bookingDAO.saveBooking(booking);
