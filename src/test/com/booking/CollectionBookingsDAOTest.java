@@ -1,6 +1,6 @@
 package com.booking;
 
-import org.junit.Test;
+/*import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class CollectionBookingsDAOTest {
         //given
         //when
         //then
-    }
+    }*/
 
     //@Test
     /*public void getAllBookingsShouldReturnBookingsList() {
@@ -141,4 +141,4 @@ public class CollectionBookingsDAOTest {
 
 
 */
-}
+//}

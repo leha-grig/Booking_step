@@ -1,12 +1,12 @@
 package com.booking;
-
+/*
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;*/
 
 public class BookingsServiceTest {
 

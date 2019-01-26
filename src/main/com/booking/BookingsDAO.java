@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface BookingsDAO {
+interface BookingsDAO {
 
     Map<Flight, List<Booking>> getAllBookings();
 
