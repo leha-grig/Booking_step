@@ -1,8 +1,6 @@
 package com.booking;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Console {
@@ -19,7 +17,9 @@ public class Console {
             "My flights", "EXIT"};
     private FlightsDAO dao = new FlightsDAO();
     private FlightsService flightsService = new FlightsService(dao);
-    private BookingsService bookingsServise;
+    private BookingsDAO bookingsDAO = new BookingsDAO();
+    private BookingsService bookingsServise=new BookingsService();
+    private FlightController = new FlightController(bookingServise);
     private Scanner scanner =new Scanner(System.in);
 
     public void chooseCommand(Scanner sc) {
@@ -30,6 +30,8 @@ public class Console {
         while(true){
             displayChooseItem(options);
             int choose;
+            String name;
+            String surname;
             choose = sc.nextInt();
             switch(choose){
                 case 1: flightsService.showFlightsFor24hours();
@@ -46,28 +48,25 @@ public class Console {
                     System.out.println("Enter date");
                     String date = scanner.nextLine();
                     System.out.println("Enter number of people!");
-                    String numberOfPeople =scanner.nextLine();
-                    List<Flight> licts = flightsService.showSelectedFlights(dest,date,Integer.parseInt(numberOfPeople));
-                    System.out.println(licts);
-                    System.out.println("If you chose something enter it number of flight or press zero to exit!");
+                    String numberOfPeople = scanner.nextLine();
+                    List<Flight> list = flightsService.showSelectedFlights(dest,date,Integer.parseInt(numberOfPeople));
+                    System.out.println(list);
+                    System.out.println("If you chose something, enter number of flight or press zero to exit!");
                     int numberOfFlight = sc.nextInt();
-                    for (int i = 0; i < licts.size()-1; i++) {
-                        if(licts.get(i).equals(numberOfFlight - 1)){
-                            System.out.println("Enter your name!");
-                            String name = scanner.nextLine();
+                    if(numberOfFlight>0 && numberOfFlight<=list.size()){
+                    System.out.println("Enter your name!");
+                            name = scanner.nextLine();
                             System.out.println("Enter your surname!");
-                            String surname = scanner.nextLine();
-                            bookingsServise.createBooking(licts.get(i), name, surname);
-                            System.out.println(bookingsServise.createBooking(licts.get(i), name, surname));
-                        } else if(numberOfFlight == 0){
-                            System.out.println("You back in main menu!");
-                        } else {
-                            System.out.println("I did not find such number!");
-                            numberOfFlight = sc.nextInt();
-                            continue;
-                        }
-
-                    }
+                            surname = scanner.nextLine();
+                        bookingsServise.createBooking(list.get(numberOfFlight), name, surname, );
+                              System.out.println(numberOfFlight);
+                              System.out.println(bookingsServise.showSelectedBookings(name, surname));
+                          }else if(numberOfFlight == 0) {
+                             System.out.println("You back in main menu!");
+                             break;
+                         }else{
+                              System.out.println("Write number!");
+                          }
 
                     continue outerLoop;
                 case 4:
@@ -77,9 +76,9 @@ public class Console {
                     continue outerLoop;
                 case 5:
                     System.out.println("Enter your name!");
-                    String name = scanner.nextLine();
+                    name = scanner.nextLine();
                     System.out.println("Enter your surname!");
-                    String surname = scanner.nextLine();
+                    surname = scanner.nextLine();
                     bookingsServise.showSelectedBookings(name,surname);
                     continue outerLoop;
                 case 6:
