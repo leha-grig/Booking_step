@@ -1,24 +1,20 @@
 package com.booking;
-
-
-import java.util.Set;
+import java.util.List;
 
 public class BookingController {
+
     private BookingsService bookingsService;
 
-    Booking createBooking(Flight flight, String name, String surname) {
-        return bookingsService.createBooking(flight, name, surname);
+    public Booking createBooking(Flight flight, String name, String surname, FlightController flightController)throws BookingAlreadyExist {
+        return bookingsService.createBooking(flight, name, surname, flightController);
     }
 
-
-    boolean deleteBookingByID(int ID) {
+    public boolean deleteBookingByID(int ID) {
         return bookingsService.deleteBookingByID(ID);
     }
 
-
-    Set<Booking> showSelectedBookings(String name, String surname) {
+    public List<Booking> showSelectedBookings(String name, String surname) {
         return bookingsService.showSelectedBookings(name, surname);
     }
-
 
 }

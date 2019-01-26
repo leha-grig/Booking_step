@@ -2,22 +2,37 @@ package com.booking;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Flight f1 = new Flight(LocalDateTime.now(), "Kiev", "Romnu", 70);
-        Flight f2 = new Flight(LocalDateTime.now().plusMinutes(15), "Kiev", "Lvov", 70);
-        System.out.println((int) Duration.between(f2.getDateTime(), f1.getDateTime()).getSeconds());
 
         FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
+        FlightController flightController = new FlightController(flightsService);
 
-//        flightsService.showFlightsFor24hours();
-        flightsService.showSelectedFlights("Lima", "2019/01.25", 3);
+//        flightController.showFlightsFor24hours();
+        Flight f1 = flightController.showSelectedFlights("Lima", "2019-01-27", 1).get(0);
+        Flight f2 = flightController.showSelectedFlights("Athens", "2019-01-27", 1).get(0);
 
-        Console console = new Console();
-        Scanner sc = new Scanner(System.in);
-        console.chooseCommand(sc);
+
+
+        flightsService.showFlightByID("KA127015");
+        CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
+        BookingsService bookingsService = new BookingsService(newBookings);
+        try {
+            bookingsService.createBooking(f1, "Alex", "Smith", flightController);
+        } catch (BookingAlreadyExist e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            bookingsService.createBooking(f2, "Alex", "Smith", flightController);
+        } catch (BookingAlreadyExist e) {
+            System.out.println(e.getMessage());
+        }
+        flightsService.showFlightByID("KA127015");
+
+
+        System.out.println(newBookings.getAllBookings());
+        bookingsService.showSelectedBookings("Alex", "Smith");
     }
 }

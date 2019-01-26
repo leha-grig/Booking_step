@@ -8,90 +8,91 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Flight implements Serializable {
-        private LocalDateTime dateTime;
-        private String departureCity;
-        private String destination;
-        private String id;
-        private int capasity;
-        private int bookedSits;
+    private LocalDateTime dateTime;
+    private String departureCity;
+    private String destination;
+    private String id;
+    private int capasity;
+    private int bookedSits;
 
-        public Flight(LocalDateTime dateTime, String departureCity, String destination, int capasity) {
-            this.dateTime = dateTime;
-            this.departureCity = departureCity;
-            this.destination = destination;
-            this.id = setID();
-            this.capasity = capasity;
-        }
+    public Flight(LocalDateTime dateTime, String departureCity, String destination, int capasity) {
+        this.dateTime = dateTime;
+        this.departureCity = departureCity;
+        this.destination = destination;
+        this.id = setID();
+        this.capasity = capasity;
+    }
 // геттеры, конструктор, Иквелс и хэш-код,
-        // конструктор должен генерить уникальное ID (вызов приватного метода) и записывать его в поле id;
-        // метод вывода свободных мест,
-        // метод получения даты,
-        // метод получения времени
+    // конструктор должен генерить уникальное ID (вызов приватного метода) и записывать его в поле id;
+    // метод вывода свободных мест,
+    // метод получения даты,
+    // метод получения времени
 
-        public LocalDate getDate() {
-            return LocalDate.from(dateTime);
-        }
+    public LocalDate getDate() {
+        return LocalDate.from(dateTime);
+    }
 
-        public String getTime (){
-            return LocalTime.from(dateTime).format(DateTimeFormatter.ofPattern("HH:mm"));
-        }
+    public String getTime (){
+        return LocalTime.from(dateTime).format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
 
-        private String setID (){
-            return ""+departureCity.charAt(0)+destination.charAt(0)+dateTime.getMonthValue()+dateTime.getDayOfMonth()+dateTime.getHour()+dateTime.getMinute();
-        }
-        public int getFreeSits(){
-            return capasity-bookedSits;
-        }
+    private String setID (){
+        return ""+departureCity.charAt(0)+destination.charAt(0)+dateTime.getMonthValue()+dateTime.getDayOfMonth()+dateTime.getHour()+dateTime.getMinute();
+    }
 
-        @Override
-        public String toString() {
-            return id + " " + getDate() + " "+ getTime()+" "+ departureCity + " " + destination + " ";
-        }
+    public int getFreeSits(){
+        return capasity - bookedSits;
+    }
 
-        public void setBookedSits(int bookedSits) {
-            this.bookedSits = bookedSits;
-        }
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 
-        public LocalDateTime getDateTime() {
-            return dateTime;
-        }
+    public String getDepartureCity() {
+        return departureCity;
+    }
 
-        public String getDepartureCity() {
-            return departureCity;
-        }
+    public String getDestination() {
+        return destination;
+    }
 
-        public String getDestination() {
-            return destination;
-        }
+    public String getId() {
+        return id;
+    }
 
-        public String getId() {
-            return id;
-        }
+    public int getCapasity() {
+        return capasity;
+    }
 
-        public int getCapasity() {
-            return capasity;
-        }
+    public void setBookedSits(int bookedSits) {
+        this.bookedSits = bookedSits;
+    }
 
-        public int getBookedSits() {
-            return bookedSits;
-        }
+    public int getBookedSits() {
+        return bookedSits;
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            com.booking.Flight flight = (com.booking.Flight) o;
-            return capasity == flight.capasity &&
-                    Objects.equals(dateTime, flight.dateTime) &&
-                    Objects.equals(departureCity, flight.departureCity) &&
-                    Objects.equals(destination, flight.destination) &&
-                    Objects.equals(id, flight.id);
-        }
+    @Override
+    public String toString() {
+        String str = String.format("%-12s%-12s%-7s%-15s%-15s", id, getDate(), getTime(), departureCity, destination);
+        return str;
+    }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(dateTime, departureCity, destination, id);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return capasity == flight.capasity &&
+                Objects.equals(dateTime, flight.dateTime) &&
+                Objects.equals(departureCity, flight.departureCity) &&
+                Objects.equals(destination, flight.destination) &&
+                Objects.equals(id, flight.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateTime, departureCity, destination, id);
+    }
 
 }

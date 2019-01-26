@@ -1,24 +1,22 @@
 package com.booking;
 
-
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CollectionGenerator {
 
     private List<String> cities;
     {
         try {
-            cities = Files.readAllLines(Paths.get("src/main/com/booking/cities.txt"));
+            cities = Files.readAllLines(Paths.get("./cities.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
