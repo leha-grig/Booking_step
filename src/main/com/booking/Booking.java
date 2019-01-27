@@ -1,5 +1,7 @@
 package com.booking;
 
+import com.booking.Flights.Flight;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -84,7 +86,7 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        return Math.abs(flight.getId().hashCode()*7+name.hashCode()*7+surname.hashCode()*7)*3;
+        return Math.abs(flight.id().hashCode()*7+name.hashCode()*7+surname.hashCode()*7)*3;
     }
 
 }

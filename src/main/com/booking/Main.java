@@ -1,7 +1,17 @@
 package com.booking;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import com.booking.Exceptions.BookingAlreadyExist;
+import com.booking.Flights.Flight;
+import com.booking.Flights.FlightController;
+import com.booking.Flights.FlightsDAO;
+import com.booking.Flights.FlightsService;
+
+//
+//TODO разбить проект по пакетам
+//TODO сделать ДАО интерфейс генерифицированный, имплементить для букингов
+//TODO продвинутое ДЗ
+//TODO тесты
+
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +25,7 @@ public class Main {
         Flight f2 = flightController.showSelectedFlights("Athens", "2019-01-27", 1).get(0);
 
 
-
-        flightsService.showFlightByID("KA127015");
+        flightsService.showFlightByID("KA1271215");
         CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(newBookings);
         try {
@@ -29,10 +38,12 @@ public class Main {
         } catch (BookingAlreadyExist e) {
             System.out.println(e.getMessage());
         }
-        flightsService.showFlightByID("KA127015");
+        flightsService.showFlightByID("KA1271215");
 
 
         System.out.println(newBookings.getAllBookings());
         bookingsService.showSelectedBookings("Alex", "Smith");
     }
+
+
 }

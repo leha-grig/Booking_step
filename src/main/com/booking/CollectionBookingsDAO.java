@@ -1,5 +1,7 @@
 package com.booking;
 
+import com.booking.Flights.Flight;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -7,16 +9,17 @@ import java.util.stream.Collectors;
 public class CollectionBookingsDAO implements BookingsDAO {
 
     private Map<Flight, List<Booking>> bookings;
+    private ObjectToFileReaderWriter <Map<Flight, List<Booking>>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
 
     public CollectionBookingsDAO() {
 
         if (isCollectionExist("./bookings.txt")) {
 
-            readBookingsCollectionFromFile("./bookings.txt");
+            bookings = objectToFileReaderWriter.readObjectFromFile("./bookings.txt", bookings);
 
         } else {
             this.bookings = new HashMap<>();
-            writeObjectToFile("./bookings.txt", this.bookings);
+            objectToFileReaderWriter.writeObjectToFile("./bookings.txt", this.bookings);
         }
     }
 
@@ -24,7 +27,7 @@ public class CollectionBookingsDAO implements BookingsDAO {
         return new File(path).isFile();
     }
 
-    private void readBookingsCollectionFromFile(String path) {
+   /* private void readBookingsCollectionFromFile(String path) {
         ObjectInputStream in;
         try {
             in = new ObjectInputStream(new BufferedInputStream(
@@ -46,7 +49,7 @@ public class CollectionBookingsDAO implements BookingsDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public Map<Flight, List<Booking>> getAllBookings() {
@@ -80,7 +83,7 @@ public class CollectionBookingsDAO implements BookingsDAO {
             return false;
         }
         bookings.get(booking.getFlight()).remove(booking);
-        writeObjectToFile("./bookings.txt", bookings);
+        objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
         return true;
     }
 
@@ -100,7 +103,7 @@ public class CollectionBookingsDAO implements BookingsDAO {
             }
         });
         if (check[0]) {
-            writeObjectToFile("./bookings.txt", bookings);
+            objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
         }
         return check[0];
     }
@@ -118,6 +121,6 @@ public class CollectionBookingsDAO implements BookingsDAO {
             newList.set(newList.indexOf(booking), booking);
             bookings.replace(booking.getFlight(), newList);
         }
-        writeObjectToFile("./bookings.txt", bookings);
+        objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
     }
 }

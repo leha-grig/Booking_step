@@ -1,5 +1,7 @@
 package com.booking;
 
+import com.booking.Flights.Flight;
+
 import java.util.Map;
 
 public class PrintAllLine {

@@ -1,4 +1,6 @@
 package com.booking;
+import com.booking.Flights.Flight;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public interface BookingsDAO {
 
     boolean deleteBooking(int ID);
 
-    void saveBooking(Booking booking);
+    public abstract void saveBooking(Booking booking);
 
 
 

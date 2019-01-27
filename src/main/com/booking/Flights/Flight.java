@@ -1,4 +1,6 @@
-package com.booking;
+package com.booking.Flights;
+
+import com.booking.Identifiable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Flight implements Serializable {
+public class Flight implements Serializable, Identifiable <String> {
     private LocalDateTime dateTime;
     private String departureCity;
     private String destination;
@@ -56,7 +58,7 @@ public class Flight implements Serializable {
         return destination;
     }
 
-    public String getId() {
+    public String id() {
         return id;
     }
 

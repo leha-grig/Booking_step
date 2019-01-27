@@ -1,4 +1,4 @@
-package com.booking;
+package com.booking.Flights;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,9 +16,9 @@ public class FlightsService {
         this.flightsDAO = flightsDAO;
     }
 
-    List<Flight> showFlightsFor24hours() {
+    public List<Flight> showFlightsFor24hours() {
 
-        List<Flight> flightsList = new ArrayList<>(flightsDAO.getFlights().values());
+        List<Flight> flightsList = new ArrayList<>(flightsDAO.getAll());
         List<Flight> selectedFlights = flightsList.stream()
                 .filter(flight -> flight.getDateTime().isBefore(LocalDateTime.now().plusHours(24)) && flight.getDateTime().isAfter(LocalDateTime.now()))
                 .sorted((f1, f2) -> (int) Duration.between(f2.getDateTime(), f1.getDateTime()).getSeconds())
@@ -29,16 +29,16 @@ public class FlightsService {
         return selectedFlights;
     }
 
-    Flight showFlightByID(String id) {
-        Flight flight = flightsDAO.getFlightByID(id);
+    public Flight showFlightByID(String id) {
+        Flight flight = flightsDAO.getById(id);
         System.out.printf("%s%4d%n", flight.toString(), flight.getFreeSits());
         return flight;
     }
 
-    List<Flight> showSelectedFlights(String destination, String date, int passangers) {
+    public List<Flight> showSelectedFlights(String destination, String date, int passangers) {
         date = correctDateFormat(date);
         LocalDate parsedDate = LocalDate.parse(date);
-        List<Flight> flightsList = new ArrayList<Flight>(flightsDAO.getFlights().values());
+        List<Flight> flightsList = new ArrayList(flightsDAO.getAll());
         List<Flight> selectedFlights = flightsList.stream()
                 .filter(f -> f.getDestination().matches(destination))
                 .filter(f -> f.getDate().isEqual(parsedDate))
@@ -57,7 +57,7 @@ public class FlightsService {
     }
 
     public void saveFlight(Flight flight){
-        flightsDAO.saveFlight(flight);
+        flightsDAO.save(flight);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.booking;
+package com.booking.Flights;
 
 import java.util.List;
 
@@ -9,14 +9,14 @@ public class FlightController {
         this.flightsService = flightsService;
     }
 
-    List<Flight> showFlightsFor24hours(){
+    public List<Flight> showFlightsFor24hours(){
         return flightsService.showFlightsFor24hours();
     }
 
-    Flight showFlightByID(String id){
+    public Flight showFlightByID(String id){
         return flightsService.showFlightByID(id);
     }
-    List<Flight> showSelectedFlights(String destination, String date, int passangers){
+    public List<Flight> showSelectedFlights(String destination, String date, int passangers){
         return flightsService.showSelectedFlights(destination, date, passangers);
     }
     public void saveFlight(Flight flight){
