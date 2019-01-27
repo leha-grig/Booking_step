@@ -10,14 +10,12 @@ import java.util.List;
 
 public class BookingsServiceTest {
 
-    /*@Test
+    @Test
     public void shouldCreateNewBookingAndReturnBookingObject() {
         //given
-        LocalDateTime localDateTime = LocalDateTime.now();
         Booking booking = new Booking();
-        Flight flight = new Flight(localDateTime, "Kyiv", "Helsinki", 150);
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        Flight flight = new Flight();
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(bookingsDAO);
         FlightsDAO flightsDAO = new FlightsDAO();
         FlightsService flightsService = new FlightsService(flightsDAO);
@@ -29,7 +27,7 @@ public class BookingsServiceTest {
         int unexpectedFlightSeatsResult = flight.getBookedSits() - 1;
         Booking expectedResult = null;
         try {
-            expectedResult = bookingsService.createBooking(flight, "Valentyna", "Lysenok", flightController);
+            expectedResult = bookingsService.createBooking(flight, null, null, flightController);
         } catch (BookingAlreadyExist e) {
             e.getMessage();
         }
@@ -43,18 +41,18 @@ public class BookingsServiceTest {
     @Test
     public void shouldShowSelectedBookingsAndReturnListOfBookings() {
         //given
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Flight flight = new Flight(localDateTime, "Kyiv", "Helsinki", 150);
-        Booking booking = new Booking(flight, "Valentyna", "Lysenok");
+        LocalDateTime localDate = LocalDateTime.now();
+        Flight flight = new Flight(localDate, "Odessa", "Paris", 10);
+        Booking booking = new Booking(flight, "V", "L");
         List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(bookingsDAO);
         bookingsDAO.saveBooking(booking);
         //when
-        List<Booking> expectedResult = bookingsService.showSelectedBookings("Valentyna", "Lysenok");
+        List<Booking> expectedResult = bookingsService.showSelectedBookings("V", "L");
         List<Booking> resultTrue = bookings;
         //then
         assertEquals(expectedResult, resultTrue);
-    }*/
+    }
 
 }

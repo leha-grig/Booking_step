@@ -2,8 +2,7 @@ package com.booking;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -11,72 +10,32 @@ import static org.junit.Assert.*;
 public class CollectionBookingsDAOTest {
 
     @Test
-    public void shouldReturnTrueIfBookingCollectionExist() {
-        //given
-        //when
-        //then
-    }
-
-    @Test
-    public void shouldReadBookingsCollectionFromFile() {
-        //given
-        //when
-        //then
-    }
-
-    @Test
-    public void shouldWriteBookingsObjectsToFile() {
-        //given
-        //when
-        //then
-    }
-
-    //@Test
-    /*public void getAllBookingsShouldReturnBookingsList() {
+    public void getAllBookingsShouldReturnBookingsList() {
         //given
         Booking booking = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         bookingsDAO.saveBooking(booking);
         //when
-        List<Booking> expectedResult = bookings;
-        //List<Booking> resultTrue = bookingsDAO.getAllBookings();
-        List<Booking> resultFalse = new ArrayList<>();
+        Map<Flight, List<Booking>> expectedResult = bookingsDAO.getAllBookings();
+        Map<Flight, List<Booking>> resultTrue = new HashMap<>();
+        List<Booking> bookingList = new ArrayList<>();
+        bookingList.add(booking);
+        resultTrue.put(null, bookingList);
+        Map<Flight, List<Booking>> resultFalse = new HashMap<>();
         //then
         assertEquals(expectedResult, resultTrue);
         assertNotEquals(expectedResult, resultFalse);
     }
 
     @Test
-    public void getBookingByIndexShouldReturnBooking() {
-        //given
-        Booking booking = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
-        bookingsDAO.saveBooking(booking);
-        //when
-        Booking expectedResult1 = booking;
-        Booking expectedResult2 = null;
-        Booking resultTrue = bookingsDAO.getBookingByIndex(0);
-        Booking resultFalse1 = bookingsDAO.getBookingByIndex(1);
-        Booking resultFalse2 = bookingsDAO.getBookingByIndex(-1);
-        //then
-        assertEquals(expectedResult1, resultTrue);
-        assertEquals(expectedResult2, resultFalse1);
-        assertEquals(expectedResult2, resultFalse2);
-        assertNotEquals(expectedResult2, resultTrue);
-    }
-
-    @Test
     public void getBookingByIDShouldReturnBooking() {
         //given
         Booking booking = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         bookingsDAO.saveBooking(booking);
         //when
         Booking expectedResult1 = booking;
-        String expectedResult2 = String.format("%-12s%-15s%-15s%s", 0, null, null, null);
+        String expectedResult2 = String.format("%-12s%-15s%-15s%s%n", 0, null, null, null);
         Booking resultTrue = bookingsDAO.getBookingByID(booking.getID());
         String resultFalse = bookingsDAO.getBookingByID(0).toString();
         //then
@@ -90,55 +49,49 @@ public class CollectionBookingsDAOTest {
         //given
         Booking booking = new Booking();
         Booking booking2 = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         bookingsDAO.saveBooking(booking);
         //when
-        int expectedResult = bookings.size() - 1;
         boolean resultTrue = bookingsDAO.deleteBooking(booking);
-        int result = bookings.size();
         boolean resultFalse = bookingsDAO.deleteBooking(booking2);
         //then
         assertThat(resultTrue, is(true));
         assertThat(resultFalse, is(false));
-        assertEquals(expectedResult, result);
     }
 
     @Test
     public void shouldDeleteBookingByBookingIDAndReturnBooleanValue() {
         //given
         Booking booking = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        Flight flight = new Flight();
+        FlightsDAO flightsDAO = new FlightsDAO();
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
+        flightsDAO.saveFlight(flight);
         bookingsDAO.saveBooking(booking);
         //when
-        int expectedResult = bookings.size() - 1;
+        Map<Flight, List<Booking>> bookings = bookingsDAO.getAllBookings();
         boolean resultTrue = bookingsDAO.deleteBooking(booking.getID());
-        int result = bookings.size();
         boolean resultFalse = bookingsDAO.deleteBooking(0);
+        int expectedResult = bookings.size();
+        System.out.println(expectedResult);
         //then
         assertThat(resultTrue, is(true));
         assertThat(resultFalse, is(false));
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult, 0);
+        assertNotEquals(expectedResult, 1);
     }
 
     @Test
     public void shouldSaveBookingAndInBookingCollection() {
         //given
         Booking booking = new Booking();
-        List<Booking> bookings = new ArrayList<>();
-        BookingsDAO bookingsDAO = new CollectionBookingsDAO(bookings);
+        BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         bookingsDAO.saveBooking(booking);
         //when
-        bookingsDAO.saveBooking(booking);
+        Map<Flight, List<Booking>> bookings = bookingsDAO.getAllBookings();
         int expectedResult = bookings.size();
-        int resultTrue = 1;
-        int resultFalse = 0;
         //then
-        assertEquals(expectedResult, resultTrue);
-        assertNotEquals(expectedResult, resultFalse);
+        assertEquals(expectedResult, 1);
+        assertNotEquals(expectedResult, 0);
     }
-
-
-*/
 }

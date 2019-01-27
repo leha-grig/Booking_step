@@ -15,6 +15,8 @@ public class Flight implements Serializable {
     private int capasity;
     private int bookedSits;
 
+    public Flight() {}
+
     public Flight(LocalDateTime dateTime, String departureCity, String destination, int capasity) {
         this.dateTime = dateTime;
         this.departureCity = departureCity;
