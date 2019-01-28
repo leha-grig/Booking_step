@@ -1,15 +1,18 @@
 package com.booking;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Console {
-// List<Flight> generateFlights; // при первом запуске программы сгенерировать рейсы
+    // List<Flight> generateFlights; // при первом запуске программы сгенерировать рейсы
     /*{
         FlightsDAO flightsDAO = new FlightsDAO();
 
 
     }*/
+    public final static String valdiateID = "^([A-Z]){2}[0-9]{6,7}";
 
     private String[] options = {
             "Show all flights for 24hours", "Show flith by ID",
@@ -22,54 +25,49 @@ public class Console {
     private BookingsService bookingsServise = new BookingsService(bookingsDAO);
     private BookingController bookingsController = new BookingController(bookingsServise);
 
-    private Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
 
-    public void chooseCommand(Scanner sc) {
-        //displayChooseItem(options);
+    public void chooseCommand() {
         System.out.println("Enter number of command!");
-        //int choose;
+
         outerLoop:
         while (true) {
             displayChooseItem(options);
-            int choose;
-            String name;
-            String surname;
-            choose = sc.nextInt();
+            int choose = scanner.nextInt();
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
                     continue outerLoop;
                 case 2:
-                    System.out.println("Enter ID of flight!");
-                    String number = scanner.nextLine();
+                    String number = scheckID(false, true);
                     flightController.showFlightByID(number);
                     continue outerLoop;
                 case 3:
-                    System.out.println("Enter desination");
-                    String dest = scanner.nextLine();
-                    System.out.println("Enter date");
+                    String dest = checkInputString("Enter desination!");
+                    System.out.println("Enter date!");
                     String date = scanner.nextLine();
-                    System.out.println("Enter number of people!");
-                    String numberOfPeople = scanner.nextLine();
-                    List<Flight> list = flightController.showSelectedFlights(dest, date, Integer.parseInt(numberOfPeople));
+                    int numberOfPeople = getCorrectNumber("Enter number of people!");
+                    List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
                     System.out.println(list);
                     System.out.println("If you chose something, enter number of flight or press zero to exit!");
-                    int numberOfFlight = scanner.nextInt();
-                    while(!(numberOfFlight >= 0 && numberOfFlight <= list.size())){System.out.println("Write number!");
-                        numberOfFlight = scanner.nextInt();}
-                    if ( numberOfFlight == 0) {
+                    int numberOfFlight = checkNumberOfFligth(list);
+                    while (!(numberOfFlight >= 0 && numberOfFlight <= list.size())) {
+                        System.out.println("Write number!");
+                        numberOfFlight = scanner.nextInt();
+                    }
+                    if (numberOfFlight == 0) {
                         System.out.println("You back in main menu!");
                         break;
                     }
 
-                    for (int i = 1; i <= numberOfFlight; i++) {
-                        System.out.println("Enter name of the " + i + " pasanjer!");
-                        name = scanner.nextLine();
-                        System.out.println("Enter surname of the " + i + " pasanjer!");
-                        surname = scanner.nextLine();
+                    for (int i = 1; i <= numberOfPeople; i++) {
+
+                        String name = checkInputString("Enter name of the " + i + " pasanjer!");
+
+                        String surname = checkInputString("Enter surname of the " + i + " pasanjer!");
                         try {
                             Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname, flightController);
-                            System.out.println("The booking was created: "+booking);
+                            System.out.println("The booking was created: " + booking);
                         } catch (BookingAlreadyExist bookingAlreadyExist) {
                             System.out.println(bookingAlreadyExist.getMessage());
                         }
@@ -81,10 +79,10 @@ public class Console {
                     bookingsController.deleteBookingByID(Integer.parseInt(number) - 1);
                     continue outerLoop;
                 case 5:
-                    System.out.println("Enter your name!");
-                    String name1 = scanner.nextLine();
-                    System.out.println("Enter your surname!");
-                    String surname1 = scanner.nextLine();
+
+                    String name1 = checkInputString("Enter your name!");
+
+                    String surname1 = checkInputString("Enter your surname!");
                     bookingsController.showSelectedBookings(name1, surname1);
                     continue outerLoop;
                 case 6:
@@ -92,15 +90,77 @@ public class Console {
                     break outerLoop;
                 //return;
                 default:
-                    System.out.println("Enter number from 1 to 7!");
-                    //continue;
+                    System.out.println("Enter number from 1 to 6!");
+                    continue outerLoop;
             }
         }
     }
 
-    private void createReservation() {
-        System.out.println("ax");
+    private int checkNumberOfFligth(List l) {
+        int number;
+        while (true) {
+            try {
+                number = scanner.nextInt();
+                if (number < 0 || number > l.size()) throw new InputMismatchException("I did not find flight with such index!");
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+                continue;
+            }
+            break;
+        }
+        return number;
     }
+
+    private int getCorrectNumber(String s) {
+        System.out.println(s);
+        int number;
+        while (true) {
+            try {
+                number = scanner.nextInt();
+                if (number < 0 || number > 10) throw new BookingAlreadyExist("Booking is full!");
+                if( number == 0 ) break;
+            } catch (BookingAlreadyExist e) {
+                System.out.println("Booking does not have so many sits!");
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+                continue;
+            }
+            break;
+        }
+        return number;
+    }
+
+    private String scheckID(boolean id, boolean messageFlage) {
+        if (messageFlage) System.out.println(!id ? "Enter correct id" : "Enter id format QAS23456");
+        String checkStr = scanner.nextLine();
+        while (!checkStr.matches((valdiateID))) {
+            System.out.println("Enter once more!");
+            checkStr = scanner.nextLine();
+        }
+        return checkStr;
+    }
+
+    private  String checkInputString(String question) {
+            System.out.println(question);
+            String line;
+            int sizeName;
+            while (true) {
+                line = scanner.nextLine().trim().toLowerCase();
+                try {
+                    sizeName = line.length();
+                    if (sizeName == 0) throw new NullPointerException("Can not be null!");
+                    for (int i = 0; i < sizeName; i++) {
+                        if (Character.isDigit(line.charAt(i))) throw new NumberFormatException("Can not be number!");
+                    }
+                } catch (NullPointerException | NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
+                break;
+            }
+            return line.substring(0,1).toUpperCase()+line.substring(1);
+        }
 
 
     private void displayChooseItem(String[] options) {
@@ -110,4 +170,8 @@ public class Console {
             ++number;
         }
     }
+
 }
+//сделать проверку даты
+//убрать баг
+//choose проверить

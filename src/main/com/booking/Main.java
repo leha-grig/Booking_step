@@ -36,8 +36,8 @@ public class Main {
 
         System.out.println(newBookings.getAllBookings());
         bookingsService.showSelectedBookings("Alex", "Smith");
-        Scanner scanner = new Scanner(System.in);
+
         Console console = new Console();
-        console.chooseCommand(scanner);
+        console.chooseCommand();
     }
 }
