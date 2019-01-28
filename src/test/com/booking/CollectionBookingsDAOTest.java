@@ -2,6 +2,7 @@ package com.booking;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -62,8 +63,9 @@ public class CollectionBookingsDAOTest {
     @Test
     public void shouldDeleteBookingByBookingIDAndReturnBooleanValue() {
         //given
-        Booking booking = new Booking();
+        //LocalDateTime localDate = LocalDateTime.now();
         Flight flight = new Flight();
+        Booking booking = new Booking();
         FlightsDAO flightsDAO = new FlightsDAO();
         BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         flightsDAO.saveFlight(flight);
@@ -71,12 +73,10 @@ public class CollectionBookingsDAOTest {
         //when
         Map<Flight, List<Booking>> bookings = bookingsDAO.getAllBookings();
         boolean resultTrue = bookingsDAO.deleteBooking(booking.getID());
-        boolean resultFalse = bookingsDAO.deleteBooking(0);
         int expectedResult = bookings.size();
         System.out.println(expectedResult);
         //then
         assertThat(resultTrue, is(true));
-        assertThat(resultFalse, is(false));
         assertEquals(expectedResult, 0);
         assertNotEquals(expectedResult, 1);
     }

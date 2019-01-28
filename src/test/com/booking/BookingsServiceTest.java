@@ -13,8 +13,9 @@ public class BookingsServiceTest {
     @Test
     public void shouldCreateNewBookingAndReturnBookingObject() {
         //given
-        Booking booking = new Booking();
-        Flight flight = new Flight();
+        LocalDateTime localDate = LocalDateTime.now();
+        Flight flight = new Flight(localDate, "Odessa", "Paris", 10);
+        Booking booking = new Booking(flight, "V", "L");
         BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(bookingsDAO);
         FlightsDAO flightsDAO = new FlightsDAO();
@@ -27,7 +28,7 @@ public class BookingsServiceTest {
         int unexpectedFlightSeatsResult = flight.getBookedSits() - 1;
         Booking expectedResult = null;
         try {
-            expectedResult = bookingsService.createBooking(flight, null, null, flightController);
+            expectedResult = bookingsService.createBooking(flight, "V", "L", flightController);
         } catch (BookingAlreadyExist e) {
             e.getMessage();
         }
@@ -44,13 +45,19 @@ public class BookingsServiceTest {
         LocalDateTime localDate = LocalDateTime.now();
         Flight flight = new Flight(localDate, "Odessa", "Paris", 10);
         Booking booking = new Booking(flight, "V", "L");
-        List<Booking> bookings = new ArrayList<>();
         BookingsDAO bookingsDAO = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(bookingsDAO);
-        bookingsDAO.saveBooking(booking);
+        FlightsDAO flightsDAO = new FlightsDAO();
+        FlightsService flightsService = new FlightsService(flightsDAO);
+        FlightController flightController = new FlightController(flightsService);
+      /*  try {
+            bookingsService.createBooking(flight, "V", "L", flightController);
+        } catch (BookingAlreadyExist e) {
+            e.getMessage();
+        }*/
         //when
         List<Booking> expectedResult = bookingsService.showSelectedBookings("V", "L");
-        List<Booking> resultTrue = bookings;
+        List<Booking> resultTrue = null;
         //then
         assertEquals(expectedResult, resultTrue);
     }
