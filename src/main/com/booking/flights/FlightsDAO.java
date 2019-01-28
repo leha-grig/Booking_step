@@ -1,13 +1,11 @@
-package com.booking.Flights;
+package com.booking.flights;
 
 import com.booking.DAO;
-import com.booking.Identifiable;
 import com.booking.ObjectToFileReaderWriter;
 
 import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FlightsDAO implements DAO<String, Flight> {

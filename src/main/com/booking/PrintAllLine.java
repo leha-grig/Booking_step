@@ -1,6 +1,6 @@
 package com.booking;
 
-import com.booking.Flights.Flight;
+import com.booking.flights.Flight;
 
 import java.util.Map;
 

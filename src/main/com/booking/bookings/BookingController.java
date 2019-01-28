@@ -1,7 +1,7 @@
-package com.booking;
+package com.booking.bookings;
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.Flights.Flight;
-import com.booking.Flights.FlightController;
+import com.booking.flights.Flight;
+import com.booking.flights.FlightController;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ public class BookingController {
         return bookingsService.createBooking(flight, name, surname, flightController);
     }
 
-    public boolean deleteBookingByID(int ID) {
-        return bookingsService.deleteBookingByID(ID);
+    public void deleteBookingByID(int ID) {
+        bookingsService.deleteBookingByID(ID);
     }
 
     public List<Booking> showSelectedBookings(String name, String surname) {

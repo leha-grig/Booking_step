@@ -1,27 +1,24 @@
-package com.booking;
+package com.booking.bookings;
 
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.Flights.Flight;
-import com.booking.Flights.FlightController;
+import com.booking.flights.Flight;
+import com.booking.flights.FlightController;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookingsService {
 
-    private BookingsDAO bookingDAO;
+    private CollectionBookingsDAO bookingDAO;
 
-    public BookingsService(BookingsDAO bookingDAO) {
+    public BookingsService(CollectionBookingsDAO bookingDAO) {
         this.bookingDAO = bookingDAO;
     }
 
-    //TODO: сделать проверку имени фамилии и не создавать, если уже есть на данный самолет.
-    // TODO: Переделать коллекцию букинг в Мапу, гле клюси это рейсы, значения - листы букингов на рейсы
+
     public Booking createBooking(Flight flight, String name, String surname, FlightController flightController) throws BookingAlreadyExist {
 
-        List<Booking> flightBookings = bookingDAO.getAllBookings().get(flight);
+        List<Booking> flightBookings = bookingDAO.getBookings().get(flight);
 
         // проверка на то, есть ли уже такой букинг на данном рейсе
         final boolean[] check = {false};
@@ -43,21 +40,19 @@ public class BookingsService {
             flight.setBookedSits(++flightSeats);
             flightController.saveFlight(flight);
 
-            bookingDAO.saveBooking(booking);
+            bookingDAO.save(booking);
             return booking;
         }
     }
 
-    public boolean deleteBookingByID(int ID) {
-        return bookingDAO.deleteBooking(ID);
+    public void deleteBookingByID(int ID) {
+        bookingDAO.remove(ID);
     }
 
     public List<Booking> showSelectedBookings(String name, String surname) {
-        List<List<Booking>> bookingsList = new ArrayList<>(bookingDAO.getAllBookings().values());
-        List<Booking> flattenBookings = bookingsList.stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        List<Booking> selectedBookings = flattenBookings.stream()
+//        List<Booking> flattenBookings = new ArrayList<>(bookingDAO.getAll());
+
+        List<Booking> selectedBookings = bookingDAO.getAll().stream()
                 .filter(booking -> booking.getName().matches(name))
                 .filter(booking -> booking.getSurname().matches(surname))
                 .collect(Collectors.toList());

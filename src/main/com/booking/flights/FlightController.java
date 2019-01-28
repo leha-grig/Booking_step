@@ -1,4 +1,4 @@
-package com.booking.Flights;
+package com.booking.flights;
 
 import java.util.List;
 

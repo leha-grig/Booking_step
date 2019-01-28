@@ -1,10 +1,6 @@
 package com.booking;
 
-import com.booking.Flights.Flight;
-
 import java.io.*;
-import java.util.List;
-import java.util.Map;
 
 public class ObjectToFileReaderWriter <T>{
 

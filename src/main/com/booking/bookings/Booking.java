@@ -1,12 +1,13 @@
-package com.booking;
+package com.booking.bookings;
 
-import com.booking.Flights.Flight;
+import com.booking.flights.Flight;
+import com.booking.Identifiable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Booking implements Serializable {
+public class Booking implements Serializable, Identifiable<Integer> {
 
     private Flight flight;
     private LocalDate date;
@@ -14,7 +15,6 @@ public class Booking implements Serializable {
     private String surname;
     private int ID;
 
-    public Booking() {}
 
     public Booking(Flight flight, String name, String surname) {
         this.flight = flight;
@@ -56,7 +56,7 @@ public class Booking implements Serializable {
         this.surname = surname;
     }
 
-    public int getID() {
+    public Integer id() {
         return ID;
     }
 

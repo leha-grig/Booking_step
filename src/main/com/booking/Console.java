@@ -1,12 +1,15 @@
 package com.booking;
 
+import com.booking.bookings.Booking;
+import com.booking.bookings.BookingController;
+import com.booking.bookings.BookingsService;
+import com.booking.bookings.CollectionBookingsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.Flights.Flight;
-import com.booking.Flights.FlightController;
-import com.booking.Flights.FlightsDAO;
-import com.booking.Flights.FlightsService;
+import com.booking.flights.Flight;
+import com.booking.flights.FlightController;
+import com.booking.flights.FlightsDAO;
+import com.booking.flights.FlightsService;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +28,7 @@ public class Console {
     private FlightsDAO dao = new FlightsDAO();
     private FlightsService flightsService = new FlightsService(dao);
     private FlightController flightController = new FlightController(flightsService);
-    private BookingsDAO bookingsDAO = new CollectionBookingsDAO();
+    private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
     private BookingsService bookingsServise = new BookingsService(bookingsDAO);
     private BookingController bookingsController = new BookingController(bookingsServise);
 
@@ -83,7 +86,7 @@ public class Console {
                     continue outerLoop;
                 case 4:
                     System.out.println("Enter reservation number!");
-                    number = scanner.nextLine();
+                    number = scanner.next();
                     bookingsController.deleteBookingByID(Integer.parseInt(number) - 1);
                     continue outerLoop;
                 case 5:
@@ -91,7 +94,7 @@ public class Console {
                     String name1 = checkInputString("Enter your name!");
 
                     String surname1 = checkInputString("Enter your surname!");
-                    System.out.printf("%-12s%-15s%-15s%-12s%-12s%-7s%-15s%-15s%n", "BookingID", "Name", "Surname", "FlightID", "Date", "Time", "From", "Destination");
+                    System.out.printf("%6s%-12s%-15s%-15s%-12s%-12s%-7s%-15s%-15s%n", " ", "BookingID", "Name", "Surname", "FlightID", "Date", "Time", "From", "Destination");
                     bookingsController.showSelectedBookings(name1, surname1);
                     continue outerLoop;
                 case 6:
