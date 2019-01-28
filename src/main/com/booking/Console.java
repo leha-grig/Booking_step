@@ -33,7 +33,7 @@ public class Console {
         outerLoop:
         while (true) {
             displayChooseItem(options);
-            int choose = scanner.nextInt();
+            int choose = Integer.parseInt(scanner.nextLine());
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
