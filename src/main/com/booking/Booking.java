@@ -86,7 +86,6 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        return Math.abs(flight.id().hashCode()*7+name.hashCode()*7+surname.hashCode()*7)*3;
+        return Math.abs((flight.id().hashCode()*3+name.hashCode()*3+surname.hashCode()*3)*3);
     }
-
 }
