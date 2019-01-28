@@ -6,12 +6,13 @@ import com.booking.ObjectToFileReaderWriter;
 
 import java.io.*;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FlightsDAO implements DAO<String, Flight> {
     private Map<String, Flight> flights;
-    private ObjectToFileReaderWriter <Map<String, Flight>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
+    private ObjectToFileReaderWriter<Map<String, Flight>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
 
     public FlightsDAO() {
 
@@ -25,6 +26,45 @@ public class FlightsDAO implements DAO<String, Flight> {
         }
     }
 
+    //constractor for testing
+    public FlightsDAO(Flight flight1, Flight flight2) {
+        flights = new HashMap<>();
+        flights.put(flight1.id(), flight1);
+        flights.put(flight2.id(), flight2);
+    }
+
+
+    private boolean isCollectionExist(String path) {
+        return new File(path).isFile();
+    }
+
+    @Override
+    public Flight getById(String ID) {
+        return flights.get(ID);
+    }
+
+    @Override
+    public void save(Flight flight) {
+        if (flight != null) {
+            flights.put(flight.id(), flight);
+            objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+        }
+    }
+
+    @Override
+    public Collection<Flight> getAll() {
+        return flights.values();
+    }
+
+    @Override
+    public void remove(String id) {
+        flights.remove(id);
+        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+    }
+
+    public Map<String, Flight> getFlights() {
+        return flights;
+    }
     /*private void readFlightsCollectionFromFile(String path) {
         ObjectInputStream in;
         try {
@@ -35,17 +75,6 @@ public class FlightsDAO implements DAO<String, Flight> {
             e.printStackTrace();
         }
     }*/
-
-@Override
-    public Flight getById(String ID) {
-        return flights.get(ID);
-    }
-
-    @Override
-    public void save(Flight flight) {
-        flights.put(flight.id(), flight);
-        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
-    }
 
     /*private void writeObjectToFile(String path, Map<String, Flight> flights) {
         FileOutputStream file;
@@ -60,18 +89,4 @@ public class FlightsDAO implements DAO<String, Flight> {
         }
     }*/
 
-    private boolean isCollectionExist(String path) {
-        return new File(path).isFile();
-    }
-
-    @Override
-    public Collection<Flight> getAll() {
-        return flights.values();
-    }
-
-    @Override
-    public void remove(String id) {
-        flights.remove(id);
-        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
-    }
 }
