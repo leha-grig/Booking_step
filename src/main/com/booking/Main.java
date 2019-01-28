@@ -11,12 +11,15 @@ import com.booking.Flights.FlightsService;
 //TODO сделать ДАО интерфейс генерифицированный, имплементить для букингов
 //TODO продвинутое ДЗ
 //TODO тесты
+//TODO добавить в консоль возможность выхода в мэйн меню из любой точки?
+//TODO добавить в консоль шапку
 
 
 public class Main {
     public static void main(String[] args) {
-
-        FlightsDAO dao = new FlightsDAO();
+        Console console = new Console();
+        console.chooseCommand();
+        /*FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
         FlightController flightController = new FlightController(flightsService);
 
@@ -42,7 +45,7 @@ public class Main {
 
 
         System.out.println(newBookings.getAllBookings());
-        bookingsService.showSelectedBookings("Alex", "Smith");
+        bookingsService.showSelectedBookings("Alex", "Smith");*/
     }
 
 

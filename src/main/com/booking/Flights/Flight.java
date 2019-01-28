@@ -24,11 +24,7 @@ public class Flight implements Serializable, Identifiable <String> {
         this.id = setID();
         this.capasity = capasity;
     }
-// геттеры, конструктор, Иквелс и хэш-код,
-    // конструктор должен генерить уникальное ID (вызов приватного метода) и записывать его в поле id;
-    // метод вывода свободных мест,
-    // метод получения даты,
-    // метод получения времени
+
 
     public LocalDate getDate() {
         return LocalDate.from(dateTime);
