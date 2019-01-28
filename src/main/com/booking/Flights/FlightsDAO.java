@@ -26,7 +26,7 @@ public class FlightsDAO implements DAO<String, Flight> {
         }
     }
 
-    //constractor for testing
+    //constructor for testing
     public FlightsDAO(Flight flight1, Flight flight2) {
         flights = new HashMap<>();
         flights.put(flight1.id(), flight1);

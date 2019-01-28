@@ -6,7 +6,7 @@ import com.booking.Flights.FlightController;
 import com.booking.Flights.FlightsDAO;
 import com.booking.Flights.FlightsService;
 
-//
+//TODO проверки корректности файлов и их наличия - список городов, флайтов, букингов
 //TODO разбить проект по пакетам
 //TODO сделать ДАО интерфейс генерифицированный, имплементить для букингов
 //TODO продвинутое ДЗ
@@ -21,8 +21,8 @@ public class Main {
         FlightController flightController = new FlightController(flightsService);
 
 //        flightController.showFlightsFor24hours();
-        Flight f1 = flightController.showSelectedFlights("Lima", "2019-01-27", 1).get(0);
-        Flight f2 = flightController.showSelectedFlights("Athens", "2019-01-27", 1).get(0);
+        Flight f1 = flightController.showSelectedFlights("Lima", "2019-01-29", 1).get(0);
+        Flight f2 = flightController.showSelectedFlights("Athens", "2019-01-29", 1).get(0);
 
 
         flightsService.showFlightByID("KA1271215");
