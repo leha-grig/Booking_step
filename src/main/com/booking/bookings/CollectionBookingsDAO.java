@@ -51,10 +51,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     @Override
     public Booking getById(Integer ID) {
-        /*List<List<Booking>> bookingsList = new ArrayList<>(bookings.values());
-        List<Booking> flattenBookings = bookingsList.stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());*/
+
         for (Booking booking : getAll()) {
             if (booking.id().equals(ID)) {
                 return booking;
@@ -67,16 +64,15 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
     public void remove(Integer ID) {
         final boolean[] check = {false};
         bookings.forEach((flight, list) -> {
-            final int[] index = {0};
+            final int[] bookingIndexInList = {0};
             list.forEach(booking -> {
                 if (booking.id().equals(ID)) {
                     check[0] = true;
-                    index[0] = list.indexOf(booking);
+                    bookingIndexInList[0] = list.indexOf(booking);
                 }
             });
             if (check[0]) {
-                list.remove(index[0]);
-//                objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
+                list.remove(bookingIndexInList[0]);
             }
         });
         if (check[0]) {

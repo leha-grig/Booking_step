@@ -15,10 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Console {
-    // List<Flight> generateFlights; // при первом запуске программы сгенерировать рейсы
-    /*{
-        FlightsDAO flightsDAO = new FlightsDAO();
-    }*/
+
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
 
     private String[] options = {
@@ -47,25 +44,22 @@ public class Console {
                     flightController.showFlightsFor24hours();
                     continue outerLoop;
                 case 2:
-                    String number = scheckID(false, true);
+                    String number = scheckID();
                     System.out.printf("%-12s%-12s%-7s%-15s%-15s%-10s%n", "FlightID", "Date", "Time", "From", "Destination", "Free sits");
                     flightController.showFlightByID(number);
                     continue outerLoop;
                 case 3:
                     String dest = checkInputString("Enter desination!");
-                    System.out.println("Enter date!");
+                    System.out.println("Enter date in format yyyy-MM-dd");
                     String date = scanner.next();
                     int numberOfPeople = getCorrectNumber("Enter number of people!");
                     System.out.printf("%-6s%-12s%-12s%-7s%-15s%-15s%n", "Num","FlightID", "Date", "Time", "From", "Destination");
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
 
-//                    System.out.println(list);
+
                     System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
                     int numberOfFlight = checkNumberOfFligth(list);
-                    /*while (!(numberOfFlight >= 0 && numberOfFlight <= list.size())) {
-                        System.out.println("Write number!");
-                        numberOfFlight = scanner.nextInt();
-                    }*/
+
                     if (numberOfFlight == 0) {
                         System.out.println("You back in main menu!");
                         break;
@@ -87,7 +81,7 @@ public class Console {
                 case 4:
                     System.out.println("Enter reservation number!");
                     number = scanner.next();
-                    bookingsController.deleteBookingByID(Integer.parseInt(number) - 1);
+                    bookingsController.deleteBookingByID(Integer.parseInt(number) - 1, flightController);
                     continue outerLoop;
                 case 5:
 
@@ -116,7 +110,6 @@ public class Console {
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println(e.getMessage());
-//                scanner.nextLine();
                 continue;
             }
             break;
@@ -135,7 +128,7 @@ public class Console {
             } catch (BookingAlreadyExist e) {
                 System.out.println("Booking does not have so many sits!");
                 System.out.println(e.getMessage());
-//                scanner.nextLine();
+
                 continue;
             }
             break;
@@ -143,8 +136,7 @@ public class Console {
         return number;
     }
 
-    private String scheckID(boolean id, boolean messageFlage) {
-//        if (messageFlage) System.out.println(!id ? "Enter correct id" : "Enter id format QAS23456");
+    private String scheckID() {
         System.out.println("Enter flight ID");
         String checkStr = scanner.next();
         while (!checkStr.matches((valdiateID))) {
@@ -184,6 +176,3 @@ public class Console {
         }
     }
 }
-//сделать проверку даты
-//убрать баг
-//choose проверить

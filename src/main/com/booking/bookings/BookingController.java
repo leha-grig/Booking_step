@@ -17,8 +17,8 @@ public class BookingController {
         return bookingsService.createBooking(flight, name, surname, flightController);
     }
 
-    public void deleteBookingByID(int ID) {
-        bookingsService.deleteBookingByID(ID);
+    public void deleteBookingByID(int ID, FlightController flightController) {
+        bookingsService.deleteBookingByID(ID, flightController);
     }
 
     public List<Booking> showSelectedBookings(String name, String surname) {

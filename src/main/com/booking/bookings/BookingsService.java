@@ -36,7 +36,6 @@ public class BookingsService {
             int flightSeats = flight.getBookedSits();
             Booking booking = new Booking(flight, name, surname);
 
-
             flight.setBookedSits(++flightSeats);
             flightController.saveFlight(flight);
 
@@ -45,12 +44,25 @@ public class BookingsService {
         }
     }
 
-    public void deleteBookingByID(int ID) {
+    public void deleteBookingByID(int ID, FlightController flightController) {
+        final boolean[] check = {false};
+        final Flight[] flight = {null};
+        bookingDAO.getAll().forEach((booking) -> {
+            if (booking.id().equals(ID)) {
+                check[0] = true;
+                flight[0] = booking.getFlight();
+            }
+        });
+        if (check[0]) {
+            int flightSeats = flight[0].getBookedSits();
+            flight[0].setBookedSits(--flightSeats);
+            flightController.saveFlight(flight[0]);
+        }
         bookingDAO.remove(ID);
+
     }
 
     public List<Booking> showSelectedBookings(String name, String surname) {
-//        List<Booking> flattenBookings = new ArrayList<>(bookingDAO.getAll());
 
         List<Booking> selectedBookings = bookingDAO.getAll().stream()
                 .filter(booking -> booking.getName().matches(name))

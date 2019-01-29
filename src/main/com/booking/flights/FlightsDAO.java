@@ -63,28 +63,5 @@ public class FlightsDAO implements DAO<String, Flight> {
     public Map<String, Flight> getFlights() {
         return flights;
     }
-    /*private void readFlightsCollectionFromFile(String path) {
-        ObjectInputStream in;
-        try {
-            in = new ObjectInputStream(new BufferedInputStream(
-                    new FileInputStream(path)));
-            this.flights = (Map<String, Flight>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*private void writeObjectToFile(String path, Map<String, Flight> flights) {
-        FileOutputStream file;
-        try {
-            file = new FileOutputStream(path);
-            ObjectOutputStream data = new ObjectOutputStream(file);
-            data.writeObject(flights);
-            data.flush();
-            data.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 }

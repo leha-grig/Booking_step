@@ -79,7 +79,6 @@ public class Booking implements Serializable, Identifiable<Integer> {
         Booking booking = (Booking) o;
         return ID == booking.ID &&
                 Objects.equals(flight, booking.flight) &&
-                Objects.equals(date, booking.date) &&
                 Objects.equals(name, booking.name) &&
                 Objects.equals(surname, booking.surname);
     }

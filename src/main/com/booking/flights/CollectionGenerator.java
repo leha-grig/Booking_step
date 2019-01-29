@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**Evoking to generate new flights collection if it does not exist*/
 public class CollectionGenerator {
 
     private List<String> cities;
