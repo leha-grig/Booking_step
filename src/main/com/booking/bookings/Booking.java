@@ -1,9 +1,13 @@
-package main.com.booking;
+package com.booking.bookings;
 
+import com.booking.flights.Flight;
+import com.booking.Identifiable;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Booking {
+public class Booking implements Serializable, Identifiable<Integer> {
 
     private Flight flight;
     private LocalDate date;
@@ -11,9 +15,10 @@ public class Booking {
     private String surname;
     private int ID;
 
-    public Booking(Flight flight, LocalDate date, String name, String surname) {
+
+    public Booking(Flight flight, String name, String surname) {
         this.flight = flight;
-        this.date = date;
+        this.date = flight.getDate();
         this.name = name;
         this.surname = surname;
         this.ID = hashCode();
@@ -51,7 +56,7 @@ public class Booking {
         this.surname = surname;
     }
 
-    public int getID() {
+    public Integer id() {
         return ID;
     }
 
@@ -61,13 +66,10 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "flight='" + flight + '\'' +
-                ", date=" + date +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", ID=" + ID +
-                '}';
+
+        String str = String.format("%-12s%-15s%-15s%s%n", ID, name, surname, flight);
+        
+        return str;
     }
 
     @Override
@@ -77,14 +79,12 @@ public class Booking {
         Booking booking = (Booking) o;
         return ID == booking.ID &&
                 Objects.equals(flight, booking.flight) &&
-                Objects.equals(date, booking.date) &&
                 Objects.equals(name, booking.name) &&
                 Objects.equals(surname, booking.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(flight, date, name, surname);
+        return Math.abs((flight.id().hashCode()*3+name.hashCode()*3+surname.hashCode()*3)*3);
     }
-
 }
