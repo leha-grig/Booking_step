@@ -1,5 +1,8 @@
-package com.booking;
-
+package com.booking.bookings;
+import com.booking.Booking;
+import com.booking.BookingsDAO;
+import com.booking.Flight;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -63,22 +66,18 @@ public class CollectionBookingsDAOTest {
     @Test
     public void shouldDeleteBookingByBookingIDAndReturnBooleanValue() {
         //given
-        //LocalDateTime localDate = LocalDateTime.now();
-        Flight flight = new Flight();
-        Booking booking = new Booking();
-        FlightsDAO flightsDAO = new FlightsDAO();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Flight flight = new Flight(localDateTime, "Odessa", "Paris", 10);
+        Booking booking = new Booking(flight, "V", "L");
+        Booking booking2 = new Booking();
         BookingsDAO bookingsDAO = new CollectionBookingsDAO();
-        flightsDAO.saveFlight(flight);
         bookingsDAO.saveBooking(booking);
         //when
-        Map<Flight, List<Booking>> bookings = bookingsDAO.getAllBookings();
         boolean resultTrue = bookingsDAO.deleteBooking(booking.getID());
-        int expectedResult = bookings.size();
-        System.out.println(expectedResult);
+        boolean resultFalse = bookingsDAO.deleteBooking(booking2.getID());
         //then
         assertThat(resultTrue, is(true));
-        assertEquals(expectedResult, 0);
-        assertNotEquals(expectedResult, 1);
+        assertThat(resultFalse, is(false));
     }
 
     @Test

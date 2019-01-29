@@ -1,4 +1,8 @@
-package com.booking;
+package com.booking.bookings;
+
+import com.booking.Booking;
+import com.booking.BookingsDAO;
+import com.booking.Flight;
 
 import java.io.*;
 import java.util.*;
