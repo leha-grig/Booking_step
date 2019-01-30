@@ -1,4 +1,7 @@
-package com.booking.flights;
+package com.booking.services;
+
+import com.booking.DAO.FlightsDAO;
+import com.booking.objects.Flight;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -24,7 +27,7 @@ public class FlightsService {
                 .sorted((f1, f2) -> (int) Duration.between(f2.getDateTime(), f1.getDateTime()).getSeconds())
                 .collect(Collectors.toList());
         if (selectedFlights.size() == 0) {
-            System.out.println("No flights for 24 hours found");
+            System.out.println("No DAO for 24 hours found");
         } else {
             selectedFlights.forEach(System.out::println);
         }
@@ -56,7 +59,7 @@ public class FlightsService {
                 .filter(f -> f.getFreeSits() >= passengers)
                 .collect(Collectors.toList());
         if (selectedFlights.size() == 0) {
-            System.out.println("No flights for your request found");
+            System.out.println("No DAO for your request found");
         } else {
             selectedFlights.forEach(f -> System.out.printf("%3d%-3s%s%n", (selectedFlights.indexOf(f) + 1), ". ", f.toString()));
         }

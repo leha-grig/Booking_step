@@ -1,27 +1,26 @@
 package com.booking;
 
-import com.booking.bookings.Booking;
-import com.booking.bookings.BookingController;
-import com.booking.bookings.BookingsService;
-import com.booking.bookings.CollectionBookingsDAO;
+import com.booking.DAO.CollectionBookingsDAO;
+import com.booking.DAO.FlightsDAO;
+import com.booking.objects.Booking;
+import com.booking.services.BookingController;
+import com.booking.services.BookingsService;
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.flights.Flight;
-import com.booking.flights.FlightController;
-import com.booking.flights.FlightsDAO;
-import com.booking.flights.FlightsService;
-
+import com.booking.objects.Flight;
+import com.booking.services.FlightController;
+import com.booking.services.FlightsService;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Console {
+public class ConsoleApp {
 
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
 
     private String[] options = {
-            "Show all flights for 24hours", "Show flith by ID",
+            "Show all DAO for 24hours", "Show flith by ID",
             "Fyight search and booking", "Cancel reservation",
-            "My flights", "EXIT"};
+            "My DAO", "EXIT"};
     private FlightsDAO dao = new FlightsDAO();
     private FlightsService flightsService = new FlightsService(dao);
     private FlightController flightController = new FlightController(flightsService);
@@ -81,7 +80,7 @@ public class Console {
                 case 4:
                     System.out.println("Enter reservation number!");
                     number = scanner.next();
-                    bookingsController.deleteBookingByID(Integer.parseInt(number) - 1);
+                    bookingsController.deleteBookingByID(Integer.parseInt(number));
                     continue outerLoop;
                 case 5:
 

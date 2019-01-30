@@ -1,4 +1,6 @@
-package com.booking.flights;
+package com.booking.services;
+
+import com.booking.objects.Flight;
 
 import java.util.List;
 

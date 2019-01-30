@@ -1,6 +1,6 @@
-package com.booking.flights;
+package com.booking.objects;
 
-import com.booking.Identifiable;
+import com.booking.interfaces.Identifiable;
 
 import java.io.Serializable;
 import java.time.LocalDate;

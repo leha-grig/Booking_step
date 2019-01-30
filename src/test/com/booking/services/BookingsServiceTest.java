@@ -1,10 +1,10 @@
-package com.booking.bookings;
+package com.booking.services;
 
+import com.booking.DAO.CollectionBookingsDAO;
+import com.booking.DAO.FlightsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.flights.Flight;
-import com.booking.flights.FlightController;
-import com.booking.flights.FlightsDAO;
-import com.booking.flights.FlightsService;
+import com.booking.objects.Booking;
+import com.booking.objects.Flight;
 import org.junit.Before;
 import org.junit.Test;
 

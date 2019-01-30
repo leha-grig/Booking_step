@@ -1,4 +1,4 @@
-package com.booking;
+package com.booking.utils;
 
 import com.booking.Exceptions.FileReadingException;
 

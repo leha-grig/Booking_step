@@ -1,9 +1,9 @@
-package com.booking.flights;
+package com.booking.DAO;
 
-import com.booking.Constants;
-import com.booking.DAO;
+import com.booking.interfaces.Constants;
 import com.booking.Exceptions.FileReadingException;
-import com.booking.ObjectToFileReaderWriter;
+import com.booking.utils.ObjectToFileReaderWriter;
+import com.booking.objects.Flight;
 
 import java.io.*;
 import java.util.Collection;

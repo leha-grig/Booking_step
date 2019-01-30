@@ -1,4 +1,6 @@
-package com.booking;
+package com.booking.DAO;
+
+import com.booking.interfaces.Identifiable;
 
 import java.util.Collection;
 

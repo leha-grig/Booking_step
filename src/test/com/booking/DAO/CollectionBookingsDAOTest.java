@@ -1,7 +1,7 @@
-package com.booking.bookings;
+package com.booking.DAO;
 
-import com.booking.flights.Flight;
-import com.booking.flights.FlightsDAO;
+import com.booking.objects.Booking;
+import com.booking.objects.Flight;
 import org.junit.Before;
 import org.junit.Test;
 

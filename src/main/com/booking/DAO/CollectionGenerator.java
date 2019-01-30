@@ -1,6 +1,8 @@
-package com.booking.flights;
+package com.booking.DAO;
 
-import com.booking.ObjectToFileReaderWriter;
+import com.booking.interfaces.Constants;
+import com.booking.utils.ObjectToFileReaderWriter;
+import com.booking.objects.Flight;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**Evoking to generate new flights collection if it does not exist*/
+/**Evoking to generate new flightsDAO collection if it does not exist or wrong*/
 public class CollectionGenerator {
 
     private List<String> cities;
@@ -19,7 +21,7 @@ public class CollectionGenerator {
 
     {
         try {
-            cities = Files.readAllLines(Paths.get("./cities.txt"));
+            cities = Files.readAllLines(Paths.get(Constants.cities));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +42,7 @@ public class CollectionGenerator {
             flights.put(flight.id(), flight);
         }
 
-        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+        objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
 
         return flights;
     }

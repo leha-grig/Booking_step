@@ -1,4 +1,5 @@
-package com.booking.flights;
+package com.booking.objects;
+
 
 import org.junit.Before;
 import org.junit.Test;
