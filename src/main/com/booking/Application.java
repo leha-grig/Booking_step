@@ -1,20 +1,18 @@
 package com.booking;
 
+import com.booking.Exceptions.GoingBeyond;
 import com.booking.bookings.Booking;
 import com.booking.bookings.BookingController;
 import com.booking.bookings.BookingsService;
 import com.booking.bookings.CollectionBookingsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.flights.Flight;
-import com.booking.flights.FlightController;
-import com.booking.flights.FlightsDAO;
-import com.booking.flights.FlightsService;
+import com.booking.flights.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Console {
+public class Application {
 
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
 
@@ -28,12 +26,15 @@ public class Console {
     private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
     private BookingsService bookingsServise = new BookingsService(bookingsDAO);
     private BookingController bookingsController = new BookingController(bookingsServise);
+    /*Map<String, Flight> flights = new CollectionGenerator().generateNewFlightsCollection(10,10);
+
+    FlightPrintable ttp = new FlightPrintable(flights);*/
 
     private final static Scanner scanner = new Scanner(System.in);
 
     public void chooseCommand() {
         System.out.println("Enter number of command!");
-
+        //ttp.print();
         outerLoop:
         while (true) {
             displayChooseItem(options);
@@ -50,15 +51,21 @@ public class Console {
                     continue outerLoop;
                 case 3:
                     String dest = checkInputString("Enter desination!");
-                    System.out.println("Enter date in format yyyy-MM-dd");
-                    String date = scanner.next();
+                    System.out.println("Enter year: yyyy!");
+                    String year = checkYear();
+                    System.out.println("Enter month: mm");
+                    String month = checkMonth();
+                    System.out.println("Enter day: dd");
+                    String day = checkDay();
+
+                    String date = year+"-"+ month+"-"+ day;
                     int numberOfPeople = getCorrectNumber("Enter number of people!");
                     System.out.printf("%-6s%-12s%-12s%-7s%-15s%-15s%n", "Num","FlightID", "Date", "Time", "From", "Destination");
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
 
 
                     System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
-                    int numberOfFlight = checkNumberOfFligth(list);
+                    int numberOfFlight = checkNumberOfFlight(list);
 
                     if (numberOfFlight == 0) {
                         System.out.println("You back in main menu!");
@@ -94,7 +101,6 @@ public class Console {
                 case 6:
                     System.out.println("EXIT");
                     break outerLoop;
-                //return;
                 default:
                     System.out.println("Enter number from 1 to 6!");
                     continue outerLoop;
@@ -102,11 +108,21 @@ public class Console {
         }
     }
 
-    private int checkNumberOfFligth(List l) {
+    private int getChoose(int choose) {
+        try {
+            choose = Integer.parseInt(scanner.next());
+        } catch (NumberFormatException e) {
+            System.out.println("Enter number please!");
+        }
+        return choose;
+    }
+
+    private int checkNumberOfFlight(List l) {
         int number;
         while (true) {
             try {
                 number = scanner.nextInt();
+                if(l.size()==0) break;
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -175,4 +191,59 @@ public class Console {
             ++number;
         }
     }
+    public String checkDay() {
+        String day;
+        int dayCheck;
+        while (true) {
+            day = scanner.nextLine();
+            try {
+                dayCheck = Integer.parseInt(day);
+                if (dayCheck < 1 || dayCheck > 31) throw new GoingBeyond("Введите день от 1 до 31!");
+            } catch (NumberFormatException | GoingBeyond e) {
+                System.out.println(e.getMessage());
+                System.out.println("It is not a number!");
+                continue;
+            }
+            break;
+        }
+        return day;
+    }
+
+    public String checkMonth() {
+        String month;
+        int monthCheck;
+        while (true) {
+            month = scanner.nextLine();
+            try {
+                monthCheck = Integer.parseInt(month);
+                if (monthCheck < 1 || monthCheck > 12) throw new GoingBeyond("Введите  месяц от 1 до 12!");
+            } catch (NumberFormatException | GoingBeyond e) {
+                System.out.println(e.getMessage());
+                System.out.println("It is not a number!");
+                continue;
+            }
+            break;
+        }
+        return month;
+    }
+
+    public String checkYear() {
+        String year;
+        int yearCheck;
+        while (true) {
+            year = scanner.nextLine();
+            try {
+                yearCheck = Integer.parseInt(year);
+                if (yearCheck < 1943 || yearCheck > 2018)
+                    throw new InputMismatchException("Введите год от 1943 до 2018!");
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println(e.getMessage());
+                System.out.println("It is not a number!");
+                continue;
+            }
+            break;
+        }
+        return year;
+    }
+
 }
