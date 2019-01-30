@@ -1,6 +1,8 @@
 package com.booking.bookings;
 
+import com.booking.Constants;
 import com.booking.DAO;
+import com.booking.Exceptions.FileReadingException;
 import com.booking.flights.Flight;
 import com.booking.ObjectToFileReaderWriter;
 
@@ -15,13 +17,19 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     public CollectionBookingsDAO() {
 
-        if (isCollectionExist("./bookings.txt")) {
+        if (isCollectionExist(Constants.bookingsPath)) {
 
-            bookings = objectToFileReaderWriter.readObjectFromFile("./bookings.txt", bookings);
+            try {
+                bookings = objectToFileReaderWriter.readObjectFromFile(Constants.bookingsPath, bookings);
+            } catch (FileReadingException e) {
+                System.out.println(e.getMessage());
+                this.bookings = new HashMap<>();
+                objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, this.bookings);
+            }
 
         } else {
             this.bookings = new HashMap<>();
-            objectToFileReaderWriter.writeObjectToFile("./bookings.txt", this.bookings);
+            objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, this.bookings);
         }
     }
 
@@ -76,7 +84,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
             }
         });
         if (check[0]) {
-            objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
+            objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, bookings);
         }
     }
 
@@ -93,7 +101,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
             newList.set(newList.indexOf(booking), booking);
             bookings.replace(booking.getFlight(), newList);
         }
-        objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
+        objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, bookings);
     }
 
 }

@@ -26,7 +26,7 @@ public class Console {
     private FlightsService flightsService = new FlightsService(dao);
     private FlightController flightController = new FlightController(flightsService);
     private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
-    private BookingsService bookingsServise = new BookingsService(bookingsDAO);
+    private BookingsService bookingsServise = new BookingsService(bookingsDAO, flightsService);
     private BookingController bookingsController = new BookingController(bookingsServise);
 
     private final static Scanner scanner = new Scanner(System.in);
@@ -71,7 +71,7 @@ public class Console {
 
                         String surname = checkInputString("Enter surname of the " + i + " pasanjer!");
                         try {
-                            Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname, flightController);
+                            Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname);
                             System.out.println("The new booking was created: " + booking);
                         } catch (BookingAlreadyExist bookingAlreadyExist) {
                             System.out.println(bookingAlreadyExist.getMessage());
@@ -81,7 +81,7 @@ public class Console {
                 case 4:
                     System.out.println("Enter reservation number!");
                     number = scanner.next();
-                    bookingsController.deleteBookingByID(Integer.parseInt(number) - 1, flightController);
+                    bookingsController.deleteBookingByID(Integer.parseInt(number) - 1);
                     continue outerLoop;
                 case 5:
 

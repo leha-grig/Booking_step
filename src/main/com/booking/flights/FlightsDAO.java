@@ -1,6 +1,8 @@
 package com.booking.flights;
 
+import com.booking.Constants;
 import com.booking.DAO;
+import com.booking.Exceptions.FileReadingException;
 import com.booking.ObjectToFileReaderWriter;
 
 import java.io.*;
@@ -14,13 +16,19 @@ public class FlightsDAO implements DAO<String, Flight> {
 
     public FlightsDAO() {
 
-        if (isCollectionExist("./flights.txt")) {
+        if (isCollectionExist(Constants.flightsPath)) {
 
-            flights = objectToFileReaderWriter.readObjectFromFile("flights.txt", flights);
+            try {
+                flights = objectToFileReaderWriter.readObjectFromFile(Constants.flightsPath, flights);
+            } catch (FileReadingException e) {
+                System.out.println(e.getMessage());
+                CollectionGenerator collectionGenerator = new CollectionGenerator();
+                this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
+            }
 
         } else {
             CollectionGenerator collectionGenerator = new CollectionGenerator();
-            this.flights = collectionGenerator.generateNewFlightsCollection(500, 47);
+            this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
         }
     }
 
@@ -45,7 +53,7 @@ public class FlightsDAO implements DAO<String, Flight> {
     public void save(Flight flight) {
         if (flight != null) {
             flights.put(flight.id(), flight);
-            objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+            objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
         }
     }
 
@@ -57,7 +65,7 @@ public class FlightsDAO implements DAO<String, Flight> {
     @Override
     public void remove(String id) {
         flights.remove(id);
-        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+        objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
     }
 
     public Map<String, Flight> getFlights() {

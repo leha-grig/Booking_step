@@ -13,12 +13,12 @@ public class BookingController {
         this.bookingsService = bookingsService;
     }
 
-    public Booking createBooking(Flight flight, String name, String surname, FlightController flightController)throws BookingAlreadyExist {
-        return bookingsService.createBooking(flight, name, surname, flightController);
+    public Booking createBooking(Flight flight, String name, String surname)throws BookingAlreadyExist {
+        return bookingsService.createBooking(flight, name, surname);
     }
 
-    public void deleteBookingByID(int ID, FlightController flightController) {
-        bookingsService.deleteBookingByID(ID, flightController);
+    public void deleteBookingByID(int ID) {
+        bookingsService.deleteBookingByID(ID);
     }
 
     public List<Booking> showSelectedBookings(String name, String surname) {

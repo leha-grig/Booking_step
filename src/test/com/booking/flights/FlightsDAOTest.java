@@ -87,18 +87,16 @@ public class FlightsDAOTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    /*
-    // как избежать ошибки при введении null пользователем, если null перекрывает две сигнатуры метода?
     @Test
     public void does_remove_notChangeTheMapWhenFlightIDisNull() {
         //given
         //when
         Map<String, Flight> before = new HashMap<>(flightsDAO.getFlights());
-        flightsDAO.remove(null);
+        flightsDAO.remove((String)null);
         Map<String, Flight> after = flightsDAO.getFlights();
         //then
         assertThat(after).isEqualTo(before);
-    }*/
+    }
 
     @Test
     public void does_remove_notChangeTheMapWhenFlightIDisNotCorrect() {
