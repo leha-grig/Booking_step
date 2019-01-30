@@ -23,6 +23,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
                 bookings = objectToFileReaderWriter.readObjectFromFile(Constants.bookingsPath, bookings);
             } catch (FileReadingException e) {
                 System.out.println(e.getMessage());
+                System.out.println("The source file will be renewed!");
                 this.bookings = new HashMap<>();
                 objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, this.bookings);
             }
@@ -70,6 +71,9 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     @Override
     public void remove(Integer ID) {
+        if (ID == null) {
+            return;
+        }
         final boolean[] check = {false};
         bookings.forEach((flight, list) -> {
             final int[] bookingIndexInList = {0};

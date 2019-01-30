@@ -14,7 +14,7 @@ public class ObjectToFileReaderWriter <T>{
             object = (T) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            throw new FileReadingException("The source file was not read properly! The source file will be renewed!");
+            throw new FileReadingException("The source file was not read properly!");
         } finally {
             try {
                 if (in != null) {

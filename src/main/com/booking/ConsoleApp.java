@@ -2,10 +2,10 @@ package com.booking;
 
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
+import com.booking.Exceptions.*;
 import com.booking.objects.Booking;
 import com.booking.services.BookingController;
 import com.booking.services.BookingsService;
-import com.booking.Exceptions.BookingAlreadyExist;
 import com.booking.objects.Flight;
 import com.booking.services.FlightController;
 import com.booking.services.FlightsService;
@@ -18,15 +18,15 @@ public class ConsoleApp {
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
 
     private String[] options = {
-            "Show all DAO for 24hours", "Show flith by ID",
-            "Fyight search and booking", "Cancel reservation",
-            "My DAO", "EXIT"};
+            "Show all flights for 24hours", "Show flight by ID",
+            "Flight search and booking", "Cancel reservation",
+            "My bookings", "EXIT"};
     private FlightsDAO dao = new FlightsDAO();
     private FlightsService flightsService = new FlightsService(dao);
     private FlightController flightController = new FlightController(flightsService);
     private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
-    private BookingsService bookingsServise = new BookingsService(bookingsDAO, flightsService);
-    private BookingController bookingsController = new BookingController(bookingsServise);
+    private BookingsService bookingsService = new BookingsService(bookingsDAO, flightsService);
+    private BookingController bookingsController = new BookingController(bookingsService);
 
     private final static Scanner scanner = new Scanner(System.in);
 
@@ -39,20 +39,17 @@ public class ConsoleApp {
             int choose = Integer.parseInt(scanner.next());
             switch (choose) {
                 case 1:
-                    System.out.printf("%-12s%-12s%-7s%-15s%-15s%n", "FlightID", "Date", "Time", "From", "Destination");
                     flightController.showFlightsFor24hours();
                     continue outerLoop;
                 case 2:
                     String number = scheckID();
-                    System.out.printf("%-12s%-12s%-7s%-15s%-15s%-10s%n", "FlightID", "Date", "Time", "From", "Destination", "Free sits");
                     flightController.showFlightByID(number);
                     continue outerLoop;
                 case 3:
-                    String dest = checkInputString("Enter desination!");
+                    String dest = checkInputString("Enter destination!");
                     System.out.println("Enter date in format yyyy-MM-dd");
                     String date = scanner.next();
                     int numberOfPeople = getCorrectNumber("Enter number of people!");
-                    System.out.printf("%-6s%-12s%-12s%-7s%-15s%-15s%n", "Num","FlightID", "Date", "Time", "From", "Destination");
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
 
 
@@ -60,15 +57,15 @@ public class ConsoleApp {
                     int numberOfFlight = checkNumberOfFligth(list);
 
                     if (numberOfFlight == 0) {
-                        System.out.println("You back in main menu!");
+                        System.out.println("You are back in the main menu!");
                         break;
                     }
 
                     for (int i = 1; i <= numberOfPeople; i++) {
 
-                        String name = checkInputString("Enter name of the " + i + " pasanjer!");
+                        String name = checkInputString("Enter name of the " + i + " passenger");
 
-                        String surname = checkInputString("Enter surname of the " + i + " pasanjer!");
+                        String surname = checkInputString("Enter surname of the " + i + " passenger");
                         try {
                             Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname);
                             System.out.println("The new booking was created: " + booking);
@@ -87,7 +84,6 @@ public class ConsoleApp {
                     String name1 = checkInputString("Enter your name!");
 
                     String surname1 = checkInputString("Enter your surname!");
-                    System.out.printf("%6s%-12s%-15s%-15s%-12s%-12s%-7s%-15s%-15s%n", " ", "BookingID", "Name", "Surname", "FlightID", "Date", "Time", "From", "Destination");
                     bookingsController.showSelectedBookings(name1, surname1);
                     continue outerLoop;
                 case 6:
@@ -122,12 +118,11 @@ public class ConsoleApp {
         while (true) {
             try {
                 number = scanner.nextInt();
-                if (number < 0 || number > 10) throw new BookingAlreadyExist("Booking is full!");
+                if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
+                if (number > 4) throw new LargeBokingException ("You can not make reservation for more than 4 persons at once");
                 if( number == 0 ) break;
-            } catch (BookingAlreadyExist e) {
-                System.out.println("Booking does not have so many sits!");
+            } catch (NumberBelowZeroException | LargeBokingException e) {
                 System.out.println(e.getMessage());
-
                 continue;
             }
             break;
@@ -153,11 +148,14 @@ public class ConsoleApp {
             line = scanner.next().trim().toLowerCase();
             try {
                 sizeName = line.length();
-                if (sizeName == 0) throw new NullPointerException("Can not be null!");
+                if (sizeName == 0) throw new EmptyStringException("This field can bot be empty!");
+                if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")){
+                    throw new StringValidationException("The field may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
+                }
                 for (int i = 0; i < sizeName; i++) {
                     if (Character.isDigit(line.charAt(i))) throw new NumberFormatException("Can not be number!");
                 }
-            } catch (NullPointerException | NumberFormatException e) {
+            } catch (EmptyStringException | StringValidationException e) {
                 System.out.println(e.getMessage());
                 continue;
             }

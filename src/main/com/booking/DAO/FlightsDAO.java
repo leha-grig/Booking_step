@@ -22,6 +22,7 @@ public class FlightsDAO implements DAO<String, Flight> {
                 flights = objectToFileReaderWriter.readObjectFromFile(Constants.flightsPath, flights);
             } catch (FileReadingException e) {
                 System.out.println(e.getMessage());
+                System.out.println("The source file will be renewed!");
                 CollectionGenerator collectionGenerator = new CollectionGenerator();
                 this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
             }
@@ -64,9 +65,14 @@ public class FlightsDAO implements DAO<String, Flight> {
 
     @Override
     public void remove(String id) {
+        if (id == null) {
+            return;
+        }
+
         flights.remove(id);
         objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
     }
+
 
     public Map<String, Flight> getFlights() {
         return flights;
