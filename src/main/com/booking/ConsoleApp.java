@@ -9,6 +9,9 @@ import com.booking.services.BookingsService;
 import com.booking.objects.Flight;
 import com.booking.services.FlightController;
 import com.booking.services.FlightsService;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +39,7 @@ public class ConsoleApp {
         outerLoop:
         while (true) {
             displayChooseItem(options);
-            int choose = Integer.parseInt(scanner.next());
+            int choose = Integer.parseInt(scanner.nextLine());
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
@@ -47,8 +50,7 @@ public class ConsoleApp {
                     continue outerLoop;
                 case 3:
                     String dest = checkInputString("Enter destination!");
-                    System.out.println("Enter date in format yyyy-MM-dd");
-                    String date = scanner.next();
+                    String date = checkDate();
                     int numberOfPeople = getCorrectNumber("Enter number of people!");
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
 
@@ -76,7 +78,7 @@ public class ConsoleApp {
                     continue outerLoop;
                 case 4:
                     System.out.println("Enter reservation number!");
-                    number = scanner.next();
+                    number = scanner.nextLine();
                     bookingsController.deleteBookingByID(Integer.parseInt(number));
                     continue outerLoop;
                 case 5:
@@ -101,7 +103,7 @@ public class ConsoleApp {
         int number;
         while (true) {
             try {
-                number = scanner.nextInt();
+                number = Integer.parseInt(scanner.nextLine());
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -114,14 +116,19 @@ public class ConsoleApp {
 
     private int getCorrectNumber(String s) {
         System.out.println(s);
+        String str;
         int number;
         while (true) {
             try {
-                number = scanner.nextInt();
+                str = scanner.nextLine();
+                if(s.matches("\\D")){
+                    throw new NoNumberInStringException ("one digit is only acceptable in this field!");
+                }
+                number = Integer.parseInt(str);
                 if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
-                if (number > 4) throw new LargeBokingException ("You can not make reservation for more than 4 persons at once");
-                if( number == 0 ) break;
-            } catch (NumberBelowZeroException | LargeBokingException e) {
+                if (number > 4) throw new LargeBokingException("You can not make reservation for more than 4 persons at once");
+                if (number == 0) break;
+            } catch (NumberBelowZeroException | LargeBokingException | NoNumberInStringException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
@@ -132,24 +139,45 @@ public class ConsoleApp {
 
     private String scheckID() {
         System.out.println("Enter flight ID");
-        String checkStr = scanner.next();
+        String checkStr = scanner.nextLine();
         while (!checkStr.matches((valdiateID))) {
             System.out.println("Enter id in format AA111111");
-            checkStr = scanner.next();
+            checkStr = scanner.nextLine();
         }
         return checkStr;
     }
 
-    private  String checkInputString(String question) {
+    private String checkDate() {
+        System.out.println("Enter date in format yyyy-MM-dd");
+        boolean flag = true;
+        String date = null;
+        while (flag) {
+            date = scanner.nextLine();
+            while (!date.matches("\\d{4}[-./]\\d{2}[-./]\\d{2}")) {
+                System.out.println("Enter date in format yyyy-MM-dd");
+                date = scanner.nextLine();
+            }
+
+            try {
+                LocalDate parsedDate = LocalDate.parse(date);
+                flag = false;
+            } catch (DateTimeParseException e) {
+                System.out.println("The date is not allowed. Try again");
+            }
+        }
+        return date;
+    }
+
+    private String checkInputString(String question) {
         System.out.println(question);
         String line;
         int sizeName;
         while (true) {
-            line = scanner.next().trim().toLowerCase();
+            line = scanner.nextLine().trim().toLowerCase();
             try {
                 sizeName = line.length();
                 if (sizeName == 0) throw new EmptyStringException("This field can bot be empty!");
-                if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")){
+                if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")) {
                     throw new StringValidationException("The field may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
                 }
                 for (int i = 0; i < sizeName; i++) {
@@ -161,7 +189,7 @@ public class ConsoleApp {
             }
             break;
         }
-        return line.substring(0,1).toUpperCase()+line.substring(1);
+        return line.substring(0, 1).toUpperCase() + line.substring(1);
     }
 
 
