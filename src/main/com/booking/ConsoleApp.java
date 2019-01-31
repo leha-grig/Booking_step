@@ -39,21 +39,22 @@ public class ConsoleApp {
         outerLoop:
         while (true) {
             displayChooseItem(options);
-            int choose = Integer.parseInt(scanner.nextLine());
+
+            int choose = checkNumberString();
+
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
                     continue outerLoop;
                 case 2:
-                    String number = scheckID();
-                    flightController.showFlightByID(number);
+                    String idString = scheckID();
+                    flightController.showFlightByID(idString);
                     continue outerLoop;
                 case 3:
                     String dest = checkInputString("Enter destination!");
                     String date = checkDate();
                     int numberOfPeople = getCorrectNumber("Enter number of people!");
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
-
 
                     System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
                     int numberOfFlight = checkNumberOfFligth(list);
@@ -78,8 +79,9 @@ public class ConsoleApp {
                     continue outerLoop;
                 case 4:
                     System.out.println("Enter reservation number!");
-                    number = scanner.nextLine();
-                    bookingsController.deleteBookingByID(Integer.parseInt(number));
+                    int number = checkNumberString();
+
+                    bookingsController.deleteBookingByID(number);
                     continue outerLoop;
                 case 5:
 
@@ -91,7 +93,7 @@ public class ConsoleApp {
                 case 6:
                     System.out.println("EXIT");
                     break outerLoop;
-                //return;
+
                 default:
                     System.out.println("Enter number from 1 to 6!");
                     continue outerLoop;
@@ -99,11 +101,30 @@ public class ConsoleApp {
         }
     }
 
+    private int checkNumberString() {
+        String string;
+        while (true) {
+            string = scanner.nextLine();
+            if (string.matches("^.*\\D+.*$")) {
+                try {
+                    throw new IncorrectNumberInStringException("digits are only acceptable in this field!");
+
+                } catch (IncorrectNumberInStringException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
+            }
+            break;
+        }
+        return Integer.parseInt(string);
+    }
+
     private int checkNumberOfFligth(List l) {
         int number;
         while (true) {
             try {
-                number = Integer.parseInt(scanner.nextLine());
+
+                number = checkNumberString();
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -121,14 +142,14 @@ public class ConsoleApp {
         while (true) {
             try {
                 str = scanner.nextLine();
-                if(s.matches("\\D")){
-                    throw new NoNumberInStringException ("one digit is only acceptable in this field!");
+                if (str.matches("^.*\\D+.*$")) {
+                    throw new IncorrectNumberInStringException("one digit is only acceptable in this field!");
                 }
                 number = Integer.parseInt(str);
                 if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
                 if (number > 4) throw new LargeBokingException("You can not make reservation for more than 4 persons at once");
                 if (number == 0) break;
-            } catch (NumberBelowZeroException | LargeBokingException | NoNumberInStringException e) {
+            } catch (NumberBelowZeroException | LargeBokingException | IncorrectNumberInStringException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
@@ -162,6 +183,7 @@ public class ConsoleApp {
                 LocalDate parsedDate = LocalDate.parse(date);
                 flag = false;
             } catch (DateTimeParseException e) {
+                System.out.println(e.getMessage());
                 System.out.println("The date is not allowed. Try again");
             }
         }
@@ -173,23 +195,21 @@ public class ConsoleApp {
         String line;
         int sizeName;
         while (true) {
-            line = scanner.nextLine().trim().toLowerCase();
+            line = scanner.nextLine().trim();
             try {
                 sizeName = line.length();
                 if (sizeName == 0) throw new EmptyStringException("This field can bot be empty!");
                 if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")) {
                     throw new StringValidationException("The field may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
                 }
-                for (int i = 0; i < sizeName; i++) {
-                    if (Character.isDigit(line.charAt(i))) throw new NumberFormatException("Can not be number!");
-                }
+
             } catch (EmptyStringException | StringValidationException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
             break;
         }
-        return line.substring(0, 1).toUpperCase() + line.substring(1);
+        return line;
     }
 
 
