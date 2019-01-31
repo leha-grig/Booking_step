@@ -1,14 +1,5 @@
 package com.booking;
 
-import com.booking.bookings.BookingController;
-import com.booking.bookings.BookingsService;
-import com.booking.bookings.CollectionBookingsDAO;
-import com.booking.Exceptions.BookingAlreadyExist;
-import com.booking.flights.Flight;
-import com.booking.flights.FlightController;
-import com.booking.flights.FlightsDAO;
-import com.booking.flights.FlightsService;
-
 //TODO проверки корректности файлов и их наличия - список городов, флайтов, букингов - как это сделать?
 //TODO продвинутое ДЗ
 //TODO добавить в консоль возможность выхода в мэйн меню из любой точки?
@@ -18,9 +9,9 @@ import com.booking.flights.FlightsService;
 
 
 
-public class Main {
+public class AppStart {
     public static void main(String[] args) {
-        Console console = new Console();
+        Application console = new Application();
         console.chooseCommand();
 
    /*     FlightsDAO dao = new FlightsDAO();
@@ -62,6 +53,10 @@ public class Main {
         flightController.showFlightByID("KL130915");
         System.out.println(newBookings.getAll());
         bookingController.showSelectedBookings("Alex", "Smith");*/
+      /* Map<String, Flight> flights = new CollectionGenerator().generateNewFlightsCollection(10,10);
+
+    FlightPrintable ttp = new FlightPrintable(flights);
+        ttp.print();*/
     }
 
 
