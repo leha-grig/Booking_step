@@ -74,6 +74,7 @@ public class ConsoleApp {
         String password;
         User user = null;
         while (true) {
+            System.out.println("Enter the year of your birth");
             year = checkNumberString();
             try {
                 userInfoFormatChecker.yearChecker(year);
@@ -83,6 +84,7 @@ public class ConsoleApp {
             }
         }
         while (true) {
+            System.out.println("Enter your login name");
             login = scanner.nextLine();
             try {
                 userInfoFormatChecker.loginChecker(login);
@@ -98,6 +100,7 @@ public class ConsoleApp {
             }
         }
         while (true) {
+            System.out.println("Enter your password");
             password = scanner.nextLine();
             try {
                 userInfoFormatChecker.passwordChecker(password);
@@ -128,7 +131,7 @@ public class ConsoleApp {
         return user;
     }
 
-    public void chooseCommand(User user) {
+    private void chooseCommand(User user) {
         if (user == null) {return;}
         System.out.println("Enter number of command!");
         boolean flag = true;
@@ -140,50 +143,19 @@ public class ConsoleApp {
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
-                    continue;
+                    break;
                 case 2:
-                    String idString = checkID();
-                    flightController.showFlightByID(idString);
-                    continue;
+                    showFlightById();
+                    break;
                 case 3:
-                    String dest = checkInputString("Enter destination!");
-                    String date = checkDate();
-                    int numberOfPeople = getCorrectNumber("Enter number of people!");
-                    List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
-
-                    System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
-                    int numberOfFlight = checkNumberOfFlight(list);
-
-                    if (numberOfFlight == 0) {
-                        System.out.println("You are back in the main menu!");
-                        break;
-                    }
-
-                    for (int i = 1; i <= numberOfPeople; i++) {
-
-                        String name = checkInputString("Enter name of the " + i + " passenger");
-
-                        String surname = checkInputString("Enter surname of the " + i + " passenger");
-                        try {
-                            Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname);
-                            System.out.println("The new booking was created: " + booking);
-                        } catch (BookingAlreadyExist bookingAlreadyExist) {
-                            System.out.println(bookingAlreadyExist.getMessage());
-                        }
-                    }
-                    continue;
+                    FlightSelectionAndBooking();
+                    break;
                 case 4:
-                    System.out.println("Enter reservation number!");
-                    int number = checkNumberString();
-
-                    bookingsController.deleteBookingByID(number);
-                    continue;
+                    bookingRemoving();
+                    break;
                 case 5:
-
-                    String name1 = user.getName();
-                    String surname1 = user.getSurname();
-                    bookingsController.showSelectedBookings(name1, surname1);
-                    continue;
+                    showUserBookings(user);
+                    break;
                 case 6:
                     System.out.println("Log out");
                     flag = false;
@@ -192,6 +164,51 @@ public class ConsoleApp {
                     System.out.println("Enter number from 1 to 6!");
             }
         }
+    }
+
+    private void showUserBookings(User user) {
+        String name1 = user.getName();
+        String surname1 = user.getSurname();
+        bookingsController.showSelectedBookings(name1, surname1);
+    }
+
+    private void bookingRemoving() {
+        System.out.println("Enter reservation number!");
+        int number = checkNumberString();
+        bookingsController.deleteBookingByID(number);
+    }
+
+    private void FlightSelectionAndBooking() {
+        String dest = checkInputString("Enter destination!");
+        String date = checkDate();
+        int numberOfPeople = getCorrectNumber("Enter number of people!");
+        List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
+
+        System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
+        int numberOfFlight = checkNumberOfFlight(list);
+
+        if (numberOfFlight == 0) {
+            System.out.println("You are back in the main menu!");
+            return;
+        }
+
+        for (int i = 1; i <= numberOfPeople; i++) {
+
+            String name = checkInputString("Enter name of the " + i + " passenger");
+
+            String surname = checkInputString("Enter surname of the " + i + " passenger");
+            try {
+                Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname);
+                System.out.println("The new booking was created: " + booking);
+            } catch (BookingAlreadyExist bookingAlreadyExist) {
+                System.out.println(bookingAlreadyExist.getMessage());
+            }
+        }
+    }
+
+    private void showFlightById() {
+        String idString = checkFlightID();
+        flightController.showFlightByID(idString);
     }
 
     private int checkNumberString() {
@@ -247,7 +264,7 @@ public class ConsoleApp {
         return number;
     }
 
-    private String checkID() {
+    private String checkFlightID() {
         System.out.println("Enter flight ID");
         String checkStr = scanner.nextLine();
         while (!checkStr.matches((valdiateID))) {
