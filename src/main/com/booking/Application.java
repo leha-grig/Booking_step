@@ -79,7 +79,7 @@ public class Application {
     }
 
     private void createAndSearchBooking() {
-        String dest = checkInputString("Enter desination!");
+        String dest = checkInputString("Enter destination!");
         String date = checkDate();
         int numberOfPeople = getCorrectNumber("Enter number of people!");
         List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
@@ -93,9 +93,9 @@ public class Application {
         }
 
         for (int i = 1; i <= numberOfPeople; i++) {
-            String name = checkInputString("Enter name of the " + i + " pasanjer!");
+            String name = checkInputString("Enter name of the " + i + " passenger!");
 
-            String surname = checkInputString("Enter surname of the " + i + " pasanjer!");
+            String surname = checkInputString("Enter surname of the " + i + " passenger!");
             try {
                 Booking booking = bookingsController.createBooking(list.get(numberOfFlight - 1), name, surname);
                 System.out.println("The new booking was created: " + booking);
@@ -109,7 +109,7 @@ public class Application {
         String string;
         while(true){
             string=scanner.nextLine();
-            if(string.matches("^.*\\D+.*$")){
+            if(string.matches("^.*\\D+.*$") || string.length()==0){
                 try{
                     throw new IncorrectNumberInStringException("digits are only acceptable in this field!");
                 } catch(IncorrectNumberInStringException e) {
@@ -127,7 +127,6 @@ public class Application {
         while (true) {
             try {
                 number = checkNumberString();
-                if(l.size()==0) break;
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -140,19 +139,15 @@ public class Application {
 
     private int getCorrectNumber(String s) {
         System.out.println(s);
-        String str;
+
         int number;
         while (true) {
             try {
-                str = scanner.nextLine();
-                if (str.matches("^.*\\D+.*$")) {
-                    throw new IncorrectNumberInStringException("One digit is only acceptable in this field!");
-                }
-                number = Integer.parseInt(str);
+                number = checkNumberString();
                 if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
                 if (number > 4) throw new LargeBokingException("You can not make reservation for more than 4 persons at once");
                 if (number == 0) break;
-            } catch (NumberBelowZeroException | LargeBokingException | IncorrectNumberInStringException e) {
+            } catch (NumberBelowZeroException | LargeBokingException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
@@ -163,7 +158,7 @@ public class Application {
 
     private String scheckID() {
         System.out.println("Enter flight ID");
-        String checkStr = scanner.next();
+        String checkStr = scanner.nextLine();
         while (!checkStr.matches((valdiateID))) {
             System.out.println("Enter id in format AA111111");
             checkStr = scanner.nextLine();
@@ -197,7 +192,7 @@ public class Application {
         String line;
         int sizeName;
         while (true) {
-            line = scanner.next().trim();
+            line = scanner.nextLine().trim();
             try {
                 sizeName = line.length();
                 if (sizeName == 0) throw new EmptyStringException("This field can bot be empty!");

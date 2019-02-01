@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookingsServiceTest {
     private static FlightsDAO flightsDAO;
+    private static FlightsService flightsService;
     private static LocalDateTime ldt1;
     private static LocalDateTime ldt2;
     private static Flight flight1;
@@ -39,7 +40,7 @@ public class BookingsServiceTest {
         booking1 = new Booking(flight1, "Euha", "Saturn");
         booking2 = new Booking(flight2, "Kot", "Vaska");
         bookingsDAO = new CollectionBookingsDAO(booking1, booking2);
-        bookingsService = new BookingsService(bookingsDAO);
+        bookingsService = new BookingsService(bookingsDAO,flightsService);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class BookingsServiceTest {
         //when
         Booking result = null;
         try {
-            result = bookingsService.createBooking(flight2, "Kot", "Murzik", flightController);
+            result = bookingsService.createBooking(flight2, "Kot", "Murzik");
         } catch (BookingAlreadyExist bookingAlreadyExist) {
             bookingAlreadyExist.printStackTrace();
         }
@@ -69,7 +70,7 @@ public class BookingsServiceTest {
         //when
         Collection<Booking> result = null;
         try {
-            bookingsService.createBooking(flight2, "Kot", "Murzik", flightController);
+            bookingsService.createBooking(flight2, "Kot", "Murzik");
             result = bookingsDAO.getAll();
         } catch (BookingAlreadyExist bookingAlreadyExist) {
             bookingAlreadyExist.printStackTrace();
@@ -88,9 +89,9 @@ public class BookingsServiceTest {
         //when
         List<Booking> expected = null;
         try {
-            bookingsService.createBooking(flight2, "Kot", "Murzik", flightController);
+            bookingsService.createBooking(flight2, "Kot", "Murzik");
             expected = new ArrayList<>(bookingsDAO.getAll());
-            bookingsService.createBooking(flight2, "Kot", "Murzik", flightController);
+            bookingsService.createBooking(flight2, "Kot", "Murzik");
 
         } catch (BookingAlreadyExist bookingAlreadyExist) {
             bookingAlreadyExist.printStackTrace();

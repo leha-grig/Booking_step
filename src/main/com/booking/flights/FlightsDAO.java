@@ -1,7 +1,11 @@
 package com.booking.flights;
 
 import com.booking.DAO;
+
+import com.booking.Exceptions.FileReadingException;
 import com.booking.ObjectToFileReaderWriter;
+import com.booking.interfaces.Constants;
+import com.booking.logger.BookingServiceLogger;
 
 import java.io.*;
 import java.util.Collection;
@@ -11,16 +15,22 @@ import java.util.Map;
 public class FlightsDAO implements DAO<String, Flight> {
     private Map<String, Flight> flights;
     private ObjectToFileReaderWriter<Map<String, Flight>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
-
+    BookingServiceLogger logger = new BookingServiceLogger();
     public FlightsDAO() {
+        if (isCollectionExist(Constants.flightsPath)) {
 
-        if (isCollectionExist("./flights.txt")) {
-
-            flights = objectToFileReaderWriter.readObjectFromFile("flights.txt", flights);
+            try {
+                flights = objectToFileReaderWriter.readObjectFromFile(Constants.flightsPath, flights);
+                throw new FileReadingException("The source file will be renewed!");
+            } catch (FileReadingException e) {
+                System.out.println(e.getMessage());
+                CollectionGenerator collectionGenerator = new CollectionGenerator();
+                this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
+            }
 
         } else {
             CollectionGenerator collectionGenerator = new CollectionGenerator();
-            this.flights = collectionGenerator.generateNewFlightsCollection(500, 47);
+            this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
         }
     }
 
@@ -38,6 +48,7 @@ public class FlightsDAO implements DAO<String, Flight> {
 
     @Override
     public Flight getById(String ID) {
+        logger.info("User got Flight By ID");
         return flights.get(ID);
     }
 
@@ -45,22 +56,32 @@ public class FlightsDAO implements DAO<String, Flight> {
     public void save(Flight flight) {
         if (flight != null) {
             flights.put(flight.id(), flight);
+            logger.info("Flight was saved");
             objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+            logger.info("Booking was added to ./flights.txt path");
         }
     }
 
     @Override
     public Collection<Flight> getAll() {
+        logger.info("Get all information about Flights");
         return flights.values();
     }
 
     @Override
     public void remove(String id) {
+        if (id == null) {
+            logger.error("Error information: flight wasn't remove");
+            return;
+        }
         flights.remove(id);
-        objectToFileReaderWriter.writeObjectToFile("./flights.txt", flights);
+        logger.info("Flight was removed");
+        objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
+        logger.info("Information was update in ./flights.txt path");
     }
 
     public Map<String, Flight> getFlights() {
+        logger.info("Get all information about Flights");
         return flights;
     }
 

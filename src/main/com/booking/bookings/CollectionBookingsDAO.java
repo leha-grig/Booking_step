@@ -3,6 +3,7 @@ package com.booking.bookings;
 import com.booking.DAO;
 import com.booking.flights.Flight;
 import com.booking.ObjectToFileReaderWriter;
+import com.booking.logger.BookingServiceLogger;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +13,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     private Map<Flight, List<Booking>> bookings;
     private ObjectToFileReaderWriter<Map<Flight, List<Booking>>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
-
+    BookingServiceLogger logger = new BookingServiceLogger();
     public CollectionBookingsDAO() {
 
         if (isCollectionExist("./bookings.txt")) {
@@ -43,6 +44,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     @Override
     public Collection<Booking> getAll() {
+        logger.info("Get all information about Bookings");
         return bookings.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
@@ -54,9 +56,11 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
         for (Booking booking : getAll()) {
             if (booking.id().equals(ID)) {
+                logger.info("Get Booking information by ID");
                 return booking;
             }
         }
+        logger.error("Booking isn't exist");
         return null;
     }
 
@@ -73,10 +77,12 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
             });
             if (check[0]) {
                 list.remove(bookingIndexInList[0]);
+                logger.info("Remove booking");
             }
         });
         if (check[0]) {
             objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
+            logger.info("Booking was removed from ./bookings.txt path");
         }
     }
 
@@ -94,6 +100,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
             bookings.replace(booking.getFlight(), newList);
         }
         objectToFileReaderWriter.writeObjectToFile("./bookings.txt", bookings);
+        logger.info("Booking was added to ./bookings.txt path");
     }
 
 }

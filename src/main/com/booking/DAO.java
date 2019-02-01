@@ -1,5 +1,7 @@
 package com.booking;
 
+import com.booking.interfaces.Identifiable;
+
 import java.util.Collection;
 
 public interface DAO<S, T extends Identifiable<S>> {
