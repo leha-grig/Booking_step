@@ -143,9 +143,9 @@ public class ConsoleApp {
             try {
                 number = checkNumberString();
                 if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
-                if (number > 4) throw new LargeBokingException("You can not make reservation for more than 4 persons at once");
+                if (number > 4) throw new LargeBookingException("You can not make reservation for more than 4 persons at once");
                 if (number == 0) break;
-            } catch (NumberBelowZeroException | LargeBokingException e) {
+            } catch (NumberBelowZeroException | LargeBookingException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
