@@ -26,6 +26,9 @@ public class UserController {
 
         return userService.showAllUsers();
     }
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
     public void deleteUser(String id) {
         userService.deleteUser(id);
     }

@@ -14,8 +14,8 @@ public class UserInfoFormatChecker {
             throw new StringValidationException("The name may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
         }
     }
-    public void loginChecker (String password) throws LoginFormatException {
-        if (!password.matches("[\\w-_.]{3,20}")){
+    public void loginChecker (String login) throws LoginFormatException {
+        if (!login.matches("[\\w-_.]{3,20}")){
             throw new LoginFormatException("Incorrect login format. Login must have from 3 to 20 symbols and may contain letters, digits, '.', '-' and '_' ");
 
         }

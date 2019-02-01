@@ -16,23 +16,38 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, UserMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
-        userDAO.getAll().forEach(user -> {
-            if (user.getName().equals(name) && user.getSurname().equals(surname) && user.getYearOfBirth() == yearOfBirth) {
-                throw new UserMatchException("This user is already exist");
-            }
-            if (user.getLogin().equals(login)) {
-                throw new LoginMatchException("user with this login is already exist.");
-            }
-        });
+    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
+
         userInfoFormatChecker.nameChecker(name);
         userInfoFormatChecker.nameChecker(surname);
         userInfoFormatChecker.loginChecker(login);
         userInfoFormatChecker.passwordChecker(password);
         userInfoFormatChecker.yearChecker(yearOfBirth);
+
+        try {
+            userDAO.getAll().forEach(user -> {
+                if (user.getName().equals(name) && user.getSurname().equals(surname) && user.getYearOfBirth() == yearOfBirth) {
+                    throw new UserMatchException("This user is already exist");
+                }
+            });
+        } catch (UserMatchException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+        loginMatchChecker(login);
+
         User user = new User(name, surname, yearOfBirth, login, password);
         userDAO.save(user);
         return user;
+    }
+
+    private void loginMatchChecker(String login) throws LoginMatchException {
+        userDAO.getAll().forEach(user -> {
+            if (user.getLogin().equals(login)) {
+                throw new LoginMatchException("user with this login is already exist.");
+            }
+        });
     }
 
     public User getUser(String login, String password) throws IncorrectLoginPasswordException {
@@ -41,18 +56,24 @@ public class UserService {
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
-        throw new IncorrectLoginPasswordException ("The user login or password is incorrect");
+        throw new IncorrectLoginPasswordException("The user login or password is incorrect");
 
     }
 
     public void showUserFull(String login) {
         User user = userDAO.getById(login);
-        if (user == null){return;}
+        if (user == null) {
+            return;
+        }
         System.out.println(user + "password: " + user.getPassword());
     }
 
     public List<User> showAllUsers() {
         userDAO.getAll().forEach(System.out::println);
+        return new ArrayList<>(userDAO.getAll());
+    }
+
+    public List<User> getAllUsers() {
         return new ArrayList<>(userDAO.getAll());
     }
 

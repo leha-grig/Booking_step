@@ -77,3 +77,11 @@
 01/02/2019 04:45  [DEBUG] Get all information about Users
 01/02/2019 04:45  [DEBUG] New user was added to the users collection
 01/02/2019 04:45  [DEBUG] Users collection was rewrite to ./users.txt path
+01/02/2019 07:19  [DEBUG] User was got by ID
+01/02/2019 07:19  [DEBUG] Get all information about Bookings
+01/02/2019 07:19  [DEBUG] Get all information about Flights
+01/02/2019 07:20  [DEBUG] Get all information about Flights
+01/02/2019 07:20  [DEBUG] Flight was saved
+01/02/2019 07:20  [DEBUG] Booking was added to ./flights.txt path
+01/02/2019 07:20  [DEBUG] Booking was added to ./bookings.txt path
+01/02/2019 07:20  [DEBUG] User was got by ID

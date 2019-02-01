@@ -15,7 +15,7 @@ import com.booking.services.UserService;
 public class Main {
     public static void main(String[] args) {
 
-        UserDAO userDAO = new UserDAO();
+        /*UserDAO userDAO = new UserDAO();
         UserService userService = new UserService(userDAO);
         UserController userController = new UserController(userService);
 
@@ -26,11 +26,11 @@ public class Main {
 
             } catch (PasswordFormatException | LoginFormatException | StringValidationException | UserMatchException | LoginMatchException | YearOfBirthFormatException e) {
                 System.out.println(e.getMessage());
-            }
+            }*/
 
 
         ConsoleApp console = new ConsoleApp();
-        console.chooseCommand();
+        console.chooseIniOption();
 
         /*FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
