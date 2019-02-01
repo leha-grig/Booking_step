@@ -16,3 +16,6 @@
 31/01/2019 11:22  [DEBUG] Remove booking
 31/01/2019 11:22  [DEBUG] Booking was removed from ./bookings.txt path
 31/01/2019 11:22  [DEBUG] Get all information about Bookings
+01/02/2019 12:53  [DEBUG] Get all information about Flights
+01/02/2019 12:53  [DEBUG] User got Flight By ID
+01/02/2019 12:54  [DEBUG] User got Flight By ID

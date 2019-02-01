@@ -47,7 +47,7 @@ public class ConsoleApp {
                     flightController.showFlightsFor24hours();
                     continue outerLoop;
                 case 2:
-                    String idString = scheckID();
+                    String idString = checkID();
                     flightController.showFlightByID(idString);
                     continue outerLoop;
                 case 3:
@@ -57,7 +57,7 @@ public class ConsoleApp {
                     List<Flight> list = flightController.showSelectedFlights(dest, date, numberOfPeople);
 
                     System.out.println("To proceed booking, please, enter the Num of flight from the list above or press zero to exit!");
-                    int numberOfFlight = checkNumberOfFligth(list);
+                    int numberOfFlight = checkNumberOfFlight(list);
 
                     if (numberOfFlight == 0) {
                         System.out.println("You are back in the main menu!");
@@ -105,7 +105,7 @@ public class ConsoleApp {
         String string;
         while (true) {
             string = scanner.nextLine();
-            if (string.matches("^.*\\D+.*$")) {
+            if (string.matches("^.*\\D+.*$") || string.length() == 0) {
                 try {
                     throw new IncorrectNumberInStringException("digits are only acceptable in this field!");
 
@@ -119,7 +119,7 @@ public class ConsoleApp {
         return Integer.parseInt(string);
     }
 
-    private int checkNumberOfFligth(List l) {
+    private int checkNumberOfFlight(List l) {
         int number;
         while (true) {
             try {
@@ -137,19 +137,15 @@ public class ConsoleApp {
 
     private int getCorrectNumber(String s) {
         System.out.println(s);
-        String str;
+
         int number;
         while (true) {
             try {
-                str = scanner.nextLine();
-                if (str.matches("^.*\\D+.*$")) {
-                    throw new IncorrectNumberInStringException("one digit is only acceptable in this field!");
-                }
-                number = Integer.parseInt(str);
+                number = checkNumberString();
                 if (number < 0) throw new NumberBelowZeroException("The number can not be below zero!");
                 if (number > 4) throw new LargeBokingException("You can not make reservation for more than 4 persons at once");
                 if (number == 0) break;
-            } catch (NumberBelowZeroException | LargeBokingException | IncorrectNumberInStringException e) {
+            } catch (NumberBelowZeroException | LargeBokingException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
@@ -158,7 +154,7 @@ public class ConsoleApp {
         return number;
     }
 
-    private String scheckID() {
+    private String checkID() {
         System.out.println("Enter flight ID");
         String checkStr = scanner.nextLine();
         while (!checkStr.matches((valdiateID))) {
