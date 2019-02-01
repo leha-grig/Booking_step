@@ -3,6 +3,7 @@ package com.booking.bookings;
 import com.booking.Exceptions.BookingAlreadyExist;
 import com.booking.flights.Flight;
 import com.booking.flights.FlightController;
+import com.booking.flights.FlightsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,13 +11,14 @@ import java.util.stream.Collectors;
 public class BookingsService {
 
     private CollectionBookingsDAO bookingDAO;
+    private FlightsService flightsService;
 
-    public BookingsService(CollectionBookingsDAO bookingDAO) {
+    public BookingsService(CollectionBookingsDAO bookingDAO, FlightsService flightsService) {
         this.bookingDAO = bookingDAO;
+        this.flightsService = flightsService;
     }
 
-
-    public Booking createBooking(Flight flight, String name, String surname, FlightController flightController) throws BookingAlreadyExist {
+    public Booking createBooking(Flight flight, String name, String surname) throws BookingAlreadyExist {
 
         List<Booking> flightBookings = bookingDAO.getBookings().get(flight);
 
@@ -37,26 +39,20 @@ public class BookingsService {
             Booking booking = new Booking(flight, name, surname);
 
             flight.setBookedSits(++flightSeats);
-            flightController.saveFlight(flight);
+            flightsService.saveFlight(flight);
 
             bookingDAO.save(booking);
             return booking;
         }
     }
 
-    public void deleteBookingByID(int ID, FlightController flightController) {
-        final boolean[] check = {false};
-        final Flight[] flight = {null};
-        bookingDAO.getAll().forEach((booking) -> {
-            if (booking.id().equals(ID)) {
-                check[0] = true;
-                flight[0] = booking.getFlight();
-            }
-        });
-        if (check[0]) {
-            int flightSeats = flight[0].getBookedSits();
-            flight[0].setBookedSits(--flightSeats);
-            flightController.saveFlight(flight[0]);
+    public void deleteBookingByID(int ID) {
+        Booking booking = bookingDAO.getById(ID);
+        if (booking != null) {
+            Flight flight = booking.getFlight();
+            int flightSeats = flight.getBookedSits();
+            flight.setBookedSits(--flightSeats);
+            flightsService.saveFlight(flight);
         }
         bookingDAO.remove(ID);
 

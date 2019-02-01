@@ -10,7 +10,7 @@ public class CmdRemoveReserve implements Command {
 
     @Override
     public void doCommand() {
-        bc.deleteBookingByID(parametr, flightController);
+        bc.deleteBookingByID(parametr);
 
     }
 
