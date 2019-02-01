@@ -20,3 +20,31 @@
 01/02/2019 01:52  [DEBUG] Get all information about Flights
 01/02/2019 01:57  [DEBUG] Get all information about Flights
 01/02/2019 01:57  [DEBUG] Get all information about Flights
+01/02/2019 02:27  [DEBUG] Get all information about Flights
+01/02/2019 02:28  [DEBUG] User got Flight By ID
+01/02/2019 02:28  [DEBUG] Get all information about Flights
+01/02/2019 02:28  [DEBUG] Flight was saved
+01/02/2019 02:28  [DEBUG] Booking was added to ./flights.txt path
+01/02/2019 02:28  [DEBUG] Booking was added to ./bookings.txt path
+01/02/2019 02:29  [DEBUG] Get all information about Bookings
+01/02/2019 02:29  [DEBUG] Get Booking information by ID
+01/02/2019 02:29  [DEBUG] Flight was saved
+01/02/2019 02:29  [DEBUG] Booking was added to ./flights.txt path
+01/02/2019 02:29  [DEBUG] Remove booking
+01/02/2019 02:29  [DEBUG] Booking was removed from ./bookings.txt path
+01/02/2019 02:29  [DEBUG] Get all information about Bookings
+01/02/2019 03:56  [DEBUG] Get all information about Flights
+01/02/2019 04:03  [DEBUG] User got Flight By ID
+01/02/2019 04:04  [DEBUG] Get all information about Flights
+01/02/2019 04:09  [DEBUG] Get all information about Flights
+01/02/2019 04:10  [DEBUG] User got Flight By ID
+01/02/2019 04:13  [DEBUG] Get all information about Flights
+01/02/2019 04:13  [DEBUG] User got Flight By ID
+01/02/2019 04:34  [DEBUG] Get all information about Flights
+01/02/2019 04:34  [DEBUG] User got Flight By ID
+01/02/2019 04:35  [DEBUG] Get all information about Flights
+01/02/2019 04:36  [DEBUG] Flight was saved
+01/02/2019 04:36  [DEBUG] Booking was added to ./flights.txt path
+01/02/2019 04:36  [DEBUG] Booking was added to ./bookings.txt path
+01/02/2019 04:36  [DEBUG] Get all information about Bookings
+01/02/2019 04:36  [ERROR] Booking isn't exist
