@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class UserDAO implements DAO<String, User> {
     private Map<String, User> users;
@@ -42,9 +42,9 @@ public class UserDAO implements DAO<String, User> {
     public void save(User user) {
         if (user != null) {
             users.put(user.id(), user);
-            logger.info("New user was added to the users collection");
+            logger.info("New user: "+ user.getLogin() + " was added to users database");
             objectToFileReaderWriter.writeObjectToFile(Constants.usersPath, users);
-            logger.info("Users collection was rewrite to ./users.txt path");
+            logger.info("Users database was rewritten to ./users.txt path");
         }
     }
 
@@ -67,7 +67,7 @@ public class UserDAO implements DAO<String, User> {
             return;
         }
         users.remove(id);
-        logger.info("User was removed");
+        logger.info("User: "+ id + " was removed from users database");
         objectToFileReaderWriter.writeObjectToFile(Constants.usersPath, users);
         logger.info("Information was update in ./users.txt path");
     }

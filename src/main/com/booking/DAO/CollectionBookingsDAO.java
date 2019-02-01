@@ -70,7 +70,7 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
                 return booking;
             }
         }
-        logger.error("Booking isn't exist");
+        logger.error("Booking search fail: booking isn't exist");
         return null;
     }
 
@@ -90,12 +90,12 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
             });
             if (check[0]) {
                 list.remove(bookingIndexInList[0]);
-                logger.info("Remove booking");
+                logger.info("Booking was removed from booking database");
             }
         });
         if (check[0]) {
             objectToFileReaderWriter.writeObjectToFile(Constants.bookingsPath, bookings);
-            logger.info("Booking was removed from ./bookings.txt path");
+            logger.info("Booking database was rewritten to ./bookings.txt path");
         }
     }
 

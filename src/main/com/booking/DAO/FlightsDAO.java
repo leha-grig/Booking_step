@@ -57,9 +57,9 @@ public class FlightsDAO implements DAO<String, Flight> {
     public void save(Flight flight) {
         if (flight != null) {
             flights.put(flight.id(), flight);
-            logger.info("Flight was saved");
+            logger.info("Flight was saved in flights database");
             objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
-            logger.info("Booking was added to ./flights.txt path");
+            logger.info("Flights database was rewritten to ./flights.txt path");
         }
     }
 
@@ -76,7 +76,7 @@ public class FlightsDAO implements DAO<String, Flight> {
             return;
         }
         flights.remove(id);
-        logger.info("Flight was removed");
+        logger.info("Flight was removed from flights database");
         objectToFileReaderWriter.writeObjectToFile(Constants.flightsPath, flights);
         logger.info("Information was update in ./flights.txt path");
     }

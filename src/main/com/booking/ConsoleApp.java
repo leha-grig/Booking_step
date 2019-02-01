@@ -43,19 +43,19 @@ public class ConsoleApp {
     public void chooseIniOption() {
         System.out.println("Enter number of command!");
         boolean flag = true;
-        User user = null;
+        User user;
         while (flag) {
             displayChooseItem(initialOptions);
             int choose = checkNumberString();
             switch (choose) {
                 case 1:
                     user = userLogin();
-                    chooseCommand(user);
-                    continue;
+                    mainMenu(user);
+                    break;
                 case 2:
                     user = userRegistration();
-                    chooseCommand(user);
-                    continue;
+                    mainMenu(user);
+                    break;
                 case 3:
                     System.out.println("EXIT");
                     flag = false;
@@ -91,7 +91,7 @@ public class ConsoleApp {
                 String finalLogin = login;
                 userController.getAllUsers().forEach(u -> {
                     if (u.getLogin().equals(finalLogin)) {
-                        throw new LoginMatchException("user with this login is already exist.");
+                        throw new LoginMatchException("User with this login is already exist.");
                     }
                 });
                 break;
@@ -131,7 +131,7 @@ public class ConsoleApp {
         return user;
     }
 
-    private void chooseCommand(User user) {
+    private void mainMenu(User user) {
         if (user == null) {return;}
         System.out.println("Enter number of command!");
         boolean flag = true;

@@ -45,7 +45,7 @@ public class UserService {
     private void loginMatchChecker(String login) throws LoginMatchException {
         userDAO.getAll().forEach(user -> {
             if (user.getLogin().equals(login)) {
-                throw new LoginMatchException("user with this login is already exist.");
+                throw new LoginMatchException("User with this login is already exist.");
             }
         });
     }
@@ -69,6 +69,7 @@ public class UserService {
     }
 
     public List<User> showAllUsers() {
+        System.out.println(String.format("%-15s%-15s%-7s%-22s", "User name", "User surname", "Birth", "User login"));
         userDAO.getAll().forEach(System.out::println);
         return new ArrayList<>(userDAO.getAll());
     }
