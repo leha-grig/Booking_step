@@ -1,5 +1,6 @@
 package com.booking.consoleApp;
 
+
 import com.booking.objects.Flight;
 
 import java.util.function.Consumer;

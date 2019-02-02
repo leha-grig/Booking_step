@@ -75,6 +75,7 @@ public class Flight implements Serializable, Identifiable <String> {
     @Override
     public String toString() {
         String str = String.format("%-12s%-12s%-7s%-15s%-15s", id, getDate(), getTime(), departureCity, destination);
+        System.out.println("-----------------------------------------------------------------");
         return str;
     }
 

@@ -10,8 +10,6 @@ package com.booking;
 public class Main {
     public static void main(String[] args) {
         ConsoleApp console = new ConsoleApp();
-        console.chooseCommand();
+        console.chooseIniOption();
     }
-
-
 }

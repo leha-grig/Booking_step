@@ -2,13 +2,13 @@ package com.booking;
 
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
+import com.booking.DAO.UserDAO;
 import com.booking.Exceptions.*;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
-import com.booking.services.BookingController;
-import com.booking.services.BookingsService;
-import com.booking.services.FlightController;
-import com.booking.services.FlightsService;
+import com.booking.objects.User;
+import com.booking.services.*;
+import com.booking.utils.UserInfoFormatChecker;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -19,6 +19,9 @@ import java.util.Scanner;
 public class ConsoleApp {
 
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
+    private final String[] initialOptions = {
+            "Log in", "New user registration", "Exit"
+    };
 
     private String[] options = {
             "Show all flights for 24hours", "Show flight by ID",
@@ -30,13 +33,132 @@ public class ConsoleApp {
     private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
     private BookingsService bookingsService = new BookingsService(bookingsDAO, flightsService);
     private BookingController bookingsController = new BookingController(bookingsService);
+    private UserDAO userDAO = new UserDAO();
+    private UserService userService = new UserService(userDAO);
+    private UserController userController = new UserController(userService);
+    private UserInfoFormatChecker userInfoFormatChecker = new UserInfoFormatChecker();
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public void chooseCommand() {
+    public void chooseIniOption() {
         System.out.println("Enter number of command!");
-        outerLoop:
+        boolean flag = true;
+        User user = null;
+        while (flag) {
+            displayChooseItem(initialOptions);
+            int choose = checkNumberString();
+            switch (choose) {
+                case 1:
+                    user = userLogin();
+                    chooseCommand(user);
+                    continue;
+                case 2:
+                    user = userRegistration();
+                    chooseCommand(user);
+                    continue;
+                case 3:
+                    System.out.println("EXIT");
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("Enter number of command from 1 to 3!");
+            }
+        }
+    }
+
+    private User userRegistration() {
+        String name = checkInputString("Enter your name");
+        String surname = checkInputString("Enter your surname");
+        int year;
+        String login;
+        String password;
+        User user = null;
+        year = getUserYear();
+        login = getUserLoginName();
+        return getUserPassword(name, surname, year, login, user);
+    }
+
+    private int getUserYear() {
+        int year;
         while (true) {
+            System.out.println("Enter the year of your birth");
+            year = checkNumberString();
+            try {
+                userInfoFormatChecker.yearChecker(year);
+                break;
+            } catch (YearOfBirthFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return year;
+    }
+
+    private String getUserLoginName() {
+        String login;
+        while (true) {
+            System.out.println("Enter your login name");
+            login = scanner.nextLine();
+            try {
+                userInfoFormatChecker.loginChecker(login);
+                String finalLogin = login;
+                userController.getAllUsers().forEach(u -> {
+                    if (u.getLogin().equals(finalLogin)) {
+                        try {
+                            throw new LoginMatchException("User with this login is already exist.");
+                        } catch (LoginMatchException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            } catch (LoginFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return login;
+    }
+
+    private User getUserPassword(String name, String surname, int year, String login, User user) {
+        String password;
+        while (true) {
+            System.out.println("Enter your password");
+            password = scanner.nextLine();
+            try {
+                userInfoFormatChecker.passwordChecker(password);
+                break;
+            } catch (PasswordFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        try {
+            user = userController.createNewUser(name, surname, year, login, password);
+        } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException | UserMatchException e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
+
+    private User userLogin() {
+        System.out.println("Enter your login");
+        String login = scanner.nextLine();
+        System.out.println("Enter your password");
+        String password = scanner.nextLine();
+        User user = null;
+        try {
+            user = userController.getUser(login, password);
+        } catch (IncorrectLoginPasswordException e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
+
+    public void chooseCommand(User user) {
+        if (user == null) {
+            return;
+        }
+        System.out.println("Enter number of command!");
+       boolean flag = true;
+        while (flag) {
             displayChooseItem(options);
 
             int choose = checkNumberString();
@@ -44,22 +166,22 @@ public class ConsoleApp {
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
-                    continue outerLoop;
+                    continue;
                 case 2:
                     showFlightById();
-                    continue outerLoop;
+                    continue;
                 case 3:
                     showFlightsAndCreateBooking();
                     break;
                 case 4:
                     deleteBookingById();
-                    continue outerLoop;
+                    continue;
                 case 5:
                     showSelectedBookings();
-                    continue outerLoop;
+                    continue;
                 case 6:
                     System.out.println("EXIT");
-                    break outerLoop;
+                    break;
                 default:
                     System.out.println("Enter number from 1 to 6!");
             }

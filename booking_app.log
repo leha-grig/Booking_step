@@ -48,3 +48,16 @@
 01/02/2019 04:36  [DEBUG] Booking was added to ./bookings.txt path
 01/02/2019 04:36  [DEBUG] Get all information about Bookings
 01/02/2019 04:36  [ERROR] Booking isn't exist
+01/02/2019 05:01  [DEBUG] Get all information about Flights
+02/02/2019 08:09  [DEBUG] Get all information about Users
+02/02/2019 08:09  [DEBUG] Get all information about Users
+02/02/2019 08:09  [DEBUG] Get all information about Users
+02/02/2019 08:09  [DEBUG] New user was added to the users collection
+02/02/2019 08:09  [DEBUG] Users collection was rewrite to ./users.txt path
+02/02/2019 08:09  [DEBUG] Get all information about Flights
+02/02/2019 08:10  [DEBUG] User got Flight By ID
+02/02/2019 08:10  [DEBUG] Get all information about Flights
+02/02/2019 08:18  [DEBUG] User was got by ID
+02/02/2019 08:19  [DEBUG] Get all information about Flights
+02/02/2019 08:19  [DEBUG] User was got by ID
+02/02/2019 08:19  [DEBUG] Get all information about Flights
