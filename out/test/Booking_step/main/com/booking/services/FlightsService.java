@@ -56,7 +56,7 @@ public class FlightsService {
         LocalDate parsedDate = LocalDate.parse(date);
         List<Flight> flightsList = new ArrayList(flightsDAO.getAll());
         List<Flight> selectedFlights = flightsList.stream()
-                .filter(f -> f.getDestination().matches(destination))
+                .filter(f -> f.getDestination().equals(destination))
                 .filter(f -> f.getDate().isEqual(parsedDate))
                 .filter(f -> f.getFreeSits() >= passengers)
                 .collect(Collectors.toList());
