@@ -7,11 +7,30 @@ package com.booking;
 //TODO переделать HashMap для Bookings - так, чтоб ключами стояли АйДи букингс? Идея в оптимизации поиска.
 
 
+import com.booking.DAO.UserDAO;
+import com.booking.Exceptions.*;
+import com.booking.services.UserController;
+import com.booking.services.UserService;
+
 public class Main {
     public static void main(String[] args) {
 
+        /*UserDAO userDAO = new UserDAO();
+        UserService userService = new UserService(userDAO);
+        UserController userController = new UserController(userService);
+
+            try {
+                userController.createNewUser("Alex", "Grig", 1978, "alex-grig", "qwerty");
+                userController.createNewUser("Mike", "Smith", 2017, "mike_smith", "qwerty");
+                userController.createNewUser("Max", "Fry", 1980, "max_fry", "qwerty");
+
+            } catch (PasswordFormatException | LoginFormatException | StringValidationException | UserMatchException | LoginMatchException | YearOfBirthFormatException e) {
+                System.out.println(e.getMessage());
+            }*/
+
+
         ConsoleApp console = new ConsoleApp();
-        console.chooseCommand();
+        console.chooseIniOption();
 
         /*FlightsDAO dao = new FlightsDAO();
         FlightsService flightsService = new FlightsService(dao);
