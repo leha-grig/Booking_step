@@ -4,6 +4,7 @@ import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
 import com.booking.DAO.UserDAO;
 import com.booking.Exceptions.*;
+import com.booking.logger.BookingServiceLogger;
 import com.booking.objects.Booking;
 import com.booking.objects.User;
 import com.booking.services.*;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApp {
+
+    BookingServiceLogger logger = new BookingServiceLogger();
 
     public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
     private final String[] initialOptions = {
@@ -50,10 +53,12 @@ public class ConsoleApp {
             switch (choose) {
                 case 1:
                     user = userLogin();
+                    logger.info(user.getName() + " " + user.getSurname() + "chose login option");
                     mainMenu(user);
                     break;
                 case 2:
                     user = userRegistration();
+                    logger.info(user.getName() + " " + user.getSurname() + "chose registration option");
                     mainMenu(user);
                     break;
                 case 3:
@@ -72,14 +77,17 @@ public class ConsoleApp {
         int year;
         String login;
         String password;
-        User user = null;
+        User user = new User(name, surname);
         while (true) {
             System.out.println("Enter the year of your birth");
             year = checkNumberString();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user date of birth information input");
                 userInfoFormatChecker.yearChecker(year);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user input date of birth");
                 break;
             } catch (YearOfBirthFormatException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's date of birth input");
                 System.out.println(e.getMessage());
             }
         }
@@ -87,15 +95,19 @@ public class ConsoleApp {
             System.out.println("Enter your login name");
             login = scanner.nextLine();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user login input");
                 userInfoFormatChecker.loginChecker(login);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user login input");
                 String finalLogin = login;
                 userController.getAllUsers().forEach(u -> {
                     if (u.getLogin().equals(finalLogin)) {
                         throw new LoginMatchException("User with this login is already exist.");
                     }
+                    logger.error("user login is already exist");
                 });
                 break;
             } catch (LoginFormatException | LoginMatchException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's login input");
                 System.out.println(e.getMessage());
             }
         }
@@ -103,15 +115,20 @@ public class ConsoleApp {
             System.out.println("Enter your password");
             password = scanner.nextLine();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user password input");
                 userInfoFormatChecker.passwordChecker(password);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user password input");
                 break;
             } catch (PasswordFormatException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's password input");
                 System.out.println(e.getMessage());
             }
         }
         try {
             user = userController.createNewUser(name, surname, year, login, password);
+            logger.info("new user was created");
         } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException e) {
+            logger.error("user wasn't created");
             System.out.println(e.getMessage());
         }
         return user;
@@ -124,8 +141,11 @@ public class ConsoleApp {
         String password = scanner.nextLine();
         User user = null;
         try {
+            logger.info("check user's login/password input");
             user = userController.getUser(login, password);
+            logger.info("success user's login/password input");
         } catch (IncorrectLoginPasswordException e) {
+            logger.error("incorrect user's login/password input");
             System.out.println(e.getMessage());
         }
         return user;
@@ -143,21 +163,27 @@ public class ConsoleApp {
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed flights for 24 hours");
                     break;
                 case 2:
                     showFlightById();
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed flight by ID");
                     break;
                 case 3:
                     FlightSelectionAndBooking();
+                    logger.info(user.getName() + " " + user.getSurname() + " selected flight and made booking");
                     break;
                 case 4:
                     bookingRemoving();
+                    logger.info(user.getName() + " " + user.getSurname() + " removed booking");
                     break;
                 case 5:
                     showUserBookings(user);
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed bookings");
                     break;
                 case 6:
                     System.out.println("Log out");
+                    logger.info(user.getName() + " " + user.getSurname() + " log out from app");
                     flag = false;
                     break;
                 default:

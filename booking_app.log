@@ -1,105 +1,30 @@
-31/01/2019 11:19  [DEBUG] Get all information about Flights
-31/01/2019 11:19  [DEBUG] User got Flight By ID
-31/01/2019 11:19  [DEBUG] Get all information about Flights
-31/01/2019 11:20  [DEBUG] Flight was saved
-31/01/2019 11:20  [DEBUG] Booking was added to ./flights.txt path
-31/01/2019 11:20  [DEBUG] Booking was added to ./bookings.txt path
-31/01/2019 11:20  [DEBUG] Flight was saved
-31/01/2019 11:20  [DEBUG] Booking was added to ./flights.txt path
-31/01/2019 11:20  [DEBUG] Booking was added to ./bookings.txt path
-31/01/2019 11:20  [DEBUG] Get all information about Bookings
-31/01/2019 11:22  [DEBUG] Get all information about Bookings
-31/01/2019 11:22  [DEBUG] Get all information about Bookings
-31/01/2019 11:22  [DEBUG] Get Booking information by ID
-31/01/2019 11:22  [DEBUG] Flight was saved
-31/01/2019 11:22  [DEBUG] Booking was added to ./flights.txt path
-31/01/2019 11:22  [DEBUG] Remove booking
-31/01/2019 11:22  [DEBUG] Booking was removed from ./bookings.txt path
-31/01/2019 11:22  [DEBUG] Get all information about Bookings
-01/02/2019 12:53  [DEBUG] Get all information about Flights
-01/02/2019 12:53  [DEBUG] User got Flight By ID
-01/02/2019 12:54  [DEBUG] User got Flight By ID
-01/02/2019 04:06  [DEBUG] Get all information about Users
-01/02/2019 04:06  [DEBUG] New user was added to the users collection
-01/02/2019 04:06  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:06  [DEBUG] Get all information about Users
-01/02/2019 04:06  [DEBUG] Get all information about Users
-01/02/2019 04:06  [DEBUG] User was got by ID
-01/02/2019 04:22  [DEBUG] Get all information about Users
-01/02/2019 04:22  [DEBUG] Get all information about Users
-01/02/2019 04:22  [DEBUG] Get all information about Users
-01/02/2019 04:22  [DEBUG] User was got by ID
-01/02/2019 04:23  [DEBUG] Get all information about Users
-01/02/2019 04:23  [DEBUG] New user was added to the users collection
-01/02/2019 04:23  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:23  [DEBUG] Get all information about Users
-01/02/2019 04:23  [DEBUG] Get all information about Users
-01/02/2019 04:23  [DEBUG] Get all information about Users
-01/02/2019 04:23  [DEBUG] User was got by ID
-01/02/2019 04:24  [DEBUG] Get all information about Users
-01/02/2019 04:24  [DEBUG] New user was added to the users collection
-01/02/2019 04:24  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:24  [DEBUG] Get all information about Users
-01/02/2019 04:24  [DEBUG] New user was added to the users collection
-01/02/2019 04:24  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:24  [DEBUG] Get all information about Users
-01/02/2019 04:24  [DEBUG] New user was added to the users collection
-01/02/2019 04:24  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:24  [DEBUG] Get all information about Users
-01/02/2019 04:24  [DEBUG] Get all information about Users
-01/02/2019 04:24  [DEBUG] User was got by ID
-01/02/2019 04:25  [DEBUG] Get all information about Users
-01/02/2019 04:25  [DEBUG] Get all information about Users
-01/02/2019 04:25  [DEBUG] User was got by ID
-01/02/2019 04:27  [DEBUG] Get all information about Users
-01/02/2019 04:27  [DEBUG] Get all information about Users
-01/02/2019 04:27  [DEBUG] User was got by ID
-01/02/2019 04:27  [DEBUG] User was removed
-01/02/2019 04:27  [DEBUG] Information was update in ./users.txt path
-01/02/2019 04:27  [DEBUG] Get all information about Users
-01/02/2019 04:27  [DEBUG] Get all information about Users
-01/02/2019 04:27  [DEBUG] User was got by ID
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:28  [DEBUG] User was got by ID
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:28  [DEBUG] User was removed
-01/02/2019 04:28  [DEBUG] Information was update in ./users.txt path
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:28  [DEBUG] Get all information about Users
-01/02/2019 04:45  [DEBUG] Get all information about Users
-01/02/2019 04:45  [DEBUG] New user was added to the users collection
-01/02/2019 04:45  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:45  [DEBUG] Get all information about Users
-01/02/2019 04:45  [DEBUG] New user was added to the users collection
-01/02/2019 04:45  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 04:45  [DEBUG] Get all information about Users
-01/02/2019 04:45  [DEBUG] New user was added to the users collection
-01/02/2019 04:45  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 07:19  [DEBUG] User was got by ID
-01/02/2019 07:19  [DEBUG] Get all information about Bookings
-01/02/2019 07:19  [DEBUG] Get all information about Flights
-01/02/2019 07:20  [DEBUG] Get all information about Flights
-01/02/2019 07:20  [DEBUG] Flight was saved
-01/02/2019 07:20  [DEBUG] Booking was added to ./flights.txt path
-01/02/2019 07:20  [DEBUG] Booking was added to ./bookings.txt path
-01/02/2019 07:20  [DEBUG] User was got by ID
-01/02/2019 08:03  [DEBUG] User was got by ID
-01/02/2019 08:26  [DEBUG] Get all information about Users
-01/02/2019 08:26  [DEBUG] Get all information about Users
-01/02/2019 08:26  [DEBUG] Get all information about Users
-01/02/2019 08:26  [DEBUG] New user was added to the users collection
-01/02/2019 08:26  [DEBUG] Users collection was rewrite to ./users.txt path
-01/02/2019 08:27  [DEBUG] User was got by ID
-01/02/2019 08:27  [DEBUG] Get all information about Flights
-01/02/2019 08:27  [DEBUG] User got Flight By ID
-01/02/2019 08:27  [DEBUG] Get all information about Flights
-01/02/2019 08:28  [DEBUG] Get all information about Flights
-01/02/2019 08:28  [DEBUG] Flight was saved
-01/02/2019 08:28  [DEBUG] Booking was added to ./flights.txt path
-01/02/2019 08:28  [DEBUG] Booking was added to ./bookings.txt path
-01/02/2019 08:28  [DEBUG] User was got by ID
-01/02/2019 08:29  [DEBUG] Get all information about Bookings
-01/02/2019 09:28  [DEBUG] User was got by ID
-01/02/2019 09:29  [DEBUG] Get all information about Bookings
+02/02/2019 01:05  [DEBUG] Get all information about Users
+02/02/2019 01:05  [DEBUG] Get all information about Users
+02/02/2019 01:05  [DEBUG] Get all information about Users
+02/02/2019 01:06  [DEBUG] check user's login/password input
+02/02/2019 01:06  [DEBUG] User was got by ID
+02/02/2019 01:06  [DEBUG] success user's login/password input
+02/02/2019 01:06  [DEBUG] Mike Smithchose login option
+02/02/2019 01:06  [DEBUG] Mike Smith viewed flights for 24 hours
+02/02/2019 01:06  [DEBUG] Mike Smith viewed flight by ID
+02/02/2019 01:07  [DEBUG] Mike Smith selected flight and made booking
+02/02/2019 01:07  [DEBUG] Mike Smith viewed bookings
+02/02/2019 01:07  [DEBUG] Mike Smith removed booking
+02/02/2019 01:07  [DEBUG] Mike Smith selected flight and made booking
+02/02/2019 01:07  [DEBUG] Mike Smith viewed bookings
+02/02/2019 01:07  [DEBUG] Mike Smith log out from app
+02/02/2019 01:12  [DEBUG] Valentina Lysenokcheck new user date of birth information input
+02/02/2019 01:12  [DEBUG] Valentina Lysenoksuccess new user input date of birth
+02/02/2019 01:12  [DEBUG] Valentina Lysenokcheck new user login input
+02/02/2019 01:12  [DEBUG] Valentina Lysenoksuccess new user login input
+02/02/2019 01:12  [ERROR] user login is already exist
+02/02/2019 01:12  [ERROR] user login is already exist
+02/02/2019 01:12  [ERROR] user login is already exist
+02/02/2019 01:12  [DEBUG] Valentina Lysenokcheck new user password input
+02/02/2019 01:12  [DEBUG] Valentina Lysenoksuccess new user password input
+02/02/2019 01:12  [DEBUG] Valentina Lysenoknew user was created
+02/02/2019 01:12  [DEBUG] Valentina Lysenokchose registration option
+02/02/2019 01:12  [DEBUG] Valentina Lysenok viewed flights for 24 hours
+02/02/2019 01:13  [DEBUG] Valentina Lysenok viewed flight by ID
+02/02/2019 01:13  [DEBUG] Valentina Lysenok selected flight and made booking
+02/02/2019 01:13  [DEBUG] Valentina Lysenok viewed bookings

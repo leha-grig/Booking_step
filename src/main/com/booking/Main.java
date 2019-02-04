@@ -15,18 +15,18 @@ import com.booking.services.UserService;
 public class Main {
     public static void main(String[] args) {
 
-        /*UserDAO userDAO = new UserDAO();
+        UserDAO userDAO = new UserDAO();
         UserService userService = new UserService(userDAO);
         UserController userController = new UserController(userService);
 
-            try {
-                userController.createNewUser("Alex", "Grig", 1978, "alex-grig", "qwerty");
-                userController.createNewUser("Mike", "Smith", 2017, "mike_smith", "qwerty");
-                userController.createNewUser("Max", "Fry", 1980, "max_fry", "qwerty");
+        try {
+            userController.createNewUser("Alex", "Grig", 1978, "alex-grig", "qwerty");
+            userController.createNewUser("Mike", "Smith", 2017, "mike_smith", "qwerty");
+            userController.createNewUser("Max", "Fry", 1980, "max_fry", "qwerty");
 
-            } catch (PasswordFormatException | LoginFormatException | StringValidationException | UserMatchException | LoginMatchException | YearOfBirthFormatException e) {
-                System.out.println(e.getMessage());
-            }*/
+        } catch (PasswordFormatException | LoginFormatException | StringValidationException | UserMatchException | LoginMatchException | YearOfBirthFormatException e) {
+            e.getMessage();
+        }
 
 
         ConsoleApp console = new ConsoleApp();
