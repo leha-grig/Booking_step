@@ -263,7 +263,6 @@ public class ConsoleApp {
         int number;
         while (true) {
             try {
-
                 number = checkNumberString();
                 if (number < 0 || number > l.size()) throw new InputMismatchException("Please enter the correct flight number from the list above");
             } catch (NumberFormatException | InputMismatchException e) {
