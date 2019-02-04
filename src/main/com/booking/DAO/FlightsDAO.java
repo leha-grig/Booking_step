@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class FlightsDAO implements DAO<String, Flight> {
     private Map<String, Flight> flights;
-    private ObjectToFileReaderWriter<Map<String, Flight>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
+    private final ObjectToFileReaderWriter<Map<String, Flight>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
 
-    public FlightsDAO() {
+    public FlightsDAO() throws FileReadingException {
 
         if (isCollectionExist(Constants.flightsPath)) {
 
@@ -25,12 +25,12 @@ public class FlightsDAO implements DAO<String, Flight> {
                 System.out.println(e.getMessage());
                 System.out.println("The source file will be renewed!");
                 CollectionGenerator collectionGenerator = new CollectionGenerator();
-                this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
+                this.flights = collectionGenerator.generateNewFlightsCollection(500, 15, 150);
             }
 
         } else {
             CollectionGenerator collectionGenerator = new CollectionGenerator();
-            this.flights = collectionGenerator.generateNewFlightsCollection(1000, 47);
+            this.flights = collectionGenerator.generateNewFlightsCollection(500, 15, 150);
         }
     }
 
