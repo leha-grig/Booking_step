@@ -5,10 +5,19 @@ package com.booking;
 //TODO в консоли вынести методы проверки в отдельный класс?
 //TODO "красивая" консоль - без свитчей, с стрим-фильтром и Enum?
 //TODO переделать HashMap для Bookings - так, чтоб ключами стояли АйДи букингс? Идея в оптимизации поиска.
+//TODO переделать объекты - разные конструкторы для сериализации/десериализации
+//TODO переделать поля в файнал
+//TODO переделать ДАО - так, чтоб тип объектов был интерфейс
+
+//TODO авторизация по-Рихальскому
+//TODO сохранение в файл - сериализация
 
 
+import com.booking.DAO.FlightsDAO;
 import com.booking.DAO.UserDAO;
 import com.booking.Exceptions.*;
+import com.booking.services.FlightController;
+import com.booking.services.FlightsService;
 import com.booking.services.UserController;
 import com.booking.services.UserService;
 
@@ -29,14 +38,25 @@ public class Main {
             }*/
 
 
-        ConsoleApp console = new ConsoleApp();
+        ConsoleApp console = null;
+        try {
+            console = new ConsoleApp();
+        } catch (FileReadingException e) {
+            System.out.println(e.getMessage());
+        }
         console.chooseIniOption();
-
-        /*FlightsDAO dao = new FlightsDAO();
+        /*FlightsDAO dao = null;
+        try {
+            dao = new FlightsDAO();
+        } catch (FileReadingException e) {
+            System.out.println(e.getMessage());
+        }
         FlightsService flightsService = new FlightsService(dao);
         FlightController flightController = new FlightController(flightsService);
+        flightController.showSelectedFlights("Lima", "2019-02-05", 1);*/
 
-        CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
+
+        /*CollectionBookingsDAO newBookings = new CollectionBookingsDAO();
         BookingsService bookingsService = new BookingsService(newBookings, flightsService);
         BookingController bookingController = new BookingController(bookingsService);
 

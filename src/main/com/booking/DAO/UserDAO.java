@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class UserDAO implements DAO<String, User> {
     private Map<String, User> users;
-    private ObjectToFileReaderWriter<Map<String, User>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
-    BookingServiceLogger logger = new BookingServiceLogger();
+    private final ObjectToFileReaderWriter<Map<String, User>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
+    private final BookingServiceLogger logger = new BookingServiceLogger();
 
     public UserDAO() {
         if (isCollectionExist(Constants.usersPath)) {
