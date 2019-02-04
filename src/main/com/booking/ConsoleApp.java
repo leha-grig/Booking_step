@@ -19,9 +19,10 @@ import java.util.Scanner;
 
 public class ConsoleApp {
 
-    BookingServiceLogger logger = new BookingServiceLogger();
+    private final BookingServiceLogger logger = new BookingServiceLogger();
 
-    public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
+
+    public final static String valdiateFlightID = "([A-Z]){6}[0-9]{4,8}";
     private final String[] initialOptions = {
             "Log in", "New user registration", "Exit"
     };
@@ -42,6 +43,9 @@ public class ConsoleApp {
     private UserInfoFormatChecker userInfoFormatChecker = new UserInfoFormatChecker();
 
     private final static Scanner scanner = new Scanner(System.in);
+
+    public ConsoleApp() throws FileReadingException {
+    }
 
     public void chooseIniOption() {
         System.out.println("Enter number of command!");
@@ -293,8 +297,8 @@ public class ConsoleApp {
     private String checkFlightID() {
         System.out.println("Enter flight ID");
         String checkStr = scanner.nextLine();
-        while (!checkStr.matches((valdiateID))) {
-            System.out.println("Enter id in format AA111111");
+        while (!checkStr.matches((valdiateFlightID))) {
+            System.out.println("Enter id in format AAAAAA111111");
             checkStr = scanner.nextLine();
         }
         return checkStr;
