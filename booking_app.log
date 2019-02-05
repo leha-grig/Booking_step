@@ -1,10 +1,2 @@
-04/02/2019 04:49  [DEBUG] check user's login/password input
-04/02/2019 04:49  [DEBUG] success user's login/password input
-04/02/2019 04:49  [DEBUG] Alex Grigchose login option
-04/02/2019 04:49  [DEBUG] Alex Grig viewed flights for 24 hours
-04/02/2019 04:50  [DEBUG] Alex Grig viewed flight by ID
-04/02/2019 04:53  [DEBUG] Alex Grig selected flight and made booking
-04/02/2019 04:53  [DEBUG] Alex Grig viewed bookings
-04/02/2019 04:57  [DEBUG] Alex Grig selected flight and made booking
-04/02/2019 04:59  [DEBUG] Alex Grig selected flight and made booking
-04/02/2019 05:00  [DEBUG] Alex Grig log out from app
+05/02/2019 04:05  [DEBUG] check user's login/password input
+05/02/2019 04:05  [ERROR] incorrect user's login/password input

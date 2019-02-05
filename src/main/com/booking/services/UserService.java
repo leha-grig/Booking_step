@@ -16,7 +16,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
+    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
 
         userInfoFormatChecker.nameChecker(name);
         userInfoFormatChecker.nameChecker(surname);

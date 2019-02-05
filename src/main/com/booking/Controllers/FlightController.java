@@ -1,6 +1,7 @@
-package com.booking.services;
+package com.booking.Controllers;
 
 import com.booking.objects.Flight;
+import com.booking.services.FlightsService;
 
 import java.util.List;
 

@@ -29,7 +29,7 @@ public class FlightsService {
                 .sorted((f1, f2) -> (int) Duration.between(f2.getDateTime(), f1.getDateTime()).getSeconds())
                 .collect(Collectors.toList());
         if (selectedFlights.size() == 0) {
-            System.out.println("No DAO for 24 hours found");
+            System.out.println("No flights for 24 hours found");
         } else {
             System.out.printf("%-16s%-12s%-10s%-10s%-15s%-15s%n", "FlightID", "Date", "DepTime", "ArrTime", "From", "Destination");
             selectedFlights.forEach(System.out::println);
@@ -82,7 +82,7 @@ public class FlightsService {
                     selectedFlights.add(f);
                 }));
         if (selectedFlights.size() == 0) {
-            System.out.println("No DAO for your request found");
+            System.out.println("No flights for your request found");
         } else {
             System.out.printf("%-6s%-16s%-12s%-10s%-10s%-15s%-15s%n", "Num", "FlightID", "Date", "DepTime", "ArrTime", "From", "Destination");
             selectedFlights.forEach(f -> System.out.printf("%3d%-3s%s%n", (selectedFlights.indexOf(f) + 1), ". ", f.toString()));
