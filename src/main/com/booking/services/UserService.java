@@ -16,7 +16,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
+    public User createNewUser(String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException, UserMatchException {
 
         userInfoFormatChecker.nameChecker(name);
         userInfoFormatChecker.nameChecker(surname);
@@ -29,7 +29,7 @@ public class UserService {
                 try {
                     throw new UserMatchException("This user is already exist");
                 } catch (UserMatchException e) {
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -47,7 +47,7 @@ public class UserService {
                 try {
                     throw new LoginMatchException("User with this login is already exist.");
                 } catch (LoginMatchException e) {
-                    System.out.println(e.getMessage());;
+                    System.out.println(e.getMessage());
                 }
             }
         });

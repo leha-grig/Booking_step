@@ -4,10 +4,16 @@ import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
 import com.booking.DAO.UserDAO;
 import com.booking.Exceptions.*;
+import com.booking.controller.BookingController;
+import com.booking.controller.FlightController;
+import com.booking.controller.UserController;
+import com.booking.logger.BookingServiceLogger;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
 import com.booking.objects.User;
-import com.booking.services.*;
+import com.booking.services.BookingsService;
+import com.booking.services.FlightsService;
+import com.booking.services.UserService;
 import com.booking.utils.UserInfoFormatChecker;
 
 import java.time.LocalDate;
@@ -17,8 +23,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApp {
+    BookingServiceLogger logger = new BookingServiceLogger();
 
-    public final static String valdiateID = "([A-Z]){2}[0-9]{4,8}";
+    public final static String valdiateFlightID = "([A-Z]){6}[0-9]{4,8}";
     private final String[] initialOptions = {
             "Log in", "New user registration", "Exit"
     };
@@ -27,7 +34,15 @@ public class ConsoleApp {
             "Show all flights for 24hours", "Show flight by ID",
             "Flight search and booking", "Cancel reservation",
             "My bookings", "EXIT"};
-    private FlightsDAO dao = new FlightsDAO();
+    private FlightsDAO dao;
+    {
+        try {
+            dao = new FlightsDAO();
+        } catch (FileReadingException e) {
+            e.printStackTrace();
+        }
+    }
+
     private FlightsService flightsService = new FlightsService(dao);
     private FlightController flightController = new FlightController(flightsService);
     private CollectionBookingsDAO bookingsDAO = new CollectionBookingsDAO();
@@ -43,19 +58,21 @@ public class ConsoleApp {
     public void chooseIniOption() {
         System.out.println("Enter number of command!");
         boolean flag = true;
-        User user = null;
+        User user;
         while (flag) {
             displayChooseItem(initialOptions);
             int choose = checkNumberString();
             switch (choose) {
                 case 1:
                     user = userLogin();
-                    chooseCommand(user);
-                    continue;
+                    logger.info(user.getName() + " " + user.getSurname() + "chose login option");
+                    mainMenu(user);
+                    break;
                 case 2:
                     user = userRegistration();
-                    chooseCommand(user);
-                    continue;
+                    logger.info(user.getName() + " " + user.getSurname() + "chose registration option");
+                    mainMenu(user);
+                    break;
                 case 3:
                     System.out.println("EXIT");
                     flag = false;
@@ -72,34 +89,27 @@ public class ConsoleApp {
         int year;
         String login;
         String password;
-        User user = null;
-        year = getUserYear();
-        login = getUserLoginName();
-        return getUserPassword(name, surname, year, login, user);
-    }
-
-    private int getUserYear() {
-        int year;
+        User user = new User(name, surname);
         while (true) {
             System.out.println("Enter the year of your birth");
             year = checkNumberString();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user date of birth information input");
                 userInfoFormatChecker.yearChecker(year);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user input date of birth");
                 break;
             } catch (YearOfBirthFormatException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's date of birth input");
                 System.out.println(e.getMessage());
             }
         }
-        return year;
-    }
-
-    private String getUserLoginName() {
-        String login;
         while (true) {
             System.out.println("Enter your login name");
             login = scanner.nextLine();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user login input");
                 userInfoFormatChecker.loginChecker(login);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user login input");
                 String finalLogin = login;
                 userController.getAllUsers().forEach(u -> {
                     if (u.getLogin().equals(finalLogin)) {
@@ -109,30 +119,36 @@ public class ConsoleApp {
                             e.printStackTrace();
                         }
                     }
+                    logger.error("user login is already exist");
                 });
                 break;
             } catch (LoginFormatException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's login input");
                 System.out.println(e.getMessage());
             }
         }
-        return login;
-    }
-
-    private User getUserPassword(String name, String surname, int year, String login, User user) {
-        String password;
         while (true) {
             System.out.println("Enter your password");
             password = scanner.nextLine();
             try {
+                logger.info(user.getName() + " " + user.getSurname() + " check new user password input");
                 userInfoFormatChecker.passwordChecker(password);
+                logger.info(user.getName() + " " + user.getSurname() + " success new user password input");
                 break;
             } catch (PasswordFormatException e) {
+                logger.error(user.getName() + " " + user.getSurname() + " incorrect user's password input");
                 System.out.println(e.getMessage());
             }
         }
         try {
-            user = userController.createNewUser(name, surname, year, login, password);
-        } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException | UserMatchException e) {
+            try {
+                user = userController.createNewUser(name, surname, year, login, password);
+                logger.info("new user was created");
+            } catch (UserMatchException e) {
+                e.printStackTrace();
+            }
+        } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException e) {
+            logger.error("user wasn't created");
             System.out.println(e.getMessage());
         }
         return user;
@@ -145,14 +161,17 @@ public class ConsoleApp {
         String password = scanner.nextLine();
         User user = null;
         try {
+            logger.info("check user's login/password input");
             user = userController.getUser(login, password);
+            logger.info("success user's login/password input");
         } catch (IncorrectLoginPasswordException e) {
+            logger.error("incorrect user's login/password input");
             System.out.println(e.getMessage());
         }
         return user;
     }
 
-    public void chooseCommand(User user) {
+    public void mainMenu(User user) {
         if (user == null) {
             return;
         }
@@ -166,21 +185,28 @@ public class ConsoleApp {
             switch (choose) {
                 case 1:
                     flightController.showFlightsFor24hours();
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed flights for 24 hours");
                     continue;
                 case 2:
                     showFlightById();
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed flight by ID");
                     continue;
                 case 3:
                     showFlightsAndCreateBooking();
+                    logger.info(user.getName() + " " + user.getSurname() + " selected flight and made booking");
                     break;
                 case 4:
                     deleteBookingById();
+                    logger.info(user.getName() + " " + user.getSurname() + " removed booking");
                     continue;
                 case 5:
-                    showSelectedBookings();
+                    showSelectedBookings(user);
+                    logger.info(user.getName() + " " + user.getSurname() + " viewed bookings");
                     continue;
                 case 6:
-                    System.out.println("EXIT");
+                    System.out.println("Log out");
+                    logger.info(user.getName() + " " + user.getSurname() + " log out from app");
+                    flag = false;
                     break;
                 default:
                     System.out.println("Enter number from 1 to 6!");
@@ -188,9 +214,9 @@ public class ConsoleApp {
         }
     }
 
-    private void showSelectedBookings() {
-        String name1 = checkInputString("Enter your name!");
-        String surname1 = checkInputString("Enter your surname!");
+    private void showSelectedBookings(User user) {
+        String name1 = user.getName();
+        String surname1 = user.getSurname();
         bookingsController.showSelectedBookings(name1, surname1);
     }
 
@@ -228,7 +254,7 @@ public class ConsoleApp {
     }
 
     private void showFlightById() {
-        String idString = checkID();
+        String idString = checkFlightID();
         flightController.showFlightByID(idString);
     }
 
@@ -254,7 +280,6 @@ public class ConsoleApp {
         int number;
         while (true) {
             try {
-
                 number = checkNumberString();
                 if (number < 0 || number > l.size())
                     throw new InputMismatchException("Please enter the correct flight number from the list above");
@@ -269,7 +294,6 @@ public class ConsoleApp {
 
     private int getCorrectNumber(String s) {
         System.out.println(s);
-
         int number;
         while (true) {
             try {
@@ -287,11 +311,11 @@ public class ConsoleApp {
         return number;
     }
 
-    private String checkID() {
+    private String checkFlightID() {
         System.out.println("Enter flight ID");
         String checkStr = scanner.nextLine();
-        while (!checkStr.matches((valdiateID))) {
-            System.out.println("Enter id in format AA111111");
+        while (!checkStr.matches((valdiateFlightID))) {
+            System.out.println("Enter id in format AAAAAA111111");
             checkStr = scanner.nextLine();
         }
         return checkStr;
@@ -331,7 +355,6 @@ public class ConsoleApp {
                 if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")) {
                     throw new StringValidationException("The field may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
                 }
-
             } catch (EmptyStringException | StringValidationException e) {
                 System.out.println(e.getMessage());
                 continue;

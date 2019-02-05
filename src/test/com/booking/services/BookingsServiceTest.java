@@ -3,6 +3,7 @@ package com.booking.services;
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
+import com.booking.controller.FlightController;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
 import org.junit.Before;

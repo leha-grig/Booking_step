@@ -1,7 +1,8 @@
-package com.booking.services;
+package com.booking.controller;
 
 import com.booking.Exceptions.*;
 import com.booking.objects.User;
+import com.booking.services.UserService;
 
 import java.util.List;
 

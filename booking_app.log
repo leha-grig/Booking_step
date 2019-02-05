@@ -61,3 +61,43 @@
 02/02/2019 08:19  [DEBUG] Get all information about Flights
 02/02/2019 08:19  [DEBUG] User was got by ID
 02/02/2019 08:19  [DEBUG] Get all information about Flights
+02/02/2019 11:25  [DEBUG] Get all information about Flights
+02/02/2019 11:25  [DEBUG] User got Flight By ID
+02/02/2019 11:26  [DEBUG] Get all information about Flights
+02/02/2019 11:27  [DEBUG] Get all information about Flights
+03/02/2019 04:36  [DEBUG] Get all information about Flights
+03/02/2019 05:23  [DEBUG] Marina Savlic check new user date of birth information input
+03/02/2019 05:23  [ERROR] Marina Savlic incorrect user's date of birth input
+03/02/2019 05:23  [DEBUG] Marina Savlic check new user date of birth information input
+03/02/2019 05:23  [DEBUG] Marina Savlic success new user input date of birth
+03/02/2019 05:24  [DEBUG] Marina Savlic check new user login input
+03/02/2019 05:24  [DEBUG] Marina Savlic success new user login input
+03/02/2019 05:24  [ERROR] user login is already exist
+03/02/2019 05:24  [ERROR] user login is already exist
+03/02/2019 05:24  [ERROR] user login is already exist
+03/02/2019 05:24  [DEBUG] Marina Savlic check new user password input
+03/02/2019 05:24  [DEBUG] Marina Savlic success new user password input
+03/02/2019 05:24  [DEBUG] new user was created
+03/02/2019 05:24  [DEBUG] Marina Savlicchose registration option
+03/02/2019 05:24  [DEBUG] Marina Savlic viewed flights for 24 hours
+03/02/2019 05:24  [DEBUG] Marina Savlic viewed flight by ID
+03/02/2019 05:25  [DEBUG] Marina Savlic selected flight and made booking
+03/02/2019 05:25  [DEBUG] Marina Savlic removed booking
+03/02/2019 05:26  [DEBUG] Marina Savlic viewed bookings
+04/02/2019 11:49  [DEBUG] check user's login/password input
+04/02/2019 11:49  [DEBUG] success user's login/password input
+04/02/2019 11:49  [DEBUG] Alex Grigchose login option
+04/02/2019 11:49  [DEBUG] Alex Grig viewed flights for 24 hours
+05/02/2019 11:54  [DEBUG] check user's login/password input
+05/02/2019 11:54  [DEBUG] success user's login/password input
+05/02/2019 11:54  [DEBUG] Marina Savlicchose login option
+05/02/2019 11:54  [DEBUG] Marina Savlic viewed flights for 24 hours
+05/02/2019 12:35  [DEBUG] check user's login/password input
+05/02/2019 12:35  [DEBUG] success user's login/password input
+05/02/2019 12:35  [DEBUG] Marina Savlicchose login option
+05/02/2019 12:35  [DEBUG] Marina Savlic viewed flights for 24 hours
+05/02/2019 12:36  [DEBUG] check user's login/password input
+05/02/2019 12:36  [DEBUG] success user's login/password input
+05/02/2019 12:36  [DEBUG] Marina Savlicchose login option
+05/02/2019 12:36  [DEBUG] Marina Savlic viewed flights for 24 hours
+05/02/2019 12:37  [DEBUG] Marina Savlic selected flight and made booking

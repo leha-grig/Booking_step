@@ -35,13 +35,10 @@ public class BookingsService {
         if (check[0]) {
             throw new BookingAlreadyExist("Booking with this passenger is already exist on this flight");
         } else {
-
             int flightSeats = flight.getBookedSits();
             Booking booking = new Booking(flight, name, surname);
-
             flight.setBookedSits(++flightSeats);
             flightsService.saveFlight(flight);
-
             bookingDAO.save(booking);
             return booking;
         }
@@ -64,11 +61,9 @@ public class BookingsService {
                 .filter(booking -> booking.getName().matches(name))
                 .filter(booking -> booking.getSurname().matches(surname))
                 .collect(Collectors.toList());
-        System.out.printf("%6s%-12s%-15s%-15s%-12s%-12s%-7s%-15s%-15s%n", " ", "BookingID", "Name", "Surname", "FlightID", "Date", "Time", "From", "Destination");
+        System.out.printf("%6s%-12s%-15s%-15s%-12s%-12s%-7s%-15s%-15s%n", " ", "BookingID", "Name", "Surname", "FlightID", "Date", "DepTime", "ArrTime", "From", "Destination");
         selectedBookings.forEach(booking ->
-
                 System.out.printf("%3d%-3s%s%n", (selectedBookings.indexOf(booking) + 1), ". ", booking.toString()));
-
         return selectedBookings;
     }
 

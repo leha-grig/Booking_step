@@ -1,7 +1,8 @@
-package com.booking.services;
+package com.booking.controller;
 import com.booking.Exceptions.BookingAlreadyExist;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
+import com.booking.services.BookingsService;
 
 import java.util.List;
 

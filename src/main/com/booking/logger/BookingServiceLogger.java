@@ -1,16 +1,16 @@
 package com.booking.logger;
 
+import com.booking.interfaces.Logger;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BookingServiceLogger {
+public class BookingServiceLogger implements Logger {
 
-    private static String logFile = "./booking_app.log";
-    private final static DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm ");
-
+    //private static String logFile = "./booking_app.log";
+    //private final static DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm ");
+     @Override
     public void info(String msg) {
         try {
             Date now = new Date();
@@ -24,7 +24,7 @@ public class BookingServiceLogger {
             e.printStackTrace();
         }
     }
-
+    @Override
     public void error(String msg) {
         try {
             Date now = new Date();

@@ -4,16 +4,18 @@ package com.booking.consoleApp;
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
+import com.booking.Exceptions.FileReadingException;
+import com.booking.consoleApp.log.ConsoleLogger;
+import com.booking.controller.BookingController;
+import com.booking.controller.FlightController;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
-import com.booking.services.BookingController;
 import com.booking.services.BookingsService;
-import com.booking.services.FlightController;
 import com.booking.services.FlightsService;
 
 import java.util.List;
 
-public class CmdCreateBooking implements Command {
+public class CmdCreateBooking extends CommandBase implements Command {
     CheckingMethods cm =new CheckingMethods();
     private final FlightsService fs = new FlightsService(new FlightsDAO());
     private final FlightController fc = new FlightController(fs);
@@ -21,7 +23,9 @@ public class CmdCreateBooking implements Command {
     private BookingsService bookingsService = new BookingsService(bookingsDAO, fs);
     private BookingController bc = new BookingController(bookingsService);
 
-
+    public CmdCreateBooking(ConsoleLogger log) throws FileReadingException {
+        super(log);
+    }
 
     @Override
     public void doCommand() {

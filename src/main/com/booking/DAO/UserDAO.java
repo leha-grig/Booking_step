@@ -2,7 +2,6 @@ package com.booking.DAO;
 
 import com.booking.Exceptions.FileReadingException;
 import com.booking.interfaces.Constants;
-import com.booking.logger.BookingServiceLogger;
 import com.booking.objects.User;
 import com.booking.utils.ObjectToFileReaderWriter;
 
@@ -14,11 +13,10 @@ import java.util.Map;
 public class UserDAO implements DAO<String, User>{
     private Map<String, User> users;
     private ObjectToFileReaderWriter<Map<String, User>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
-    BookingServiceLogger logger = new BookingServiceLogger();
+    //BookingServiceLogger logger = new BookingServiceLogger();
 
     public UserDAO(){
         if (isCollectionExist(Constants.usersPath)) {
-
             try {
                 users = objectToFileReaderWriter.readObjectFromFile(Constants.usersPath, users);
             } catch (FileReadingException e) {
@@ -40,34 +38,34 @@ public class UserDAO implements DAO<String, User>{
     public void save(User user) {
         if (user != null) {
             users.put(user.id(), user);
-            logger.info("New user was added to the users collection");
+            //logger.info("New user was added to the users collection");
             objectToFileReaderWriter.writeObjectToFile(Constants.usersPath, users);
-            logger.info("Users collection was rewrite to ./users.txt path");
+            //logger.info("Users collection was rewrite to ./users.txt path");
         }
     }
 
     @Override
     public User getById(String id) {
-        logger.info("User was got by ID");
+        //logger.info("User was got by ID");
         return users.get(id);
     }
 
     @Override
     public Collection<User> getAll() {
-        logger.info("Get all information about Users");
+        //logger.info("Get all information about Users");
         return users.values();
     }
 
     @Override
     public void remove(String id) {
         if (id == null) {
-            logger.error("Error information: user wasn't remove");
+            //logger.error("Error information: user wasn't remove");
             return;
         }
         users.remove(id);
-        logger.info("User was removed");
+        //logger.info("User was removed");
         objectToFileReaderWriter.writeObjectToFile(Constants.usersPath, users);
-        logger.info("Information was update in ./users.txt path");
+        //logger.info("Information was update in ./users.txt path");
     }
 
 }

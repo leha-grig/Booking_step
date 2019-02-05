@@ -14,6 +14,10 @@ public class User implements Serializable, Identifiable<String> {
     private String password;
     private Who who;
 
+    public User(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 
     public User(String name, String surname, int yearOfBirth, String login, String password) {
         this.name = name;
