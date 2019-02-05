@@ -72,7 +72,14 @@ public class ConsoleApp {
                     mainMenu(user);
                     break;
                 case 2:
-                    user = userRegistration();
+                    try {
+                        user = userRegistration();
+                        logger.info("new user " + user.getLogin() + " was created");
+                    } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException | UserMatchException e) {
+                        logger.error("user wasn't created");
+                        System.out.println(e.getMessage());
+                        break;
+                    }
                     logger.info(user.getName() + " " + user.getSurname() + "chose registration option");
                     mainMenu(user);
                     break;
@@ -86,7 +93,7 @@ public class ConsoleApp {
         }
     }
 
-    private User userRegistration() {
+    private User userRegistration() throws YearOfBirthFormatException, StringValidationException, PasswordFormatException, LoginFormatException {
         String name = checkInputString("Enter your name");
         String surname = checkInputString("Enter your surname");
         int year;
@@ -139,13 +146,8 @@ public class ConsoleApp {
                 System.out.println(e.getMessage());
             }
         }
-        try {
             user = userController.createNewUser(name, surname, year, login, password);
-            logger.info("new user was created");
-        } catch (PasswordFormatException | LoginFormatException | StringValidationException | YearOfBirthFormatException | LoginMatchException e) {
-            logger.error("user wasn't created");
-            System.out.println(e.getMessage());
-        }
+
         return user;
     }
 
