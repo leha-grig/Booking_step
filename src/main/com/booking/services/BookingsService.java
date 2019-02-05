@@ -3,6 +3,7 @@ package com.booking.services;
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.Exceptions.BookingAlreadyExist;
 
+import com.booking.Exceptions.NoBookingException;
 import com.booking.objects.Booking;
 import com.booking.objects.Flight;
 
@@ -20,7 +21,7 @@ public class BookingsService {
     }
 
 
-    public Booking createBooking(Flight flight, String name, String surname) throws BookingAlreadyExist {
+    public Booking createBooking(Flight flight, String name, String surname) {
 
         List<Booking> flightBookings = bookingDAO.getBookings().get(flight);
 
@@ -48,13 +49,15 @@ public class BookingsService {
         }
     }
 
-    public void deleteBookingByID(int ID) {
+    public void deleteBookingByID(int ID) throws NoBookingException {
         Booking booking = bookingDAO.getById(ID);
         if (booking != null) {
             Flight flight = booking.getFlight();
             int flightSeats = flight.getBookedSits();
             flight.setBookedSits(--flightSeats);
             flightsService.saveFlight(flight);
+        } else {
+            throw new NoBookingException("No reservation with this number was found");
         }
         bookingDAO.remove(ID);
     }

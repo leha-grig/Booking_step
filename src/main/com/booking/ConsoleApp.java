@@ -1,5 +1,8 @@
 package com.booking;
 
+import com.booking.Controllers.BookingController;
+import com.booking.Controllers.FlightController;
+import com.booking.Controllers.UserController;
 import com.booking.DAO.CollectionBookingsDAO;
 import com.booking.DAO.FlightsDAO;
 import com.booking.DAO.UserDAO;
@@ -56,8 +59,16 @@ public class ConsoleApp {
             int choose = checkNumberString();
             switch (choose) {
                 case 1:
-                    user = userLogin();
-                    logger.info(user.getName() + " " + user.getSurname() + "chose login option");
+                    try {
+                        logger.info("check user's login/password input");
+                        user = userLogin();
+                        logger.info("success user's login/password input");
+                    } catch (IncorrectLoginPasswordException e) {
+                        logger.error("incorrect user's login/password input");
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    logger.info(user.getName() + " " + user.getSurname() + " chose login option");
                     mainMenu(user);
                     break;
                 case 2:
@@ -138,21 +149,12 @@ public class ConsoleApp {
         return user;
     }
 
-    private User userLogin() {
+    private User userLogin() throws IncorrectLoginPasswordException {
         System.out.println("Enter your login");
         String login = scanner.nextLine();
         System.out.println("Enter your password");
         String password = scanner.nextLine();
-        User user = null;
-        try {
-            logger.info("check user's login/password input");
-            user = userController.getUser(login, password);
-            logger.info("success user's login/password input");
-        } catch (IncorrectLoginPasswordException e) {
-            logger.error("incorrect user's login/password input");
-            System.out.println(e.getMessage());
-        }
-        return user;
+        return userController.getUser(login, password);
     }
 
     private void mainMenu(User user) {
@@ -178,7 +180,12 @@ public class ConsoleApp {
                     logger.info(user.getName() + " " + user.getSurname() + " selected flight and made booking");
                     break;
                 case 4:
-                    bookingRemoving();
+                    try {
+                        bookingRemoving();
+                    } catch (NoBookingException e) {
+                        System.out.println(e.getMessage());
+                        break;
+                    }
                     logger.info(user.getName() + " " + user.getSurname() + " removed booking");
                     break;
                 case 5:
@@ -202,7 +209,7 @@ public class ConsoleApp {
         bookingsController.showSelectedBookings(name1, surname1);
     }
 
-    private void bookingRemoving() {
+    private void bookingRemoving() throws NoBookingException {
         System.out.println("Enter reservation number!");
         int number = checkNumberString();
         bookingsController.deleteBookingByID(number);
@@ -304,10 +311,11 @@ public class ConsoleApp {
     }
 
     private String checkDate() {
-        System.out.println("Enter date in format yyyy-MM-dd");
+
         boolean flag = true;
         String date = null;
         while (flag) {
+            System.out.println("Enter date in format yyyy-MM-dd");
             date = scanner.nextLine();
             while (!date.matches("\\d{4}[-./]\\d{2}[-./]\\d{2}")) {
                 System.out.println("Enter date in format yyyy-MM-dd");
@@ -328,12 +336,10 @@ public class ConsoleApp {
     private String checkInputString(String question) {
         System.out.println(question);
         String line;
-        int sizeName;
         while (true) {
             line = scanner.nextLine().trim();
             try {
-                sizeName = line.length();
-                if (sizeName == 0) throw new EmptyStringException("This field can bot be empty!");
+                if (line.length() == 0) throw new EmptyStringException("This field can bot be empty!");
                 if (!line.matches("[\\w+]{1,7}[\\s, -]?[\\w+]{1,7}")) {
                     throw new StringValidationException("The field may contain Latin letters, digits and one '-' or space in between. 15 symbols maximum are allowed");
                 }

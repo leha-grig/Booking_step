@@ -1,7 +1,8 @@
-package com.booking.services;
+package com.booking.Controllers;
 
 import com.booking.Exceptions.*;
 import com.booking.objects.User;
+import com.booking.services.UserService;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    public User createNewUser (String name, String surname, int yearOfBirth, String login, String password) throws LoginMatchException, UserMatchException, PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
+    public User createNewUser (String name, String surname, int yearOfBirth, String login, String password) throws PasswordFormatException, LoginFormatException, StringValidationException, YearOfBirthFormatException {
 
         return userService.createNewUser(name, surname, yearOfBirth, login, password);
     }

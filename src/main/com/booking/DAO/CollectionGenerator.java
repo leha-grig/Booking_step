@@ -2,9 +2,6 @@ package com.booking.DAO;
 
 import com.booking.Exceptions.*;
 import com.booking.interfaces.Constants;
-import com.booking.objects.User;
-import com.booking.services.UserController;
-import com.booking.services.UserService;
 import com.booking.utils.ObjectToFileReaderWriter;
 import com.booking.objects.Flight;
 

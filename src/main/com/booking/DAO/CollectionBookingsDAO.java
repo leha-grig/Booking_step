@@ -80,15 +80,18 @@ public class CollectionBookingsDAO implements DAO<Integer, Booking> {
         }
         final boolean[] check = {false};
         bookings.forEach((flight, list) -> {
+            final boolean[] check2 = {false};
             final int[] bookingIndexInList = {0};
             list.forEach(booking -> {
                 if (booking.id().equals(ID)) {
-                    check[0] = true;
+                    check2[0] = true;
                     bookingIndexInList[0] = list.indexOf(booking);
+
                 }
             });
-            if (check[0]) {
+            if (check2[0]) {
                 list.remove(bookingIndexInList[0]);
+                check[0] = true;
                 //logger.info("Booking was removed from booking database");
             }
         });
