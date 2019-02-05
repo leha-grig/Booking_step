@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class CollectionBookingsDAO implements DAO<Integer, Booking> {
 
     private Map<Flight, List<Booking>> bookings;
-    private ObjectToFileReaderWriter<Map<Flight, List<Booking>>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
+    private final ObjectToFileReaderWriter<Map<Flight, List<Booking>>> objectToFileReaderWriter = new ObjectToFileReaderWriter();
 
     public CollectionBookingsDAO() {
 

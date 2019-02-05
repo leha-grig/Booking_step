@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class Flight implements Serializable, Identifiable <String> {
     private LocalDateTime dateTime;
+    private LocalDateTime arrivalDateTime;
     private String departureCity;
     private String destination;
     private String id;
@@ -25,6 +26,7 @@ public class Flight implements Serializable, Identifiable <String> {
         this.destination = destination;
         this.id = setID();
         this.capasity = capasity;
+        arrivalDateTime = dateTime.plusMinutes((long)Math.random()*300+60);
     }
 
 
@@ -32,12 +34,19 @@ public class Flight implements Serializable, Identifiable <String> {
         return LocalDate.from(dateTime);
     }
 
-    public String getTime (){
+    public LocalDateTime getDepDateTime(){return dateTime;}
+
+    public LocalDateTime getArrDateTime(){return arrivalDateTime;}
+
+    public String getDepTime(){
         return LocalTime.from(dateTime).format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+    public String getArrTime(){
+        return LocalTime.from(arrivalDateTime).format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     private String setID (){
-        return ""+departureCity.charAt(0)+destination.charAt(0)+dateTime.getMonthValue()+dateTime.getDayOfMonth()+dateTime.getHour()+dateTime.getMinute();
+        return ""+departureCity.substring(0, 3).toUpperCase()+destination.substring(0, 3).toUpperCase()+dateTime.getMonthValue()+dateTime.getDayOfMonth()+dateTime.getHour()+dateTime.getMinute();
     }
 
     public int getFreeSits(){
@@ -72,9 +81,10 @@ public class Flight implements Serializable, Identifiable <String> {
         return bookedSits;
     }
 
+
     @Override
     public String toString() {
-        String str = String.format("%-12s%-12s%-7s%-15s%-15s", id, getDate(), getTime(), departureCity, destination);
+        String str = String.format("%-16s%-12s%-10s%-10s%-15s%-15s", id, getDate(), getDepTime(), getArrTime(), departureCity, destination);
         return str;
     }
 

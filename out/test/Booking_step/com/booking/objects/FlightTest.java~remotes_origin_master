@@ -36,7 +36,7 @@ public class FlightTest {
     public void is_getTime_returnsCorrectTime() {
         //given
         //when
-        String result = flight.getTime();
+        String result = flight.getDepTime();
         String expected = LocalTime.of(15, 30, 0, 0).format(DateTimeFormatter.ofPattern("HH:mm"));
         //then
         assertThat(result).isEqualTo(expected);
