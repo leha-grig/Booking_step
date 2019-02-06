@@ -27,12 +27,15 @@ public class ConsoleApp {
 
     public final static String valdiateFlightID = "([A-Z]){6}[0-9]{4,8}";
     private final String[] initialOptions = {
-            "Log in", "New user registration", "Exit"
+            "Exit", "Log in", "New user registration", "Enter as unregistered user"
     };
-    private final String[] options = {
-            "Show all flights for 24hours", "Show flight by ID",
+    private final String[] optionsRegistered = {
+            "Log out", "Show all flights for 24hours", "Show flight by ID",
             "Flight search and booking", "Cancel reservation",
-            "My bookings", "Log out"};
+            "My bookings"};
+    private final String[] optionsUnregistered = {
+            "Exit to previous menu", "Show all flights for 24hours", "Show flight by ID"
+    };
 
     private FlightsDAO dao = new FlightsDAO();
     private FlightsService flightsService = new FlightsService(dao);
@@ -84,6 +87,10 @@ public class ConsoleApp {
                     mainMenu(user);
                     break;
                 case 3:
+                    user = new User();
+                    mainMenu(user);
+                    break;
+                case 0:
                     System.out.println("EXIT");
                     flag = false;
                     break;
@@ -146,7 +153,7 @@ public class ConsoleApp {
                 System.out.println(e.getMessage());
             }
         }
-            user = userController.createNewUser(name, surname, year, login, password);
+        user = userController.createNewUser(name, surname, year, login, password);
 
         return user;
     }
@@ -160,11 +167,17 @@ public class ConsoleApp {
     }
 
     private void mainMenu(User user) {
-        if (user == null) {return;}
+        if (user == null) {
+            return;
+        }
         System.out.println("Enter number of command!");
         boolean flag = true;
         while (flag) {
-            displayChooseItem(options);
+            if (user.getWho().name().equals("USER")) {
+                displayChooseItem(optionsRegistered);
+            } else {
+                displayChooseItem(optionsUnregistered);
+            }
 
             int choose = checkNumberString();
 
@@ -178,29 +191,51 @@ public class ConsoleApp {
                     logger.info(user.getName() + " " + user.getSurname() + " viewed flight by ID");
                     break;
                 case 3:
-                    FlightSelectionAndBooking();
-                    logger.info(user.getName() + " " + user.getSurname() + " selected flight and made booking");
+                    if (user.getWho().name().equals("USER")) {
+                        FlightSelectionAndBooking();
+                        logger.info(user.getName() + " " + user.getSurname() + " selected flight and made booking");
+                    } else {
+                        System.out.println("Enter number from 0 to 2!");
+                    }
                     break;
                 case 4:
-                    try {
-                        bookingRemoving();
-                    } catch (NoBookingException e) {
-                        System.out.println(e.getMessage());
-                        break;
+                    if (user.getWho().name().equals("USER")) {
+                        try {
+                            bookingRemoving();
+                        } catch (NoBookingException e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                        logger.info(user.getName() + " " + user.getSurname() + " removed booking");
                     }
-                    logger.info(user.getName() + " " + user.getSurname() + " removed booking");
+                    else {
+                        System.out.println("Enter number from 0 to 2!");
+                    }
                     break;
                 case 5:
-                    showUserBookings(user);
-                    logger.info(user.getName() + " " + user.getSurname() + " viewed bookings");
+                    if (user.getWho().name().equals("USER")) {
+                        showUserBookings(user);
+                        logger.info(user.getName() + " " + user.getSurname() + " viewed bookings");
+                    }
+                    else {
+                        System.out.println("Enter number from 0 to 2!");
+                    }
                     break;
-                case 6:
-                    System.out.println("Log out");
-                    logger.info(user.getName() + " " + user.getSurname() + " log out from app");
+                case 0:
+                    if (user.getWho().name().equals("USER")) {
+                        System.out.println("Log out");
+                        logger.info(user.getName() + " " + user.getSurname() + " log out from app");
+                    } else {
+                        System.out.println("You are in the initial menu");
+                    }
                     flag = false;
                     break;
                 default:
-                    System.out.println("Enter number from 1 to 6!");
+                    if (user.getWho().name().equals("USER")) {
+                        System.out.println("Enter number from 0 to 5!");
+                    } else {
+                        System.out.println("Enter number from 0 to 2!");
+                    }
             }
         }
     }
@@ -359,7 +394,7 @@ public class ConsoleApp {
     private void displayChooseItem(String[] options) {
         int number = 0;
         for (String option : options) {
-            System.out.println((number + 1) + ":" + option);
+            System.out.println((number) + ":" + option);
             ++number;
         }
     }

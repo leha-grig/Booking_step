@@ -1,2 +1,31 @@
 05/02/2019 04:05  [DEBUG] check user's login/password input
 05/02/2019 04:05  [ERROR] incorrect user's login/password input
+05/02/2019 08:57  [DEBUG] alex grig check new user date of birth information input
+05/02/2019 08:57  [DEBUG] alex grig success new user input date of birth
+05/02/2019 08:58  [DEBUG] alex grig check new user login input
+05/02/2019 08:58  [DEBUG] alex grig success new user login input
+05/02/2019 08:58  [DEBUG] alex grig check new user password input
+05/02/2019 08:58  [ERROR] alex grig incorrect user's password input
+05/02/2019 08:58  [DEBUG] alex grig check new user password input
+05/02/2019 08:58  [DEBUG] alex grig success new user password input
+05/02/2019 08:58  [DEBUG] new user qwe was created
+05/02/2019 08:58  [DEBUG] alex grigchose registration option
+05/02/2019 08:58  [DEBUG] alex grig log out from app
+06/02/2019 03:08  [DEBUG] null null viewed flights for 24 hours
+06/02/2019 03:09  [DEBUG] null null viewed flight by ID
+06/02/2019 03:09  [DEBUG] check user's login/password input
+06/02/2019 03:09  [ERROR] incorrect user's login/password input
+06/02/2019 03:09  [DEBUG] alex grig check new user date of birth information input
+06/02/2019 03:09  [DEBUG] alex grig success new user input date of birth
+06/02/2019 03:09  [DEBUG] alex grig check new user login input
+06/02/2019 03:09  [DEBUG] alex grig success new user login input
+06/02/2019 03:09  [DEBUG] alex grig check new user password input
+06/02/2019 03:09  [DEBUG] alex grig success new user password input
+06/02/2019 03:09  [DEBUG] new user alex was created
+06/02/2019 03:09  [DEBUG] alex grigchose registration option
+06/02/2019 03:09  [DEBUG] alex grig log out from app
+06/02/2019 03:09  [DEBUG] check user's login/password input
+06/02/2019 03:10  [DEBUG] success user's login/password input
+06/02/2019 03:10  [DEBUG] alex grig chose login option
+06/02/2019 03:10  [DEBUG] alex grig log out from app
+06/02/2019 03:15  [DEBUG] null null viewed flights for 24 hours
