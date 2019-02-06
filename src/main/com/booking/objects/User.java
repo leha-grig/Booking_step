@@ -12,11 +12,15 @@ public class User implements Serializable, Identifiable <String> {
     private int yearOfBirth;
     private String login;
     private String password;
-    private Who who;
+    private Autentification who;
 
     public User(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        this.who = Autentification.UNKNOWN;
+    }
+    public User() {
+        this.who = Autentification.UNKNOWN;
     }
 
     public User(String name, String surname, int yearOfBirth, String login, String password) {
@@ -26,7 +30,7 @@ public class User implements Serializable, Identifiable <String> {
         this.login = login;
         this.password = password;
         this.id = login;
-        this.who = Who.USER;
+        this.who = Autentification.USER;
     }
 
     public String id() {
@@ -53,11 +57,11 @@ public class User implements Serializable, Identifiable <String> {
         return password;
     }
 
-    public Who getWho() {
+    public Autentification getWho() {
         return who;
     }
 
-    public enum Who {
+    public enum Autentification {
         USER, ADMIN, UNKNOWN
     }
 
